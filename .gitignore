@@ -48,3 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+PGC/.vs/
+PGC/PGC/x64/
+PGC/x64/
