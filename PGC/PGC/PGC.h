@@ -4,7 +4,9 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QLayout.h>
-
+#include <QDateEdit>
+#include <QPushButton>
+#include <QCalendarWidget>
 
 class PGC : public QWidget
 {
@@ -17,6 +19,13 @@ public:
 private:
     QLabel* companyLogoQLabel;
     QLineEdit* programLogoQLineEdit;
+
+    QLabel* startQLabel;
+    QDateEdit* startQDateEdit;
+
+
+    QLabel* endDateQLabel;
+
 
     QFont* buttonFont;
     QFont* smallFont;
