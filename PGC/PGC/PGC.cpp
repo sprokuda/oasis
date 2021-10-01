@@ -27,36 +27,46 @@ PGC::PGC(QWidget *parent)
     logoLayout->addWidget(companyLogoQLabel);
     logoLayout->addWidget(programLogoQLineEdit);
     
-    startDateLabel = new QLabel("Start Date");
+    startDateLabel = new QLabel("Start Date",this);
     selectorStart = new QtMonthYearSelector(this);
     QHBoxLayout* startDateLayout = new QHBoxLayout;
+    startDateLayout->setContentsMargins(1, 1, 1, 1);
     startDateLayout->addStretch();
     startDateLayout->addWidget(startDateLabel);
     startDateLayout->addWidget(selectorStart);
 
-    endDateLabel = new QLabel("End Date");
+    endDateLabel = new QLabel("End Date",this);
     selectorEnd = new QtMonthYearSelector(this);
     QHBoxLayout* endDateLayout = new QHBoxLayout;
+    endDateLayout->setContentsMargins(1, 1, 1, 1);
     endDateLayout->addStretch();
     endDateLayout->addWidget(endDateLabel);
     endDateLayout->addWidget(selectorEnd);
 
-    pickerLabel = new QLabel("Calendar picker (DEMO)");
+    pickerLabel = new QLabel("Calendar picker (DEMO)", this);
     picker = new QtDatePicker();
     QHBoxLayout* pickerLayout = new QHBoxLayout;
+//    pickerLayout->setContentsMargins(10, 10, 10, 10);
     pickerLayout->addStretch();
     pickerLayout->addWidget(pickerLabel);
     pickerLayout->addWidget(picker);
 
 
-
-
+    prodColLabel = new QLabel("Production Colums", this);
+    prodCol = new QComboBox(this);
+    prodCol->addItems({"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"});
+    QHBoxLayout* prodColLayout = new QHBoxLayout;
+    prodColLayout->setContentsMargins(10, 10, 10, 10);
+    prodColLayout->addStretch();
+    prodColLayout->addWidget(prodColLabel);
+    prodColLayout->addWidget(prodCol);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addLayout(logoLayout);
     mainLayout->addLayout(startDateLayout);
     mainLayout->addLayout(endDateLayout);
     mainLayout->addLayout(pickerLayout);
+    mainLayout->addLayout(prodColLayout);
     mainLayout->addStretch();
 
     setLayout(mainLayout);

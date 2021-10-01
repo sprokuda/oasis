@@ -6,7 +6,7 @@
 #include <QLayout.h>
 #include <QDateEdit>
 #include <QPushButton>
-#include <QCalendarWidget>
+#include <QComboBox>
 
 #include "QtMonthYearSelector.h"
 #include "QtDatePicker.h"
@@ -33,7 +33,8 @@ private:
     QtDatePicker* picker;
 
 
-    QLabel* endDateQLabel;
+    QLabel* prodColLabel;
+    QComboBox* prodCol;
 
 
     QFont* buttonFont;
