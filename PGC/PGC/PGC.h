@@ -8,6 +8,8 @@
 #include <QPushButton>
 #include <QCalendarWidget>
 
+#include "QtMonthYearSelector.h"
+
 class PGC : public QWidget
 {
     Q_OBJECT
@@ -20,8 +22,11 @@ private:
     QLabel* companyLogoQLabel;
     QLineEdit* programLogoQLineEdit;
 
-    QLabel* startQLabel;
-    QDateEdit* startQDateEdit;
+    QLabel* startDateLabel;
+    QtMonthYearSelector* selectorStart;
+
+    QLabel* endDateLabel;
+    QtMonthYearSelector* selectorEnd;
 
 
     QLabel* endDateQLabel;
