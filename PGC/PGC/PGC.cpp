@@ -41,6 +41,12 @@ PGC::PGC(QWidget *parent)
     endDateLayout->addWidget(endDateLabel);
     endDateLayout->addWidget(selectorEnd);
 
+    pickerLabel = new QLabel("Calendar picker (DEMO)");
+    picker = new QtDatePicker();
+    QHBoxLayout* pickerLayout = new QHBoxLayout;
+    pickerLayout->addStretch();
+    pickerLayout->addWidget(pickerLabel);
+    pickerLayout->addWidget(picker);
 
 
 
@@ -50,11 +56,38 @@ PGC::PGC(QWidget *parent)
     mainLayout->addLayout(logoLayout);
     mainLayout->addLayout(startDateLayout);
     mainLayout->addLayout(endDateLayout);
+    mainLayout->addLayout(pickerLayout);
+    mainLayout->addStretch();
 
     setLayout(mainLayout);
     setWindowTitle(tr("Data Extractor"));
 
     this->setFont(*buttonFont);
 //    this->resize(mainWidth, mainHeight);
+
+}
+
+
+//void PGC::onShowWS()
+//{
+//    sp->show();
+//    sp->adjustPosition();
+//}
+
+void PGC::moveEvent(QMoveEvent* event)
+{
+    QWidget::moveEvent(event);
+    this->picker->adjustPopupPosition();
+//    this->multiSelect->adjustPopupPosition();
+//    this->sp->adjustPosition();
+
+}
+
+void PGC::resizeEvent(QResizeEvent* event)
+{
+    QWidget::resizeEvent(event);
+    this->picker->adjustPopupPosition();
+//    this->multiSelect->adjustPopupPosition();
+//    this->sp->adjustPosition();
 
 }

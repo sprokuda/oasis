@@ -9,6 +9,7 @@
 #include <QCalendarWidget>
 
 #include "QtMonthYearSelector.h"
+#include "QtDatePicker.h"
 
 class PGC : public QWidget
 {
@@ -28,6 +29,9 @@ private:
     QLabel* endDateLabel;
     QtMonthYearSelector* selectorEnd;
 
+    QLabel* pickerLabel;
+    QtDatePicker* picker;
+
 
     QLabel* endDateQLabel;
 
@@ -41,6 +45,9 @@ private:
 
     size_t mainWidth = 600;
     size_t mainHeight = 600;
+
+    void moveEvent(QMoveEvent* event);
+    void resizeEvent(QResizeEvent* event);
 
 
 };
