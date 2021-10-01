@@ -8,6 +8,7 @@ QtMonthYearSelector::QtMonthYearSelector(QWidget* parent)
 {
     QDate curr_date = QDate::currentDate();
     edit = new QLineEdit(QString::number(QDate::currentDate().month()) + "/" + QString::number(QDate::currentDate().year()));
+    edit->setEnabled(false);
     month = new QComboBox(this);
     month->addItems(months);
     month->setCurrentIndex(QDate::currentDate().month()-1);
