@@ -22,8 +22,7 @@ public slots:
 
 private slots:
     void onShowPopupButtonClicked();
-
-
+    void setDate(QDate date);
 signals:
     void editingFinished();
 
@@ -33,6 +32,5 @@ private:
     QLabel* dateLbl;
     QLineEdit* edit;
     QPushButton* showPP;
-
 };
 

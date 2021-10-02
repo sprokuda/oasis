@@ -6,7 +6,7 @@ QtDatePicker::QtDatePicker(QWidget* parent)
 {
     popup = new QtDatePickerPopup(this);
 
-    edit = new QLineEdit("xxxx", this);
+    edit = new QLineEdit(QDate::currentDate().toString(), this);
     showPP = new QPushButton("PickDate", this);
 
     QHBoxLayout* ctrlLayout = new QHBoxLayout(this);
@@ -23,19 +23,16 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     connect(popup, SIGNAL(dateSelected(QDate)), SLOT(setDate(QDate)));
 }
 
+void QtDatePicker::setDate(QDate date)
+{
+    edit->setText(date.toString());
+    //QString::number(QDate::currentDate().month()) + "/" + QString::number(QDate::currentDate().year())
+}
+
 void QtDatePicker::adjustPopupPosition()
 {
-//    const QPoint global = parentWidget()->mapToGlobal(edit->rect().bottomLeft());
-//    popup->move(global.x() , global.y() );//edit->height()//- edit->width()/2
-
     QRect popup_geometry = popup->geometry();
     popup_geometry.moveTo(this->mapToGlobal(edit->rect().bottomLeft()));
-    //QRect screen_geometry = QApplication::desktop()->screenGeometry(this);
-
-    //if (popup_geometry.right() > screen_geometry.right())
-    //    popup_geometry.moveRight(screen_geometry.right());
-    //if (popup_geometry.bottom() > screen_geometry.bottom())
-    //    popup_geometry.moveBottom(this->mapToGlobal(this->rect().topLeft()).y());
 
     popup->move(popup_geometry.topLeft());
 }
