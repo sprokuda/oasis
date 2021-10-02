@@ -39,8 +39,6 @@ void QtMultiSelect::onShowPopupButtonClicked()
 {
         adjustPopupPosition();
         popup->show();
-//        popup->raise();
-//        popup->activateWindow();
 
 }
 

@@ -63,12 +63,9 @@ void QtMultiSelectPopup::setTable(const QStringList& lst)
     for (size_t i = 0; i < lst.size(); i++)
     {
         QLineEdit* edit = new QLineEdit(lst[i]);
-//        edit->setFixedHeight(buttonHeight);
         edit->setEnabled(false);
         edit->setFont(font);
-//        edit->setFixedHeight(buttonHeight);
         edit->setFixedWidth(edit_width);
-
 
         table->setCellWidget(i, 0, edit);
 
@@ -78,7 +75,6 @@ void QtMultiSelectPopup::setTable(const QStringList& lst)
         connect(checkBox, &QCheckBox::toggled, this, [=](bool if_checked) { selectItem(if_checked, word); });
 
         table->setCellWidget(i, 1, checkBox);
-//        table->setRowHeight(i, buttonHeight);
     }
 }
 
