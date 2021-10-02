@@ -99,6 +99,8 @@
     <ClCompile Include="QtDatePicker.cpp" />
     <ClCompile Include="QtDatePickerPopup.cpp" />
     <ClCompile Include="QtMonthYearSelector.cpp" />
+    <ClCompile Include="QtMultiSelect.cpp" />
+    <ClCompile Include="QtMultiSelectPopup.cpp" />
     <QtMoc Include="PGC.h" />
     <ClCompile Include="PGC.cpp" />
     <ClCompile Include="main.cpp" />
@@ -111,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QtDatePickerPopup.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QtMultiSelect.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QtMultiSelectPopup.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

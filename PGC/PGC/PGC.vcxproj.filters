@@ -30,6 +30,12 @@
     <QtMoc Include="QtDatePickerPopup.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="QtMultiSelect.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="QtMultiSelectPopup.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -42,6 +48,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QtDatePickerPopup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QtMultiSelect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QtMultiSelectPopup.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

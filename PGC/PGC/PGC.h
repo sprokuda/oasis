@@ -7,9 +7,11 @@
 #include <QDateEdit>
 #include <QPushButton>
 #include <QComboBox>
+#include <QMessageBox>
 
 #include "QtMonthYearSelector.h"
 #include "QtDatePicker.h"
+#include "QtMultiSelect.h"
 
 class PGC : public QWidget
 {
@@ -36,6 +38,14 @@ private:
     QLabel* prodColLabel;
     QComboBox* prodCol;
 
+    QLabel* incBooks;
+    QtMultiSelect* booksSelect;
+
+    QLabel* practiceNameLabel;
+    QLineEdit* practiceName;
+
+    QPushButton* exctractButton;
+    QPushButton* exitAppButton;
 
     QFont* buttonFont;
     QFont* smallFont;
@@ -46,6 +56,9 @@ private:
 
     size_t mainWidth = 600;
     size_t mainHeight = 600;
+
+    void exctractData();
+    void exitProgram();
 
     void moveEvent(QMoveEvent* event);
     void resizeEvent(QResizeEvent* event);

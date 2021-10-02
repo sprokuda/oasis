@@ -5,25 +5,27 @@ QString workingDirectory;
 PGC::PGC(QWidget *parent)
     : QWidget(parent)
 {
-    buttonFont = new QFont("Calibri", 11, QFont::Medium);
+    buttonFont = new QFont("Calibri", 10, QFont::Medium);
     smallFont = new QFont("Calibri", 8, QFont::Medium);
-    bigFont = new QFont("Calibri", 14, QFont::Medium);
+    bigFont = new QFont("Calibri", 12, QFont::Medium);
 
     companyLogoQLabel = new QLabel(this);
-    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,36 }, Qt::KeepAspectRatioByExpanding);
+    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,42 }, Qt::KeepAspectRatioByExpanding);
     companyLogoQLabel->setPixmap(logo);
 
     programLogoQLineEdit = new QLineEdit(this);
-    programLogoQLineEdit->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//    programLogoQLineEdit->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
     programLogoQLineEdit->setEnabled(false);
     programLogoQLineEdit->setFixedHeight(36); //logo image height
-    programLogoQLineEdit->setFixedWidth(220);
+    programLogoQLineEdit->setFixedWidth(180);
     programLogoQLineEdit->setFont(*bigFont);
 
     programLogoQLineEdit->setText("OASIS PGC Data Extractor");
+    programLogoQLineEdit->setAlignment(Qt::AlignCenter);
 
     QHBoxLayout* logoLayout = new QHBoxLayout;
     logoLayout->addStretch();
+    logoLayout->setContentsMargins(10, 10, 10, 10);
     logoLayout->addWidget(companyLogoQLabel);
     logoLayout->addWidget(programLogoQLineEdit);
     
@@ -61,12 +63,51 @@ PGC::PGC(QWidget *parent)
     prodColLayout->addWidget(prodColLabel);
     prodColLayout->addWidget(prodCol);
 
+    incBooks = new QLabel("Include Appointment Books", this);
+    booksSelect = new QtMultiSelect(*buttonFont, 26);
+    QStringList books = { "0001","0002","0005" };
+    booksSelect->getPopup().setTable(books);
+    QHBoxLayout* booksLayout = new QHBoxLayout;
+//    endDateLayout->setContentsMargins(1, 1, 1, 1);
+    booksLayout->addStretch();
+    booksLayout->addWidget(incBooks);
+    booksLayout->addWidget(booksSelect);
+
+
+    practiceNameLabel = new QLabel("Practice Name", this);
+    practiceName = new QLineEdit(this);
+
+    QHBoxLayout* practiceLayout = new QHBoxLayout;
+    practiceLayout->setContentsMargins(10, 10, 10, 10);
+    practiceLayout->addStretch();
+    practiceLayout->addWidget(practiceNameLabel);
+    practiceLayout->addWidget(practiceName);
+
+    exctractButton = new QPushButton("Exctract");
+    exctractButton->setFixedSize(72, buttonHeight*1.2);
+    connect(exctractButton, &QPushButton::clicked, this, &PGC::exctractData);
+
+    exitAppButton = new QPushButton("Cancel");
+    exitAppButton->setFixedSize(72, buttonHeight * 1.2);
+    connect(exitAppButton, &QPushButton::clicked, this, &PGC::exitProgram);
+
+    QHBoxLayout* buttonLayout = new QHBoxLayout;
+    buttonLayout->setContentsMargins(10, 10, 10, 10);
+    buttonLayout->addStretch();
+    buttonLayout->addWidget(exctractButton);
+    buttonLayout->addStretch();
+    buttonLayout->addWidget(exitAppButton);
+    buttonLayout->addStretch();
+
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addLayout(logoLayout);
     mainLayout->addLayout(startDateLayout);
     mainLayout->addLayout(endDateLayout);
     mainLayout->addLayout(pickerLayout);
     mainLayout->addLayout(prodColLayout);
+    mainLayout->addLayout(booksLayout);
+    mainLayout->addLayout(practiceLayout);
+    mainLayout->addLayout(buttonLayout);
     mainLayout->addStretch();
 
     setLayout(mainLayout);
@@ -77,6 +118,10 @@ PGC::PGC(QWidget *parent)
 
 }
 
+void PGC::exctractData()
+{
+    /* all querying routines are call from here*/
+}
 
 //void PGC::onShowWS()
 //{
@@ -88,7 +133,7 @@ void PGC::moveEvent(QMoveEvent* event)
 {
     QWidget::moveEvent(event);
     this->picker->adjustPopupPosition();
-//    this->multiSelect->adjustPopupPosition();
+    this->booksSelect->adjustPopupPosition();
 //    this->sp->adjustPosition();
 
 }
@@ -97,7 +142,33 @@ void PGC::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
     this->picker->adjustPopupPosition();
-//    this->multiSelect->adjustPopupPosition();
+    this->booksSelect->adjustPopupPosition();
 //    this->sp->adjustPosition();
+
+}
+
+
+void PGC::exitProgram()
+{
+    QMessageBox* msgBox = new QMessageBox();
+    msgBox->setText("Conform you want to exit program");
+    QPushButton* connectButton = msgBox->addButton(tr("Exit Program"), QMessageBox::ActionRole);
+    QPushButton* abortButton = msgBox->addButton(QMessageBox::Abort);
+
+    msgBox->setFont(*buttonFont);
+    connectButton->setFont(*buttonFont);
+    abortButton->setFont(*buttonFont);
+
+
+    msgBox->exec();
+
+    if (msgBox->clickedButton() == connectButton)
+    {
+        qApp->quit();
+    }
+    else if (msgBox->clickedButton() == abortButton)
+    {
+        return;
+    }
 
 }
