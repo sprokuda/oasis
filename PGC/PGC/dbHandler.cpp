@@ -10,7 +10,7 @@ void dbHandler::doQueries()
 {
 //	QTest::qSleep(3000);
 
-//	Sleep(30);
+	Sleep(3000);
 	emit allCompleted();
 }
 

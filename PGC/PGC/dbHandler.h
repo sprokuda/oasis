@@ -10,7 +10,7 @@ class dbHandler : public QObject
 public:
     explicit dbHandler(QObject* parent = nullptr);
 
-    void doQueries();
+    Q_INVOKABLE void doQueries();
 
 signals:
     void allCompleted();

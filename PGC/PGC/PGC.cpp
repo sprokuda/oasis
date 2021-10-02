@@ -122,9 +122,10 @@ PGC::PGC(QWidget *parent)
     thread = new QThread();
 
     handler->moveToThread(thread);
+    connect(handler, SIGNAL(allCompleted()), this, SLOT(onAllCompleted()));
     thread->start();
 
-    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
+//    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
 
 }
 
