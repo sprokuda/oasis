@@ -1,6 +1,6 @@
 #include "PGC.h"
 
-QString workingDirectory;
+extern QString workingDirectory;
 
 PGC::PGC(QWidget *parent)
     : QWidget(parent)
@@ -116,11 +116,15 @@ PGC::PGC(QWidget *parent)
     this->setFont(*buttonFont);
 //    this->resize(mainWidth, mainHeight);
 
+    spinner = new QtWaitingSpinner(this);
+
 }
 
 void PGC::exctractData()
 {
     /* all querying routines are call from here*/
+    spinner->show();
+    spinner->adjustPosition();
 }
 
 //void PGC::onShowWS()

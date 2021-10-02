@@ -10,7 +10,7 @@
 using namespace std;
 using namespace filesystem;
 
-extern QString workingDirectory;
+QString workingDirectory;
 
 int main(int argc, char *argv[])
 {

@@ -12,6 +12,7 @@
 #include "QtMonthYearSelector.h"
 #include "QtDatePicker.h"
 #include "QtMultiSelect.h"
+#include "QtWaitingSpinner.h"
 
 class PGC : public QWidget
 {
@@ -56,6 +57,8 @@ private:
 
     size_t mainWidth = 600;
     size_t mainHeight = 600;
+
+    QtWaitingSpinner* spinner;
 
     void exctractData();
     void exitProgram();
