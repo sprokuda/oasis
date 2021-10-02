@@ -9,10 +9,14 @@
 #include <QComboBox>
 #include <QMessageBox>
 
+#include <Qthread>
+
 #include "QtMonthYearSelector.h"
 #include "QtDatePicker.h"
 #include "QtMultiSelect.h"
 #include "QtWaitingSpinner.h"
+
+#include "dbHandler.h"
 
 class PGC : public QWidget
 {
@@ -21,7 +25,8 @@ class PGC : public QWidget
 public:
     PGC(QWidget *parent = Q_NULLPTR);
 
-
+public slots:
+    void onAllCompleted();
 private:
     QLabel* companyLogoQLabel;
     QLineEdit* programLogoQLineEdit;
@@ -59,9 +64,11 @@ private:
     size_t mainHeight = 600;
 
     QtWaitingSpinner* spinner;
-
+    dbHandler* handler;
+    QThread* thread;
     void exctractData();
     void exitProgram();
+
 
     void moveEvent(QMoveEvent* event);
     void resizeEvent(QResizeEvent* event);

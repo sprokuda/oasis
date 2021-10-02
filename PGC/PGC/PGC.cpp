@@ -117,6 +117,14 @@ PGC::PGC(QWidget *parent)
 //    this->resize(mainWidth, mainHeight);
 
     spinner = new QtWaitingSpinner(this);
+    handler = new dbHandler();
+
+    thread = new QThread();
+
+    handler->moveToThread(thread);
+    thread->start();
+
+    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
 
 }
 
@@ -125,6 +133,19 @@ void PGC::exctractData()
     /* all querying routines are call from here*/
     spinner->show();
     spinner->adjustPosition();
+
+    QMetaObject::invokeMethod(handler, "doQueries",
+        Qt::QueuedConnection
+//                Qt::DirectConnection,
+//        Q_ARG(QString, aligner_file_path),
+//        Q_ARG(QString, patchFilePath),
+//        Q_ARG(QString, patched_file_path)
+    );
+}
+
+void PGC::onAllCompleted()
+{
+    spinner->hide();
 }
 
 //void PGC::onShowWS()
@@ -138,7 +159,7 @@ void PGC::moveEvent(QMoveEvent* event)
     QWidget::moveEvent(event);
     this->picker->adjustPopupPosition();
     this->booksSelect->adjustPopupPosition();
-//    this->sp->adjustPosition();
+    this->spinner->adjustPosition();
 
 }
 
@@ -147,13 +168,14 @@ void PGC::resizeEvent(QResizeEvent* event)
     QWidget::resizeEvent(event);
     this->picker->adjustPopupPosition();
     this->booksSelect->adjustPopupPosition();
-//    this->sp->adjustPosition();
+    this->spinner->adjustPosition();
 
 }
 
 
 void PGC::exitProgram()
 {
+    spinner->hide();
     QMessageBox* msgBox = new QMessageBox();
     msgBox->setText("Conform you want to exit program");
     QPushButton* connectButton = msgBox->addButton(tr("Exit Program"), QMessageBox::ActionRole);
