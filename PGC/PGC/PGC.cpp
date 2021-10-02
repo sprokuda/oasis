@@ -10,7 +10,7 @@ PGC::PGC(QWidget *parent)
     bigFont = new QFont("Calibri", 12, QFont::Medium);
 
     companyLogoQLabel = new QLabel(this);
-    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,42 }, Qt::KeepAspectRatioByExpanding);
+    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,36 }, Qt::KeepAspectRatioByExpanding);
     companyLogoQLabel->setPixmap(logo);
 
     programLogoQLineEdit = new QLineEdit(this);
@@ -45,7 +45,7 @@ PGC::PGC(QWidget *parent)
     endDateLayout->addWidget(endDateLabel);
     endDateLayout->addWidget(selectorEnd);
 
-    pickerLabel = new QLabel("Calendar picker (DEMO)", this);
+    pickerLabel = new QLabel("Calendar picker \n(DEMO)", this);
     picker = new QtDatePicker();
     QHBoxLayout* pickerLayout = new QHBoxLayout;
 //    pickerLayout->setContentsMargins(10, 10, 10, 10);
@@ -63,7 +63,7 @@ PGC::PGC(QWidget *parent)
     prodColLayout->addWidget(prodColLabel);
     prodColLayout->addWidget(prodCol);
 
-    incBooks = new QLabel("Include Appointment Books", this);
+    incBooks = new QLabel("Include \nAppointment Books", this);
     booksSelect = new QtMultiSelect(*buttonFont, 26);
     QStringList books = { "0001","0002","0005" };
     booksSelect->getPopup().setTable(books);
@@ -153,7 +153,7 @@ void PGC::exitProgram()
     QMessageBox* msgBox = new QMessageBox();
     msgBox->setText("Conform you want to exit program");
     QPushButton* connectButton = msgBox->addButton(tr("Exit Program"), QMessageBox::ActionRole);
-    QPushButton* abortButton = msgBox->addButton(QMessageBox::Abort);
+    QPushButton* abortButton = msgBox->addButton(QMessageBox::Cancel);
 
     msgBox->setFont(*buttonFont);
     connectButton->setFont(*buttonFont);
