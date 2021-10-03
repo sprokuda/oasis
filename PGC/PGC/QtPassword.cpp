@@ -11,8 +11,9 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 	box = new QMessageBox();
 	box->setText("Wrong password!");
 	box->addButton(QMessageBox::Ok);
+	box->setIcon(QMessageBox::Warning);
 	box->setFont(font);
-	box->resize(200,200);
+//	box->resize(200,200);
 
 	QHBoxLayout* buttonLayout = new QHBoxLayout();
 	buttonLayout->addStretch();
@@ -30,11 +31,9 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 
 	setLayout(mainLayout);
 
-	move(800, 400);
+//	move(800, 400);
 
 	QPoint global_geometry = this->mapToGlobal(this->rect().center());
-	QRect bl = box->layout()->contentsRect();
-	box->move(global_geometry.x() , global_geometry.y());
 	box->move(global_geometry.x() - 75, global_geometry.y() - 50);
 
 	connect(edit, SIGNAL(editingFinished()), this, SLOT(onPasswordEntered()));
@@ -55,7 +54,6 @@ void QtPassword::onPasswordEntered()
 	else
 	{
 		QPoint global_geometry = this->mapToGlobal(this->rect().center());
-		QRect bl = box->layout()->contentsRect();
 		box->move(global_geometry.x() - 75, global_geometry.y() - 50);
 		box->exec();
 	}
