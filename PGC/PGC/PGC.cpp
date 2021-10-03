@@ -131,9 +131,10 @@ PGC::PGC(QWidget *parent)
 
 PGC::~PGC() 
 {
-    thread->deleteLater();
+//    thread->deleteLater();
+    thread->quit();
+    thread->wait();
     delete handler;
-//    delete thread;
     delete booksSelect;
     delete picker;
 }
