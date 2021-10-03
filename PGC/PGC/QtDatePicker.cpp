@@ -41,8 +41,8 @@ void QtDatePicker::onShowPopupButtonClicked()
 //    if (!popup->isVisible()) {
         adjustPopupPosition();
         popup->show();
-        popup->raise();
-        popup->activateWindow();
+//        popup->raise();
+//        popup->activateWindow();
 //    }
 }
 
