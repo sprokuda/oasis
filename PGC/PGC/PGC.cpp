@@ -177,7 +177,7 @@ void PGC::resizeEvent(QResizeEvent* event)
 void PGC::exitProgram()
 {
     spinner->hide();
-    QMessageBox msgBox;
+    QMessageBox msgBox(this);
     msgBox.setText("Conform you want to exit program");
     msgBox.setIcon(QMessageBox::Warning);
     auto* ok = msgBox.addButton("Exit Program", QMessageBox::ActionRole);

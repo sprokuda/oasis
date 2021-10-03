@@ -7,12 +7,12 @@ extern QString workingDirectory;
 QtWaitingSpinner::QtWaitingSpinner(QWidget* parent)
     : QWidget(parent)
 {
-    label = new QLabel(this);
+    QLabel* label = new QLabel(this);
 
     QMovie* movie = new QMovie(workingDirectory + "\\ajax-loader.gif");
     label->setMovie(movie);
-//    label->show();
     movie->start();
+
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(label);

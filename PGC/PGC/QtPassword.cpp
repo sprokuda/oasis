@@ -5,10 +5,10 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 {
 	label = new QLabel("Enter password:", this);
 	edit = new QLineEdit(this);
-	okButton = new QPushButton("Conform",this);
+	okButton = new QPushButton("Conform", this);
 	cancelButton = new QPushButton("Exit", this);
 
-	box = new QMessageBox();
+	box = new QMessageBox(this);
 	box->setText("Wrong password!");
 	box->addButton(QMessageBox::Ok);
 	box->setIcon(QMessageBox::Warning);
@@ -33,8 +33,8 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 
 //	move(800, 400);
 
-	QPoint global_geometry = this->mapToGlobal(this->rect().center());
-	box->move(global_geometry.x() - 75, global_geometry.y() - 50);
+//	QPoint global_geometry = this->mapToGlobal(this->rect().center());
+//	box->move(global_geometry.x() - 75, global_geometry.y() - 50);
 
 	connect(edit, SIGNAL(editingFinished()), this, SLOT(onPasswordEntered()));
 	connect(okButton, SIGNAL(clicked()), this, SLOT(onPasswordEntered()));
@@ -53,8 +53,8 @@ void QtPassword::onPasswordEntered()
 	}
 	else
 	{
-		QPoint global_geometry = this->mapToGlobal(this->rect().center());
-		box->move(global_geometry.x() - 75, global_geometry.y() - 50);
+//		QPoint global_geometry = this->mapToGlobal(this->rect().center());
+//		box->move(global_geometry.x() - 75, global_geometry.y() - 50);
 		box->exec();
 	}
 }
