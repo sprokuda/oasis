@@ -24,7 +24,7 @@ class PGC : public QWidget
 
 public:
     PGC(QWidget *parent = Q_NULLPTR);
-
+    ~PGC();
 public slots:
     void onAllCompleted();
 private:
