@@ -177,23 +177,21 @@ void PGC::resizeEvent(QResizeEvent* event)
 void PGC::exitProgram()
 {
     spinner->hide();
-    QMessageBox* msgBox = new QMessageBox();
-    msgBox->setText("Conform you want to exit program");
-    QPushButton* connectButton = msgBox->addButton(tr("Exit Program"), QMessageBox::ActionRole);
-    QPushButton* abortButton = msgBox->addButton(QMessageBox::Cancel);
+    QMessageBox msgBox;
+    msgBox.setText("Conform you want to exit program");
+    msgBox.setIcon(QMessageBox::Warning);
+    auto* ok = msgBox.addButton("Exit Program", QMessageBox::ActionRole);
+    auto* cancel = msgBox.addButton(QMessageBox::Cancel);
 
-    msgBox->setFont(*buttonFont);
-    connectButton->setFont(*buttonFont);
-    abortButton->setFont(*buttonFont);
+    msgBox.setFont(*buttonFont);
 
+    msgBox.exec();
 
-    msgBox->exec();
-
-    if (msgBox->clickedButton() == connectButton)
+    if (msgBox.clickedButton() == ok)
     {
         qApp->quit();
     }
-    else if (msgBox->clickedButton() == abortButton)
+    else if (msgBox.clickedButton() == cancel)
     {
         return;
     }
