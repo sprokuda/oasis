@@ -3,7 +3,7 @@
 QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 		:QWidget(parent), font(qfont), buttonHeight(bHeight)
 {
-	QLabel* label = new QLabel("Enter password:", this);
+	label = new QLabel("Enter password:", this);
 	edit = new QLineEdit(this);
 	okButton = new QPushButton("Conform",this);
 	cancelButton = new QPushButton("Exit", this);

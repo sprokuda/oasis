@@ -19,6 +19,7 @@ public:
 private:
     QFont font;
     int buttonHeight;
+    QLabel* label;
     QLineEdit* edit;
     QPushButton* okButton;
     QPushButton* cancelButton;
