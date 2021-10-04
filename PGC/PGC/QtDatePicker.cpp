@@ -5,6 +5,7 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     : QWidget(parent)
 {
     popup = new QtDatePickerPopup(this);
+    popup->installEventFilter(this);
 
     edit = new QLineEdit(QDate::currentDate().toString(), this);
     showPP = new QPushButton("PickDate", this);
@@ -15,8 +16,6 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     ctrlLayout->addStretch();
     ctrlLayout->addWidget(showPP);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->addLayout(ctrlLayout);
     setLayout(ctrlLayout);
 
     connect(showPP, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
@@ -38,11 +37,19 @@ void QtDatePicker::adjustPopupPosition()
 
 void QtDatePicker::onShowPopupButtonClicked()
 {
-//    if (!popup->isVisible()) {
         adjustPopupPosition();
         popup->show();
-//        popup->raise();
-//        popup->activateWindow();
-//    }
 }
+
+
+bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
+{
+    if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
+        popup->close();
+        emit editingFinished();
+    }
+
+    return QWidget::eventFilter(object, event);
+}
+
 

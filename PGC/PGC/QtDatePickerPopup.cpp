@@ -1,10 +1,37 @@
 #include "QtDatePickerPopup.h"
 
+extern QString workingDirectory;
+
 QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     : QWidget(parent)
 {
 
     cndrWidget = new QCalendarWidget(this);
+
+    cndrWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+
+    QWidget* calendarNavBar = cndrWidget->findChild<QWidget*>("qt_calendar_navigationbar");
+    if (calendarNavBar) {
+        QPalette pal = calendarNavBar->palette();
+        pal.setColor(calendarNavBar->backgroundRole(), QColor(220, 231, 245));
+        pal.setColor(calendarNavBar->foregroundRole(), QColor(21, 28, 85));
+        calendarNavBar->setPalette(pal);
+    }
+
+    QToolButton* btn = cndrWidget->findChild<QToolButton*>("qt_calendar_prevmonth");
+    QIcon icon;
+    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-back-50.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-back-50.png"), QIcon::Active, QIcon::On);
+    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-back-50.png"), QIcon::Selected, QIcon::On);
+    btn->setIcon(icon);
+
+    btn = cndrWidget->findChild<QToolButton*>("qt_calendar_nextmonth");
+    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-next-50.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-next-50.png"), QIcon::Active, QIcon::On);
+    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-next-50.png"), QIcon::Selected, QIcon::On);
+    btn->setIcon(icon);
+
+
     hideButton = new QPushButton("Hide", this);
 
     QHBoxLayout* buttonLayout = new QHBoxLayout;
@@ -63,38 +90,7 @@ void QtDatePickerPopup::paintEvent(QPaintEvent* event)
     event->accept();
 }
 
-//void QtDatePickerPopup::resizeEvent(QResizeEvent* event)
-//{
-//    QWidget::resizeEvent(event);
-//
-//    QRect popup_geometry = geometry();
-//    popup_geometry.moveTo(parentWidget()->mapToGlobal(parentWidget()->rect().bottomLeft()));
-//    QRect screen_geometry = QApplication::desktop()->screenGeometry();
-//
-//    if (popup_geometry.right() > screen_geometry.right())
-//        popup_geometry.moveRight(screen_geometry.right());
-//    if (popup_geometry.bottom() > screen_geometry.bottom())
-//        popup_geometry.moveBottom(parentWidget()->mapToGlobal(parentWidget()->rect().topLeft()).y());
-//
-//    move(popup_geometry.topLeft());
-//}
-//
-//
-//void QtDatePickerPopup::moveEvent(QMoveEvent* event)
-//{
-//    QWidget::moveEvent(event);
-//
-//    QRect popup_geometry = geometry();
-//    popup_geometry.moveTo(parentWidget()->mapToGlobal(parentWidget()->rect().bottomLeft()));
-//    QRect screen_geometry = QApplication::desktop()->screenGeometry();
-//
-//    if (popup_geometry.right() > screen_geometry.right())
-//        popup_geometry.moveRight(screen_geometry.right());
-//    if (popup_geometry.bottom() > screen_geometry.bottom())
-//        popup_geometry.moveBottom(parentWidget()->mapToGlobal(parentWidget()->rect().topLeft()).y());
-//
-//    move(popup_geometry.topLeft());
-//}
+
 
 
 
