@@ -5,43 +5,68 @@ extern QString workingDirectory;
 QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     : QWidget(parent)
 {
+    QFont font = this->font();
+    font.setFamily("Calibri");
+    font.setPointSize(10);
+    this->setFont(font);
 
     cndrWidget = new QCalendarWidget(this);
+
+    cndrWidget->setLocale(QLocale(QLocale::English, QLocale::Australia));
 
     cndrWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
 
     QWidget* calendarNavBar = cndrWidget->findChild<QWidget*>("qt_calendar_navigationbar");
-    if (calendarNavBar) {
+    if (calendarNavBar) 
+    {
         QPalette pal = calendarNavBar->palette();
-        pal.setColor(calendarNavBar->backgroundRole(), QColor(220, 231, 245));
-        pal.setColor(calendarNavBar->foregroundRole(), QColor(21, 28, 85));
+        pal.setColor(calendarNavBar->backgroundRole(), QColor(255, 255, 255));
+        pal.setColor(calendarNavBar->foregroundRole(), QColor(0, 0, 0));
         calendarNavBar->setPalette(pal);
     }
 
     QToolButton* btn = cndrWidget->findChild<QToolButton*>("qt_calendar_prevmonth");
-    QIcon icon;
-    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-back-50.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
-    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-back-50.png"), QIcon::Active, QIcon::On);
-    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-back-50.png"), QIcon::Selected, QIcon::On);
-    btn->setIcon(icon);
+    if (btn)
+    {
+        QIcon icon;
+        icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+        icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Active, QIcon::On);
+        icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Selected, QIcon::On);
+        btn->setIcon(icon);
 
-    btn = cndrWidget->findChild<QToolButton*>("qt_calendar_nextmonth");
-    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-next-50.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
-    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-next-50.png"), QIcon::Active, QIcon::On);
-    icon.addPixmap(QPixmap(workingDirectory + "\\calendar-next-50.png"), QIcon::Selected, QIcon::On);
-    btn->setIcon(icon);
+        btn = cndrWidget->findChild<QToolButton*>("qt_calendar_nextmonth");
+        icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+        icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Active, QIcon::On);
+        icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Selected, QIcon::On);
+        btn->setIcon(icon);
+    }
+
+    QToolButton* call_btn = cndrWidget->findChild<QToolButton*>("qt_calendar_monthbutton");
+    if (call_btn)
+    {
+        QFont navigatorBarFont("Calibri", 10, QFont::Medium);
+        call_btn->setFont(navigatorBarFont);
+    }
+
+    call_btn = cndrWidget->findChild<QToolButton*>("qt_calendar_yearbutton");
+    if (call_btn)
+    {
+        QFont navigatorBarFont("Calibri", 10, QFont::Medium);
+        call_btn->setFont(navigatorBarFont);
+    }
 
 
-    hideButton = new QPushButton("Hide", this);
 
-    QHBoxLayout* buttonLayout = new QHBoxLayout;
-    buttonLayout->addStretch();
-    buttonLayout->addWidget(hideButton);
+//    hideButton = new QPushButton("Hide", this);
+
+//    QHBoxLayout* buttonLayout = new QHBoxLayout;
+//    buttonLayout->addStretch();
+//    buttonLayout->addWidget(hideButton);
 
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(cndrWidget);
-    mainLayout->addLayout(buttonLayout);
+//    mainLayout->addLayout(buttonLayout);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     setLayout(mainLayout);
 
@@ -52,11 +77,6 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     shadow_effect->setOffset(5.0);
     this->setGraphicsEffect(shadow_effect);
 
-    QFont font = this->font();
-    font.setPointSize(7);
-
-    this->setFont(font);
-
     this->setWindowTitle(QObject::tr("Date Picker"));
 
 //    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Tool | Qt::Window);
@@ -64,7 +84,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
-    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
+//    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
 }
 
 void QtDatePickerPopup::onCalendarDateSelected(const QDate& date)

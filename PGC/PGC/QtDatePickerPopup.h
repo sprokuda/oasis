@@ -4,6 +4,7 @@
 #include <QCalendarWidget>
 #include <QPushButton>
 #include <QToolButton>
+//#include <QCalToolButton>
 #include <QDate>
 
 #include <QDesktopWidget>
@@ -29,8 +30,6 @@ private:
     QCalendarWidget* cndrWidget;
     QPushButton* hideButton;
     void paintEvent(QPaintEvent* event);
-//    void resizeEvent(QResizeEvent* event);
-//    void moveEvent(QMoveEvent* event);
 
 private slots:
     void onCalendarDateSelected(const QDate& date);
