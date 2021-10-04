@@ -6,14 +6,10 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     
     popup = new QtMultiSelectPopup(font, buttonHeight, this);
 
-//    popup->installEventFilter(this);
-//    popup->adjustSize();
-
     edit = new QLineEdit("", this);
     edit->setFixedWidth(popup->width()+2);
-//    edit->setFixedHeight(buttonHeight);
+
     showPP = new QPushButton("Select books", this);
-//    showPP->setFixedHeight(buttonHeight);
 
     ctrlLayout = new QHBoxLayout(this);
     ctrlLayout->addWidget(edit);
