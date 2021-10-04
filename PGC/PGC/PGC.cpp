@@ -137,6 +137,10 @@ PGC::~PGC()
     delete handler;
     delete booksSelect;
     delete picker;
+
+    delete buttonFont;
+    delete smallFont;
+    delete bigFont;
 }
 
 void PGC::exctractData()
@@ -164,6 +168,7 @@ void PGC::onAllCompleted()
 //    sp->show();
 //    sp->adjustPosition();
 //}
+
 
 void PGC::moveEvent(QMoveEvent* event)
 {
