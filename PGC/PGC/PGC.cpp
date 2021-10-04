@@ -63,7 +63,7 @@ PGC::PGC(QWidget *parent)
     prodColLayout->addWidget(prodColLabel);
     prodColLayout->addWidget(prodCol);
 
-    incBooks = new QLabel("Include \nAppointment Books", this);
+    incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(*buttonFont, 26);
     QStringList books = { "0001","0002","0005" };
     booksSelect->getPopup().setTable(books);
@@ -111,7 +111,7 @@ PGC::PGC(QWidget *parent)
     mainLayout->addStretch();
 
     setLayout(mainLayout);
-    setWindowTitle(tr("Data Extractor"));
+    setWindowTitle(tr("OASIS PGC Data Extractor"));
 
     this->setFont(*buttonFont);
 //    this->resize(mainWidth, mainHeight);
