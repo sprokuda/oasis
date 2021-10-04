@@ -30,7 +30,7 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 	setFont(qfont);
 
 	setLayout(mainLayout);
-
+	setWindowTitle(tr("OASIS PGC Data Extractor"));
 //	move(800, 400);
 
 //	QPoint global_geometry = this->mapToGlobal(this->rect().center());
