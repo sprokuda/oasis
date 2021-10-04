@@ -22,16 +22,16 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     table->setFixedSize(total_width, 120);
 
 
-    hideButton = new QPushButton("Hide", this);
+//    hideButton = new QPushButton("Hide", this);
 //    hideButton->setFixedHeight(buttonHeight);
 
-    QHBoxLayout* buttonLayout = new QHBoxLayout;
-    buttonLayout->addStretch();
-    buttonLayout->addWidget(hideButton);
+//    QHBoxLayout* buttonLayout = new QHBoxLayout;
+//    buttonLayout->addStretch();
+//    buttonLayout->addWidget(hideButton);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(table);
-    mainLayout->addLayout(buttonLayout);
+//    mainLayout->addLayout(buttonLayout);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     setLayout(mainLayout);
 
@@ -46,7 +46,7 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
-    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
+//    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
 }
 
 int QtMultiSelectPopup::width()

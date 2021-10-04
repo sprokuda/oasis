@@ -26,7 +26,7 @@ private slots:
     void onAddItem(const QString& item_text);
     void onRemoveItem(const QString& item_text);
 signals:
-
+    void editingFinished();
 private:
 
     QtMultiSelectPopup* popup;
@@ -37,6 +37,8 @@ private:
     int buttonHeight;
 
     QHBoxLayout* ctrlLayout;
+
+    bool eventFilter(QObject* object, QEvent* event);
 
 };
 

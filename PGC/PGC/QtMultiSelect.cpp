@@ -3,8 +3,8 @@
 QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* parent)
     : QWidget(parent), font(qfont), buttonHeight(bHeight)
 {
-    
     popup = new QtMultiSelectPopup(font, buttonHeight, this);
+    popup->installEventFilter(this);
 
     edit = new QLineEdit("", this);
     edit->setFixedWidth(popup->width()+2);
@@ -23,6 +23,17 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
     connect(popup, SIGNAL(removeItem(QString)), SLOT(onRemoveItem(QString)));
 }
+
+bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
+{
+    if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
+        popup->hide();
+        emit editingFinished();
+    }
+
+    return QWidget::eventFilter(object, event);
+}
+
 
 void QtMultiSelect::adjustPopupPosition()
 {

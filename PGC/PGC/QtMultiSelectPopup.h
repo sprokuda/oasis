@@ -35,7 +35,7 @@ private:
     int total_width;
 
     QTableWidget* table;
-    QPushButton* hideButton;
+//    QPushButton* hideButton;
     QFont font;
     int buttonHeight;
 
