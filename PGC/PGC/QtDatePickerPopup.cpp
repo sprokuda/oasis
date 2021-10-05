@@ -64,8 +64,17 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
     label = new QLabel(this);
     label->setText(QString("Today: ") + QDate::currentDate().toString("dd/MM/yyyy"));
+
+    todayButton = new QToolButton(this);
+    QIcon icon;
+    icon.addPixmap(QPixmap(workingDirectory + "\\today-52.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+    icon.addPixmap(QPixmap(workingDirectory + "\\today-52.png"), QIcon::Active, QIcon::On);
+    icon.addPixmap(QPixmap(workingDirectory + "\\today-52.png"), QIcon::Selected, QIcon::On);
+    todayButton->setIcon(icon);
+
     QHBoxLayout* labelLayout = new QHBoxLayout;
     labelLayout->addStretch();
+    labelLayout->addWidget(todayButton);
     labelLayout->addWidget(label);
     labelLayout->addStretch();
 
@@ -92,7 +101,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
-//    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
+    connect(todayButton, SIGNAL(clicked()), this,SLOT(onTodayButton()));
 }
 
 void QtDatePickerPopup::onCalendarDateSelected(const QDate& date)
@@ -119,6 +128,13 @@ void QtDatePickerPopup::setDate(const QString& text)
 {
     label->setText(text);
 //    cndrWidget->setSelectedDate(QDate::currentDate());
+}
+
+void QtDatePickerPopup::onTodayButton()
+{
+    label->setText(QDate::currentDate().toString("dd/MM/yyyy"));
+    cndrWidget->setSelectedDate(QDate::currentDate());
+    emit dateSelected(QDate::currentDate());
 }
 
 
