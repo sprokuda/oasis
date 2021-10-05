@@ -4,7 +4,7 @@
 #include <QCalendarWidget>
 #include <QPushButton>
 #include <QToolButton>
-//#include <QCalToolButton>
+#include <QLabel>
 #include <QDate>
 
 #include <QDesktopWidget>
@@ -20,7 +20,7 @@ class QtDatePickerPopup : public QWidget
 
 public:
     QtDatePickerPopup(QWidget* parent = Q_NULLPTR);
-
+    void setDate(const QString& text);
 signals:
     void dateSelected(const QDate& date);
 //    void datePeriodSelected(const QDate& begin, const QDate& end);
@@ -28,7 +28,8 @@ signals:
 private:
 
     QCalendarWidget* cndrWidget;
-    QPushButton* hideButton;
+    QLabel* label;
+//    QPushButton* hideButton;
     void paintEvent(QPaintEvent* event);
 
 private slots:

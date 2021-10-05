@@ -7,7 +7,7 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     popup = new QtDatePickerPopup(this);
     popup->installEventFilter(this);
 
-    edit = new QLineEdit(QDate::currentDate().toString(), this);
+    edit = new QLineEdit(QDate::currentDate().toString("dd/MM/yyyy"), this);
     showPP = new QPushButton("PickDate", this);
 
     QHBoxLayout* ctrlLayout = new QHBoxLayout(this);
@@ -24,7 +24,7 @@ QtDatePicker::QtDatePicker(QWidget* parent)
 
 void QtDatePicker::setDate(QDate date)
 {
-    edit->setText(date.toString());
+    edit->setText(date.toString("dd/MM/yyyy"));
     //QString::number(QDate::currentDate().month()) + "/" + QString::number(QDate::currentDate().year())
 }
 
@@ -38,6 +38,7 @@ void QtDatePicker::adjustPopupPosition()
 void QtDatePicker::onShowPopupButtonClicked()
 {
         adjustPopupPosition();
+        popup->setDate(QString("Today: ") + QDate::currentDate().toString("dd/MM/yyyy"));
         popup->show();
 }
 
@@ -48,7 +49,6 @@ bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
         popup->hide();
         emit editingFinished();
     }
-
     return QWidget::eventFilter(object, event);
 }
 

@@ -15,6 +15,8 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     cndrWidget->setLocale(QLocale(QLocale::English, QLocale::Australia));
 
     cndrWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+//    cndrWidget->setDateEditEnabled(false);
+    cndrWidget->setSelectedDate(QDate::currentDate());
 
     QWidget* calendarNavBar = cndrWidget->findChild<QWidget*>("qt_calendar_navigationbar");
     if (calendarNavBar) 
@@ -55,19 +57,22 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
         call_btn->setFont(navigatorBarFont);
     }
 
-
+    label = new QLabel(this);
+    label->setText(QString("Today: ") + QDate::currentDate().toString("dd/MM/yyyy"));
 
 //    hideButton = new QPushButton("Hide", this);
 
-//    QHBoxLayout* buttonLayout = new QHBoxLayout;
-//    buttonLayout->addStretch();
-//    buttonLayout->addWidget(hideButton);
+    QHBoxLayout* labelLayout = new QHBoxLayout;
+    labelLayout->addStretch();
+    labelLayout->addWidget(label);
+    labelLayout->addStretch();
 
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(cndrWidget);
-//    mainLayout->addLayout(buttonLayout);
+    mainLayout->addLayout(labelLayout);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+//    mainLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(mainLayout);
 
     this->setAttribute(Qt::WA_TranslucentBackground);
@@ -105,12 +110,16 @@ void QtDatePickerPopup::paintEvent(QPaintEvent* event)
 //    background_path.addRoundedRect(bakcground_rect, 10, 10);
     background_path.addRect(bakcground_rect);
 
-    painter.fillPath(background_path, Qt::gray);
+    painter.fillPath(background_path, Qt::darkGray);
 
     event->accept();
 }
 
-
+void QtDatePickerPopup::setDate(const QString& text) 
+{
+    label->setText(text);
+//    cndrWidget->setSelectedDate(QDate::currentDate());
+}
 
 
 
