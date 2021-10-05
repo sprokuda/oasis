@@ -1,5 +1,7 @@
 #include "QtMultiSelect.h"
 
+extern QString workingDirectory;
+
 QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* parent)
     : QWidget(parent), font(qfont), buttonHeight(bHeight)
 {
@@ -9,17 +11,23 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     edit = new QLineEdit("", this);
     edit->setFixedWidth(popup->width()+2);
 
-    showPP = new QPushButton("Select books", this);
+    button = new QToolButton(this);
+    button->setContentsMargins(0, 0, 0, 0);
+    QIcon icon;
+    icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+    icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Active, QIcon::On);
+    icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Selected, QIcon::On);
+    button->setIcon(icon);
 
     ctrlLayout = new QHBoxLayout(this);
     ctrlLayout->addWidget(edit);
-    ctrlLayout->addWidget(showPP);
+    ctrlLayout->addWidget(button);
 
     setLayout(ctrlLayout);
 
     this->setFont(font);
 
-    connect(showPP, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
+    connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
     connect(popup, SIGNAL(removeItem(QString)), SLOT(onRemoveItem(QString)));
 }

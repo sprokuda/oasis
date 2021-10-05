@@ -2,7 +2,7 @@
 
 #include <QWidget>
 #include <QLineEdit>
-#include <QPushButton>
+#include <QToolButton>
 #include <QDate>
 
 #include "QtMultiSelectPopup.h"
@@ -31,7 +31,7 @@ private:
 
     QtMultiSelectPopup* popup;
     QLineEdit* edit;
-    QPushButton* showPP;
+    QToolButton* button;
 
     QFont font;
     int buttonHeight;

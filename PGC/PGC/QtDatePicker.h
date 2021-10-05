@@ -32,7 +32,7 @@ private:
     QtDatePickerPopup* popup;
     QLabel* dateLbl;
     QLineEdit* edit;
-    QPushButton* showPP;
+    QToolButton* button;
 
     bool eventFilter(QObject* object, QEvent* event);
 };
