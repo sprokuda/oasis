@@ -32,7 +32,7 @@ void QtDatePicker::adjustPopupPosition()
 {
     QRect popup_geometry = popup->geometry();
     popup_geometry.moveTo(this->mapToGlobal(edit->rect().bottomLeft()));
-    popup->move(popup_geometry.topLeft().x() - 1, popup_geometry.topLeft().y() - 1);
+    popup->move(popup_geometry.topLeft().x() - 1, popup_geometry.topLeft().y());
 }
 
 void QtDatePicker::onShowPopupButtonClicked()

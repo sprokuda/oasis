@@ -11,7 +11,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setFont(font);
 
     cndrWidget = new QCalendarWidget(this);
-
+    cndrWidget->setContentsMargins(0, 0, 0, 0);
     cndrWidget->setLocale(QLocale(QLocale::English, QLocale::Australia));
 
     cndrWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
@@ -57,11 +57,13 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
         call_btn->setFont(navigatorBarFont);
     }
 
+    QHBoxLayout* cndrLayout = new QHBoxLayout;
+    cndrLayout->addStretch();
+    cndrLayout->addWidget(cndrWidget);
+    cndrLayout->addStretch();
+
     label = new QLabel(this);
     label->setText(QString("Today: ") + QDate::currentDate().toString("dd/MM/yyyy"));
-
-//    hideButton = new QPushButton("Hide", this);
-
     QHBoxLayout* labelLayout = new QHBoxLayout;
     labelLayout->addStretch();
     labelLayout->addWidget(label);
@@ -69,12 +71,13 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->addWidget(cndrWidget);
+//    mainLayout->addWidget(cndrWidget);
+    mainLayout->addLayout(cndrLayout);
     mainLayout->addLayout(labelLayout);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
-//    mainLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(mainLayout);
 
+    this->setAutoFillBackground(true);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
@@ -101,17 +104,14 @@ void QtDatePickerPopup::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-
-    QRect bakcground_rect = rect().adjusted(10, 10, -10, -10);
-
+    painter.setPen(QPen(Qt::darkGray, 1));
+    QRect bakcground_rect = rect().adjusted(11, 11, -11, -11);
+ 
     QPainterPath background_path(QPoint(30, 10));
-    ////    background_path.lineTo(50, 10);  // TODO: draw pick according to popup position
-    ////    background_path.lineTo(40, 0);
-//    background_path.addRoundedRect(bakcground_rect, 10, 10);
     background_path.addRect(bakcground_rect);
 
-    painter.fillPath(background_path, Qt::darkGray);
-
+    painter.drawRect(bakcground_rect);
+    painter.fillPath(background_path, Qt::white);
     event->accept();
 }
 
