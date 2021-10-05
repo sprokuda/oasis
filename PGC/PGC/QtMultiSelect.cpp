@@ -26,6 +26,15 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
 
 bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
 {
+    if ((object == popup) && (event->type() == QEvent::KeyPress))
+    {
+        auto* key_event = dynamic_cast<QKeyEvent*>(event);
+        if (key_event->key() == Qt::Key_Escape)
+        {
+            popup->hide();
+            emit editingFinished();
+        }
+    }
     if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
         popup->close();
         emit editingFinished();

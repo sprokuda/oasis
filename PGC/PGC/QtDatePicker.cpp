@@ -45,7 +45,16 @@ void QtDatePicker::onShowPopupButtonClicked()
 
 bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
 {
-    if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
+    if ((object == popup) && (event->type() == QEvent::KeyPress))
+    {
+        auto* key_event = dynamic_cast<QKeyEvent*>(event);
+        if (key_event->key() == Qt::Key_Escape)
+        {
+            popup->hide();
+            emit editingFinished();
+        }
+    }
+    if ((object == popup) && (event->type() == QKeyEvent::WindowDeactivate)) {
         popup->hide();
         emit editingFinished();
     }
