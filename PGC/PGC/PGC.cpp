@@ -9,25 +9,25 @@ PGC::PGC(QWidget *parent)
     smallFont = new QFont("Calibri", 8, QFont::Medium);
     bigFont = new QFont("Calibri", 12, QFont::Medium);
 
-    companyLogoQLabel = new QLabel(this);
-    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,36 }, Qt::KeepAspectRatioByExpanding);
-    companyLogoQLabel->setPixmap(logo);
-
-    programLogoQLineEdit = new QLineEdit(this);
-//    programLogoQLineEdit->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-    programLogoQLineEdit->setEnabled(false);
-    programLogoQLineEdit->setFixedHeight(36); //logo image height
-    programLogoQLineEdit->setFixedWidth(180);
-    programLogoQLineEdit->setFont(*bigFont);
-
-    programLogoQLineEdit->setText("OASIS PGC Data Extractor");
-    programLogoQLineEdit->setAlignment(Qt::AlignCenter);
-
-    QHBoxLayout* logoLayout = new QHBoxLayout();
-    logoLayout->addStretch();
-    logoLayout->setContentsMargins(10, 10, 10, 10);
-    logoLayout->addWidget(companyLogoQLabel);
-    logoLayout->addWidget(programLogoQLineEdit);
+//    companyLogoQLabel = new QLabel(this);
+//    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,36 }, Qt::KeepAspectRatioByExpanding);
+//    companyLogoQLabel->setPixmap(logo);
+//
+//    programLogoQLineEdit = new QLineEdit(this);
+////    programLogoQLineEdit->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
+//    programLogoQLineEdit->setEnabled(false);
+//    programLogoQLineEdit->setFixedHeight(36); //logo image height
+//    programLogoQLineEdit->setFixedWidth(180);
+//    programLogoQLineEdit->setFont(*bigFont);
+//
+//    programLogoQLineEdit->setText("OASIS PGC Data Extractor");
+//    programLogoQLineEdit->setAlignment(Qt::AlignCenter);
+//
+//    QHBoxLayout* logoLayout = new QHBoxLayout();
+//    logoLayout->addStretch();
+//    logoLayout->setContentsMargins(10, 10, 10, 10);
+//    logoLayout->addWidget(companyLogoQLabel);
+//    logoLayout->addWidget(programLogoQLineEdit);
     
     startDateLabel = new QLabel("Start Date",this);
     selectorStart = new QtMonthYearSelector(this);
@@ -100,7 +100,7 @@ PGC::PGC(QWidget *parent)
     buttonLayout->addStretch();
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->addLayout(logoLayout);
+//    mainLayout->addLayout(logoLayout);
     mainLayout->addLayout(startDateLayout);
     mainLayout->addLayout(endDateLayout);
     mainLayout->addLayout(pickerLayout);
