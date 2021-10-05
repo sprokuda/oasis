@@ -14,7 +14,7 @@
 #include <QPainterPath>
 #include <QGraphicsDropShadowEffect>
 
-class QtMultiSelectPopup : public QWidget
+class QtMultiSelectPopup : public QWidget//QFrame
 {
     Q_OBJECT
 

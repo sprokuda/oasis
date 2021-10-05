@@ -20,23 +20,15 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     table->verticalHeader()->setFixedWidth(header_width);
     total_width = edit_width + check_width + header_width * 2;
     table->setFixedSize(total_width, 120);
-
-
-//    hideButton = new QPushButton("Hide", this);
-//    hideButton->setFixedHeight(buttonHeight);
-
-//    QHBoxLayout* buttonLayout = new QHBoxLayout;
-//    buttonLayout->addStretch();
-//    buttonLayout->addWidget(hideButton);
+    table->setFrameShape(QFrame::NoFrame);
+    table->setShowGrid(true);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(table);
-//    mainLayout->addLayout(buttonLayout);
     mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     setLayout(mainLayout);
 
     this->setAttribute(Qt::WA_TranslucentBackground);
-
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
     shadow_effect->setBlurRadius(10.0);
     shadow_effect->setOffset(5.0);
@@ -105,7 +97,7 @@ void QtMultiSelectPopup::paintEvent(QPaintEvent* event)
 //    background_path.addRoundedRect(bakcground_rect, 10, 10);
     background_path.addRect(bakcground_rect);
 
-    painter.fillPath(background_path, Qt::gray);
+    painter.fillPath(background_path, Qt::darkGray);
 
     event->accept();
 }

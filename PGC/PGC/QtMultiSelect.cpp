@@ -27,7 +27,7 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
 bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
 {
     if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
-        popup->hide();
+        popup->close();
         emit editingFinished();
     }
 
