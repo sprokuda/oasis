@@ -90,8 +90,8 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setAttribute(Qt::WA_TranslucentBackground);
 
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
-    shadow_effect->setBlurRadius(10.0);
-    shadow_effect->setOffset(5.0);
+    shadow_effect->setBlurRadius(6.0);
+    shadow_effect->setOffset(3.0);
     this->setGraphicsEffect(shadow_effect);
 
     this->setWindowTitle(QObject::tr("Date Picker"));
@@ -114,7 +114,7 @@ void QtDatePickerPopup::paintEvent(QPaintEvent* event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(Qt::darkGray, 1));
-    QRect bakcground_rect = rect().adjusted(11, 11, -11, -11);
+    QRect bakcground_rect = rect().adjusted(6, 6, -6, -6);
  
     QPainterPath background_path(QPoint(30, 10));
     background_path.addRect(bakcground_rect);

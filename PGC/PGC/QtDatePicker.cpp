@@ -9,10 +9,10 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     popup->installEventFilter(this);
 
     edit = new QLineEdit(QDate::currentDate().toString("dd/MM/yyyy"), this);
-    edit->setContentsMargins(0, 0, 0, 0);
+//    edit->setContentsMargins(0, 0, 0, 0);
 
     button = new QToolButton(this);
-    button->setContentsMargins(0, 0, 0, 0);
+//    button->setContentsMargins(0, 0, 0, 0);
     QIcon icon;
     icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
     icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Active, QIcon::On);
@@ -40,9 +40,12 @@ void QtDatePicker::setDate(QDate date)
 
 void QtDatePicker::adjustPopupPosition()
 {
-    QRect popup_geometry = popup->geometry();
-    popup_geometry.moveTo(this->mapToGlobal(edit->rect().bottomLeft()));
-    popup->move(popup_geometry.topLeft().x() - 1, popup_geometry.topLeft().y() - 1);
+    int l, r, t, b;
+    this->layout()->getContentsMargins(&l, &r, &t, &b);
+
+    QRect rect = edit->rect();
+    QPoint bottomLeft = this->mapToGlobal(rect.topLeft());
+    popup->move(bottomLeft.x() - 6 + l, bottomLeft.y() + this->height() / 2 + edit->height() / 2 - 6);
 }
 
 void QtDatePicker::onShowPopupButtonClicked()
