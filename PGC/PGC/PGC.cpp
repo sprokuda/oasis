@@ -142,6 +142,7 @@ void PGC::exctractData()
     /* all querying routines are call from here*/
     spinner->show();
     spinner->adjustPosition();
+    exctractButton->setEnabled(false);
 
     QMetaObject::invokeMethod(handler, "doQueries",
         Qt::QueuedConnection
@@ -155,12 +156,13 @@ void PGC::exctractData()
 void PGC::onAllCompleted()
 {
     spinner->hide();
+    exctractButton->setEnabled(true);
 }
 
 
 void PGC::updateLog(QString message)
 {
-    log->setText(message);
+ //   log->append(message);
 }
 
 //void PGC::onShowWS()
