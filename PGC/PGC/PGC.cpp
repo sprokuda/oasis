@@ -90,6 +90,8 @@ PGC::PGC(QWidget *parent)
     buttonLayout->addWidget(exitAppButton);
     buttonLayout->addStretch();
 
+    log = new QTextBrowser(this);
+
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
 //    mainLayout->addLayout(logoLayout);
     mainLayout->addLayout(startDateLayout);
@@ -99,6 +101,7 @@ PGC::PGC(QWidget *parent)
     mainLayout->addLayout(booksLayout);
     mainLayout->addLayout(practiceLayout);
     mainLayout->addLayout(buttonLayout);
+    mainLayout->addWidget(log);
     mainLayout->addStretch();
 
     setLayout(mainLayout);
@@ -152,6 +155,12 @@ void PGC::exctractData()
 void PGC::onAllCompleted()
 {
     spinner->hide();
+}
+
+
+void PGC::updateLog(QString message)
+{
+    log->setText(message);
 }
 
 //void PGC::onShowWS()

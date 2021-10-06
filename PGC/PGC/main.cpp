@@ -7,6 +7,7 @@
 #include <iostream>
 #include <filesystem>
 
+#include "ThreadLogStream.h"
 #include "QtPassword.h"
 
 using namespace std;
@@ -23,6 +24,12 @@ int main(int argc, char *argv[])
     app.setWindowIcon(QIcon(workingDirectory + "\\centaur-icon.png"));
 
     PGC w;
+
+    ThreadLogStream qout(std::cout);
+    //    qout->moveToThread(thrd);
+    QObject::connect(&qout, SIGNAL(sendLogString(QString)), &w, SLOT(updateLog(QString)));
+
+
     w.show();
     QFont font("Calibri", 10);
     int buttonHeight = 24;

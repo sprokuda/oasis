@@ -1,10 +1,10 @@
 #pragma once
 
-#include <QObject>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
+//#include <QObject>
+//#include <QSqlDatabase>
+//#include <QSqlQuery>
+//#include <QSqlRecord>
+//#include <QSqlError>
 #include <QVariant>
 #include <iostream>
 

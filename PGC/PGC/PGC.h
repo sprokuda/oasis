@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QMessageBox>
+#include <QTextBrowser>
 
 #include <Qthread>
 
@@ -27,6 +28,7 @@ public:
     ~PGC();
 public slots:
     void onAllCompleted();
+    void updateLog(QString message);
 private:
     QLabel* companyLogoQLabel;
     QLineEdit* programLogoQLineEdit;
@@ -53,6 +55,8 @@ private:
     QPushButton* exctractButton;
     QPushButton* exitAppButton;
 
+    QTextBrowser* log;
+
     QFont* buttonFont;
     QFont* smallFont;
     QFont* bigFont;
@@ -66,6 +70,7 @@ private:
     QtWaitingSpinner* spinner;
     dbHandler* handler;
     QThread* thread;
+
     void exctractData();
     void exitProgram();
 
