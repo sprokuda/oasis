@@ -1,8 +1,12 @@
 #pragma once
 
 #include <QObject>
-//#include <QTest>
-#include <chrono>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QVariant>
+#include <iostream>
 
 class dbHandler : public QObject
 {
