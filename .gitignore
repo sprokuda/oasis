@@ -51,3 +51,7 @@ Thumbs.db
 PGC/.vs/
 PGC/PGC/x64/
 PGC/x64/
+PGC/PGC/Debug/
+PGC/PGC/Release/PGC.tlog/PGC.write.1u.tlog
+PGC/PGC/Release/
+PGC/Debug/
