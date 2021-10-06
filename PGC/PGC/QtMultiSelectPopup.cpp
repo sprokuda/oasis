@@ -11,22 +11,31 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     table->horizontalHeader()->setFont(headerFont);
     table->verticalHeader()->setFont(headerFont);
 
-    edit_width = 60;
-    check_width = 44;
-    header_width = 16;
+    edit_width = 80;
+    check_width = 54;
+    header_width = 20;
 
     table->setColumnWidth(0, edit_width);
     table->setColumnWidth(1, check_width);
     table->verticalHeader()->setFixedWidth(header_width);
-    total_width = edit_width + check_width + header_width * 2;
-    table->setFixedSize(total_width, 120);
     table->setFrameShape(QFrame::NoFrame);
     table->setShowGrid(true);
+    table->horizontalHeader()->hide();
+    table->verticalHeader()->hide();
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(table);
-    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+//    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
     setLayout(mainLayout);
+
+    int l1, r1, t1, b1;
+    table->getContentsMargins(&l1, &r1, &t1, &b1);
+    int l, r, t, b;
+    mainLayout->getContentsMargins(&l, &r, &t, &b);
+    total_width = edit_width + check_width + l + r + l1 + r1;
+    int total_height = table->rowHeight(0)*3 + t+ b +t1 + b1;
+    table->setFixedSize(total_width, total_height);
+    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
 
     this->setAttribute(Qt::WA_TranslucentBackground);
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
@@ -88,7 +97,6 @@ void QtMultiSelectPopup::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-
     QRect bakcground_rect = rect().adjusted(10, 10, -10, -10);
 
     QPainterPath background_path(QPoint(30, 10));
@@ -97,10 +105,13 @@ void QtMultiSelectPopup::paintEvent(QPaintEvent* event)
 //    background_path.addRoundedRect(bakcground_rect, 10, 10);
     background_path.addRect(bakcground_rect);
 
-    painter.fillPath(background_path, Qt::darkGray);
 
+    painter.drawRect(bakcground_rect);
+    painter.fillPath(background_path, Qt::white);
     event->accept();
 }
+
+
 
 
 

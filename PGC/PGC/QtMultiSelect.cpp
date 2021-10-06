@@ -7,9 +7,9 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
 {
     popup = new QtMultiSelectPopup(font, buttonHeight, this);
     popup->installEventFilter(this);
-
+    popup->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     edit = new QLineEdit("", this);
-    edit->setFixedWidth(popup->width()+2);
+//    edit->setFixedWidth(popup->width()+2);
 
     button = new QToolButton(this);
     button->setContentsMargins(0, 0, 0, 0);
@@ -26,6 +26,7 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     setLayout(ctrlLayout);
 
     this->setFont(font);
+//    this->popup->setFixedSize(200, 200);
 
     connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
@@ -54,9 +55,25 @@ bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
 
 void QtMultiSelect::adjustPopupPosition()
 {
-    QRect popup_geometry = popup->geometry();
-    popup_geometry.moveTo(this->mapToGlobal(edit->rect().bottomLeft()));
-    popup->move(popup_geometry.topLeft().x()-1, popup_geometry.topLeft().y()+1);
+    //if (!popup->isVisible()) {
+    //    return;
+    //}
+
+    int l, r, t, b;
+    this->layout()->getContentsMargins(&l, &r, &t, &b);
+
+    QRect rect = edit->rect();
+    QPoint bottomLeft = this->mapToGlobal(rect.topLeft());
+    popup->move(bottomLeft.x() -10 + l, bottomLeft.y() + this->height()/2 + edit->height()/2- 10);
+//    int l1, r1, t1, b1;
+//    popup->getTable().getContentsMargins(&l1, &r1, &t1, &b1);
+////    edit->layout()->getContentsMargins(&l1, &r1, &t1, &b1);
+//    int l, r, t, b;
+//    this->layout()->getContentsMargins(&l, &r, &t, &b);
+//    QRect popup_geometry = popup->geometry();
+//    popup_geometry.moveTo(edit->mapToGlobal(edit->frameGeometry().bottomLeft() ));
+//    popup->move(popup_geometry.topLeft().x() , popup_geometry.topLeft().y() + t+- edit->frameGeometry().center().y()); //+edit->frameGeometry().bottomLeft().x() //- t -b + edit->frameGeometry().center().y()/2
+////    popup->move(edit->mapToGlobal(edit->frameGeometry().bottomLeft())); //+edit->frameGeometry().bottomLeft().x() //- t -b + edit->frameGeometry().center().y()/2
 }
 
 void QtMultiSelect::onShowPopupButtonClicked()

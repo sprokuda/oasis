@@ -22,7 +22,7 @@ public:
     QtMultiSelectPopup(const QFont& qfont, const int& bHeight, QWidget* parent = Q_NULLPTR);
     void setTable(const QStringList& lst);
     int width();
-
+    QTableWidget& getTable() { return *table; };
 signals:
     void addItem(const QString& text);
     void removeItem(const QString& text);
