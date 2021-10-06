@@ -39,8 +39,8 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
 
     this->setAttribute(Qt::WA_TranslucentBackground);
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
-    shadow_effect->setBlurRadius(10.0);
-    shadow_effect->setOffset(5.0);
+    shadow_effect->setBlurRadius(6.0);
+    shadow_effect->setOffset(3);
     this->setGraphicsEffect(shadow_effect);
 
     this->setFont(font);
@@ -97,7 +97,7 @@ void QtMultiSelectPopup::paintEvent(QPaintEvent* event)
 {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    QRect bakcground_rect = rect().adjusted(10, 10, -10, -10);
+    QRect bakcground_rect = rect().adjusted(6, 6, -6, -6);
 
     QPainterPath background_path(QPoint(30, 10));
     //    background_path.lineTo(50, 10);  // TODO: draw pick according to popup position
