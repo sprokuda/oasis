@@ -126,13 +126,13 @@ void QtDatePickerPopup::paintEvent(QPaintEvent* event)
 
 void QtDatePickerPopup::setDate(const QString& text) 
 {
-    label->setText(text);
+    label->setText("Today: " + text);
 //    cndrWidget->setSelectedDate(QDate::currentDate());
 }
 
 void QtDatePickerPopup::onTodayButton()
 {
-    label->setText(QDate::currentDate().toString("dd/MM/yyyy"));
+    label->setText("Today: " + QDate::currentDate().toString("dd/MM/yyyy"));
     cndrWidget->setSelectedDate(QDate::currentDate());
     emit dateSelected(QDate::currentDate());
 }

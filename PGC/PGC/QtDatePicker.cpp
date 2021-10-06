@@ -48,7 +48,7 @@ void QtDatePicker::adjustPopupPosition()
 void QtDatePicker::onShowPopupButtonClicked()
 {
         adjustPopupPosition();
-        popup->setDate(QString("Today: ") + QDate::currentDate().toString("dd/MM/yyyy"));
+        popup->setDate(QDate::currentDate().toString("dd/MM/yyyy"));
         popup->show();
 }
 
