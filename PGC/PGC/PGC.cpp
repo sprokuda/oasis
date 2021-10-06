@@ -30,29 +30,20 @@ PGC::PGC(QWidget *parent)
 //    logoLayout->addWidget(programLogoQLineEdit);
     
     startDateLabel = new QLabel("Start Date",this);
-    selectorStart = new QtMonthYearSelector(this);
+    pickerStart = new QtDatePicker(this);
     QHBoxLayout* startDateLayout = new QHBoxLayout();
     startDateLayout->setContentsMargins(1, 1, 1, 1);
     startDateLayout->addStretch();
     startDateLayout->addWidget(startDateLabel);
-    startDateLayout->addWidget(selectorStart);
+    startDateLayout->addWidget(pickerStart);
 
     endDateLabel = new QLabel("End Date",this);
-    selectorEnd = new QtMonthYearSelector(this);
+    pickerEnd = new QtDatePicker(this);
     QHBoxLayout* endDateLayout = new QHBoxLayout();
     endDateLayout->setContentsMargins(1, 1, 1, 1);
     endDateLayout->addStretch();
     endDateLayout->addWidget(endDateLabel);
-    endDateLayout->addWidget(selectorEnd);
-
-    pickerLabel = new QLabel("Calendar picker \n(DEMO)", this);
-    picker = new QtDatePicker();
-    QHBoxLayout* pickerLayout = new QHBoxLayout();
-//    pickerLayout->setContentsMargins(10, 10, 10, 10);
-    pickerLayout->addStretch();
-    pickerLayout->addWidget(pickerLabel);
-    pickerLayout->addWidget(picker);
-
+    endDateLayout->addWidget(pickerEnd);
 
     prodColLabel = new QLabel("Production Colums", this);
     prodCol = new QComboBox(this);
@@ -103,7 +94,7 @@ PGC::PGC(QWidget *parent)
 //    mainLayout->addLayout(logoLayout);
     mainLayout->addLayout(startDateLayout);
     mainLayout->addLayout(endDateLayout);
-    mainLayout->addLayout(pickerLayout);
+//    mainLayout->addLayout(pickerLayout);
     mainLayout->addLayout(prodColLayout);
     mainLayout->addLayout(booksLayout);
     mainLayout->addLayout(practiceLayout);
@@ -173,7 +164,8 @@ void PGC::onAllCompleted()
 void PGC::moveEvent(QMoveEvent* event)
 {
     QWidget::moveEvent(event);
-    this->picker->adjustPopupPosition();
+    this->pickerStart->adjustPopupPosition();
+    this->pickerEnd->adjustPopupPosition();
     this->booksSelect->adjustPopupPosition();
     this->spinner->adjustPosition();
 
@@ -182,7 +174,8 @@ void PGC::moveEvent(QMoveEvent* event)
 void PGC::resizeEvent(QResizeEvent* event)
 {
     QWidget::resizeEvent(event);
-    this->picker->adjustPopupPosition();
+    this->pickerStart->adjustPopupPosition();
+    this->pickerEnd->adjustPopupPosition();
     this->booksSelect->adjustPopupPosition();
     this->spinner->adjustPosition();
 

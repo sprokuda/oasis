@@ -32,10 +32,10 @@ private:
     QLineEdit* programLogoQLineEdit;
 
     QLabel* startDateLabel;
-    QtMonthYearSelector* selectorStart;
+    QtDatePicker* pickerStart;
 
     QLabel* endDateLabel;
-    QtMonthYearSelector* selectorEnd;
+    QtDatePicker* pickerEnd;
 
     QLabel* pickerLabel;
     QtDatePicker* picker;
