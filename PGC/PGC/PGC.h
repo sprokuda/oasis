@@ -29,6 +29,8 @@ public:
 public slots:
     void onAllCompleted();
     void updateLog(QString message);
+    void onQueryAppBook(QStringList list);
+
 private:
     QLabel* companyLogoQLabel;
     QLineEdit* programLogoQLineEdit;

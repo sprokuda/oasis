@@ -125,7 +125,10 @@ PGC::PGC(QWidget *parent)
 
     handler->moveToThread(thread);
     connect(handler, SIGNAL(allCompleted()), this, SLOT(onAllCompleted()));
+    connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
     thread->start();
+
+    QMetaObject::invokeMethod(handler, "queryAppBook", Qt::QueuedConnection);
 
 //    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
 
@@ -171,6 +174,11 @@ void PGC::onAllCompleted()
 void PGC::updateLog(QString message)
 {
     log->append(message);
+}
+
+void PGC::onQueryAppBook(QStringList list)
+{
+    booksSelect->getPopup().setTable(list);
 }
 
 //void PGC::onShowWS()

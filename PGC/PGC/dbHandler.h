@@ -18,11 +18,12 @@ public:
     ~dbHandler();
 
     Q_INVOKABLE void doQueries();
-
+    Q_INVOKABLE void queryAppBook();
     QSqlDatabase db;
 
 signals:
     void allCompleted();
+    void appBookReady(QStringList list);
 
 };
 

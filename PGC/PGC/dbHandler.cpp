@@ -28,37 +28,41 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_FIRST_INV_721);
     query.exec(dlt_tbl_LAST_INV_722);
     query.exec(dlt_tbl_FUT_APP_723);
+    query.exec(dlt_tbl_APP_BOOK_724);
 }
 
-void dbHandler::doQueries()
+void dbHandler::queryAppBook()
 {
-
-    const char* myQuery = "SELECT * FROM pbpatmas;";
+    const char* script = "SELECT * FROM APP_BOOK;";
+    QStringList list = { "0022","0021","0023" };
 
     QSqlQuery query(db);
 
-    query.exec(crt_tbl_FIRST_INV_721);
-    query.exec(ppl_tbl_FIRST_INV_721);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
+    //query.exec(script);
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
 
-    query.exec(crt_tbl_LAST_INV_722);
-    query.exec(ppl_tbl_LAST_INV_722);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
+    //while (query.next())
+    //{
+    //    list << query.value(1).toString();
+    //}
+    //cout << db.lastError().text().toStdString() << endl;
 
-    query.exec(crt_tbl_FUT_APP_723);
-    query.exec(ppl_tbl_FUT_APP_723);
+    list.sort();
+    emit appBookReady(list);
+}
+void dbHandler::doQueries()
+{
+    const char* script = "SELECT * FROM pbpatmas;";
+    QStringList list;
+    QSqlQuery query(db);
+
+    query.exec(script);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
     while (query.next())
     {
-    //    QString smthng = query.value(3).toString();
-    //    //         cout << "result:\n";
-        //cout << query.value(2).toString().toStdString() << " " <<
-        //    query.value(3).toString().toStdString() << endl;
-        //fflush(stdout);
     }
     cout << db.lastError().text().toStdString() << endl;
 
