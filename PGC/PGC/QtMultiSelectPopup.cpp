@@ -12,7 +12,7 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     table->verticalHeader()->setFont(headerFont);
 
     edit_width = 80;
-    check_width = 44;
+    check_width = 64;
     header_width = 20;
 
     table->setColumnWidth(0, edit_width);
