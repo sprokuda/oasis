@@ -18,6 +18,7 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
     {
         cout << "error:\n";
         cout << db.lastError().text().toStdString() << endl;
+        fflush(stdout);
     }
 }
 
@@ -39,14 +40,17 @@ void dbHandler::doQueries()
     query.exec(crt_tbl_FIRST_INV_721);
     query.exec(ppl_tbl_FIRST_INV_721);
     cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
 
     query.exec(crt_tbl_LAST_INV_722);
     query.exec(ppl_tbl_LAST_INV_722);
     cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
 
     query.exec(crt_tbl_FUT_APP_723);
     query.exec(ppl_tbl_FUT_APP_723);
     cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
 
     while (query.next())
     {
@@ -59,6 +63,7 @@ void dbHandler::doQueries()
     cout << db.lastError().text().toStdString() << endl;
 
 	//std::cout << "test\n";
+ //   fflush(stdout);
 	//Sleep(3000);
 	emit allCompleted();
 }
