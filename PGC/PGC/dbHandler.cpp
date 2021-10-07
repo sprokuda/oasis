@@ -1,7 +1,11 @@
-#include "dbHandler.h"
 #include<windows.h>
 
+#include "dbHandler.h"
+#include "dbScripts.h"
+
 using namespace std;
+
+//extern const char* crt_tbl_FIRST_INV_721;
 
 dbHandler::dbHandler(QObject* parent) : QObject(parent)
 {
@@ -17,13 +21,32 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
     }
 }
 
+dbHandler::~dbHandler()
+{
+    QSqlQuery query(db);
+    query.exec(dlt_tbl_FIRST_INV_721);
+    query.exec(dlt_tbl_LAST_INV_722);
+    query.exec(dlt_tbl_FUT_APP_723);
+}
+
 void dbHandler::doQueries()
 {
 
     const char* myQuery = "SELECT * FROM pbpatmas;";
 
     QSqlQuery query(db);
-    query.exec(myQuery);
+
+    query.exec(crt_tbl_FIRST_INV_721);
+    query.exec(ppl_tbl_FIRST_INV_721);
+    cout << db.lastError().text().toStdString() << endl;
+
+    query.exec(crt_tbl_LAST_INV_722);
+    query.exec(ppl_tbl_LAST_INV_722);
+    cout << db.lastError().text().toStdString() << endl;
+
+    query.exec(crt_tbl_FUT_APP_723);
+    query.exec(ppl_tbl_FUT_APP_723);
+    cout << db.lastError().text().toStdString() << endl;
 
     while (query.next())
     {
