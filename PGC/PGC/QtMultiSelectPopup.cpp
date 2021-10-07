@@ -18,8 +18,8 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     table->setColumnWidth(0, edit_width);
     table->setColumnWidth(1, check_width);
     table->verticalHeader()->setFixedWidth(header_width);
-//    table->setFrameShape(QFrame::NoFrame);
-    table->setShowGrid(true);
+    table->setFrameShape(QFrame::NoFrame);
+    table->setShowGrid(false);
     table->horizontalHeader()->hide();
     table->verticalHeader()->hide();
 
@@ -33,8 +33,8 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     int l, r, t, b;
     mainLayout->getContentsMargins(&l, &t, &r, &b);
     mainLayout->setSpacing(0);
-    total_width = edit_width + check_width +l+r+ 6;
-    int total_height = table->rowHeight(0)*3 + t+ b + 6;
+    total_width = edit_width + check_width +l+r+ 8;//6
+    int total_height = table->rowHeight(0)*3 + t+ b + 8;//6
     table->setContentsMargins(0, 0, 0, 0);
     this->setFixedSize(total_width, total_height);
 
