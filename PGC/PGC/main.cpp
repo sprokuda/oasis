@@ -18,22 +18,18 @@ QString workingDirectory;
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    ThreadLogStream qout(std::cout);
 
     workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
     qDebug() << workingDirectory;
     app.setWindowIcon(QIcon(workingDirectory + "\\centaur-icon.png"));
 
     PGC w;
-
-    ThreadLogStream qout(std::cout);
-    //    qout->moveToThread(thrd);
     QObject::connect(&qout, SIGNAL(sendLogString(QString)), &w, SLOT(updateLog(QString)));
-
-
     w.show();
-    QFont font("Calibri", 10);
-    int buttonHeight = 24;
 
+    //QFont font("Calibri", 10);
+    //int buttonHeight = 24;
     //QtPassword qp(font, buttonHeight);
 
     //QObject::connect(&qp, SIGNAL(passwordAccepted()), &w, SLOT(show()));

@@ -34,19 +34,20 @@ dbHandler::~dbHandler()
 void dbHandler::queryAppBook()
 {
     const char* script = "SELECT * FROM APP_BOOK;";
-    QStringList list = { "0022","0021","0023" };
+    QStringList list;// = { "0022","0021","0023" };
 
     QSqlQuery query(db);
 
-    //query.exec(script);
-    //cout << db.lastError().text().toStdString() << endl;
-    //fflush(stdout);
+    query.exec(script);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
 
-    //while (query.next())
-    //{
-    //    list << query.value(1).toString();
-    //}
-    //cout << db.lastError().text().toStdString() << endl;
+    while (query.next())
+    {
+        //cout << query.value(0).toString().toStdString();
+        list << query.value(0).toString();
+    }
+    cout << db.lastError().text().toStdString() << endl;
 
     list.sort();
     emit appBookReady(list);
