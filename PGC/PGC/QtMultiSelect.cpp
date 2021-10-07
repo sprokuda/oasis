@@ -9,7 +9,7 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     popup->installEventFilter(this);
     popup->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     edit = new QLineEdit("", this);
-//    edit->setFixedWidth(popup->width()+2);
+    edit->setContentsMargins(0, 0, 0, 0);
 
     button = new QToolButton(this);
     button->setContentsMargins(0, 0, 0, 0);
@@ -22,7 +22,8 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     ctrlLayout = new QHBoxLayout(this);
     ctrlLayout->addWidget(edit);
     ctrlLayout->addWidget(button);
-
+    ctrlLayout->setSpacing(0);
+    ctrlLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(ctrlLayout);
 
     this->setFont(font);

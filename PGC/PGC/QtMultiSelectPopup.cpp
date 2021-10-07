@@ -12,13 +12,13 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     table->verticalHeader()->setFont(headerFont);
 
     edit_width = 80;
-    check_width = 54;
+    check_width = 44;
     header_width = 20;
 
     table->setColumnWidth(0, edit_width);
     table->setColumnWidth(1, check_width);
     table->verticalHeader()->setFixedWidth(header_width);
-    table->setFrameShape(QFrame::NoFrame);
+//    table->setFrameShape(QFrame::NoFrame);
     table->setShowGrid(true);
     table->horizontalHeader()->hide();
     table->verticalHeader()->hide();
@@ -29,13 +29,15 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     setLayout(mainLayout);
 
     int l1, r1, t1, b1;
-    table->getContentsMargins(&l1, &r1, &t1, &b1);
+    table->getContentsMargins(&l1, &t1, &r1, &b1);
     int l, r, t, b;
-    mainLayout->getContentsMargins(&l, &r, &t, &b);
-    total_width = edit_width + check_width + l + r + l1 + r1;
-    int total_height = table->rowHeight(0)*3 + t+ b +t1 + b1;
-    table->setFixedSize(total_width, total_height);
-    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout->getContentsMargins(&l, &t, &r, &b);
+    mainLayout->setSpacing(0);
+    total_width = edit_width + check_width +l+r+ 6;
+    int total_height = table->rowHeight(0)*3 + t+ b + 6;
+    table->setContentsMargins(0, 0, 0, 0);
+    this->setFixedSize(total_width, total_height);
+
 
     this->setAttribute(Qt::WA_TranslucentBackground);
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
@@ -46,6 +48,7 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     this->setFont(font);
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+//    this->resize(total_width, total_height);
 
 //    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
 }
