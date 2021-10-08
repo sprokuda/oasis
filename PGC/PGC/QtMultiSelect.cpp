@@ -60,12 +60,17 @@ void QtMultiSelect::adjustPopupPosition()
     //    return;
     //}
 
-    int l, r, t, b;
+    int l, t, r, b;
     this->layout()->getContentsMargins(&l, &r, &t, &b);
+
+    int l1, t1, r1, b1;
+    this->layout()->getContentsMargins(&l1, &r1, &t1, &b1);
+
+    int lw = popup->getTable().lineWidth();
 
     QRect rect = edit->rect();
     QPoint bottomLeft = this->mapToGlobal(rect.topLeft());
-    popup->move(bottomLeft.x() -6 + l, bottomLeft.y() + this->height()/2 + edit->height()/2- 6);
+    popup->move(bottomLeft.x() -6  + 1 + l , bottomLeft.y() + this->height()/2 + edit->height()/2- 6 +lw);
 
 }
 
