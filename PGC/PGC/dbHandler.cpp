@@ -20,6 +20,28 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
         cout << db.lastError().text().toStdString() << endl;
         fflush(stdout);
     }
+
+    QSqlQuery query(db);
+
+    query.exec(crt_tbl_FIRST_INV_721);
+    query.exec(ppl_tbl_FIRST_INV_721);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_tbl_LAST_INV_722);
+    query.exec(ppl_tbl_LAST_INV_722);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_tbl_FUT_APP_723);
+    query.exec(ppl_tbl_FUT_APP_723);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_tbl_APP_BOOK_724);
+    query.exec(ppl_tbl_APP_BOOK_724);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
 }
 
 dbHandler::~dbHandler()
