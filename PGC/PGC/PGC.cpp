@@ -56,7 +56,7 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(*buttonFont, 26);
-    QStringList books = { "0001","0002","0005" };
+    QStringList books = { "000?","000?","000?","000?"};
     booksSelect->getPopup().setTable(books);
     QHBoxLayout* booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
@@ -178,7 +178,12 @@ void PGC::updateLog(QString message)
 
 void PGC::onQueryAppBook(QStringList list)
 {
-    booksSelect->getPopup().setTable(list);
+    QStringList list1;
+    for (int i = 0; i < list.size(); i++)
+    {
+       list1 << "000" + list.at(i) ;// = QString::fromLatin1(zero) + list.at(i);
+    }
+    booksSelect->getPopup().setTable(list1);
 }
 
 //void PGC::onShowWS()
