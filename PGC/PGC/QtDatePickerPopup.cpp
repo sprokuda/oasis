@@ -101,6 +101,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
+//    connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(hide()));
     connect(todayButton, SIGNAL(clicked()), this,SLOT(onTodayButton()));
 }
 

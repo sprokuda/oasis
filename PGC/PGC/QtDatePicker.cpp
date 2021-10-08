@@ -36,6 +36,12 @@ QtDatePicker::QtDatePicker(QWidget* parent)
 void QtDatePicker::setDate(QDate date)
 {
     edit->setText(date.toString("dd/MM/yyyy"));
+ //   popup->close();
+
+    int begin = 2;
+    int end = 5;
+ //   edit->setSelection(3, 4);
+
     //QString::number(QDate::currentDate().month()) + "/" + QString::number(QDate::currentDate().year())
 }
 
@@ -67,6 +73,15 @@ bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
             popup->hide();
             emit editingFinished();
         }
+    }
+    if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick))
+    {
+    //    auto* key_event = dynamic_cast<QKeyEvent*>(event);
+    //   if (key_event->key() == Qt::Key_Escape)
+    //    {
+            popup->hide();
+            emit editingFinished();
+    //    }
     }
     if ((object == popup) && (event->type() == QKeyEvent::WindowDeactivate)) {
         popup->hide();
