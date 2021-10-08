@@ -21,6 +21,20 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
         fflush(stdout);
     }
 
+}
+
+dbHandler::~dbHandler()
+{
+    QSqlQuery query(db);
+    query.exec(dlt_tbl_FIRST_INV_721);
+    query.exec(dlt_tbl_LAST_INV_722);
+    query.exec(dlt_tbl_FUT_APP_723);
+    query.exec(dlt_tbl_APP_BOOK_724);
+}
+
+
+void dbHandler::loadBooksAndFunctions()
+{
     QSqlQuery query(db);
 
     query.exec(crt_tbl_FIRST_INV_721);
@@ -42,15 +56,10 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
     query.exec(ppl_tbl_APP_BOOK_724);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
-}
 
-dbHandler::~dbHandler()
-{
-    QSqlQuery query(db);
-    query.exec(dlt_tbl_FIRST_INV_721);
-    query.exec(dlt_tbl_LAST_INV_722);
-    query.exec(dlt_tbl_FUT_APP_723);
-    query.exec(dlt_tbl_APP_BOOK_724);
+//    Sleep(3000);
+    queryAppBook();
+    //emit allCompleted();
 }
 
 void dbHandler::queryAppBook()
@@ -91,7 +100,7 @@ void dbHandler::doQueries()
 
 	//std::cout << "test\n";
  //   fflush(stdout);
-	//Sleep(3000);
+	Sleep(3000);
 	emit allCompleted();
 }
 

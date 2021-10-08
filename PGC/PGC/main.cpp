@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     PGC w;
     QObject::connect(&qout, SIGNAL(sendLogString(QString)), &w, SLOT(updateLog(QString)));
     w.show();
-
+    w.initialLoad();
     //QFont font("Calibri", 10);
     //int buttonHeight = 24;
     //QtPassword qp(font, buttonHeight);

@@ -19,6 +19,7 @@ public:
 
     Q_INVOKABLE void doQueries();
     Q_INVOKABLE void queryAppBook();
+    Q_INVOKABLE void loadBooksAndFunctions();
     QSqlDatabase db;
 
 signals:

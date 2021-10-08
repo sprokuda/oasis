@@ -128,7 +128,7 @@ PGC::PGC(QWidget *parent)
     connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
     thread->start();
 
-    QMetaObject::invokeMethod(handler, "queryAppBook", Qt::QueuedConnection);
+//    QMetaObject::invokeMethod(handler, "queryAppBook", Qt::QueuedConnection);
 
 //    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
 
@@ -146,6 +146,15 @@ PGC::~PGC()
     delete buttonFont;
     delete smallFont;
     delete bigFont;
+}
+
+void PGC::initialLoad()
+{
+     spinner->show();
+     spinner->adjustPosition();
+     this->setEnabled(false);
+     QMetaObject::invokeMethod(handler, "loadBooksAndFunctions", Qt::QueuedConnection);
+ //    QMetaObject::invokeMethod(handler, "queryAppBook", Qt::QueuedConnection);
 }
 
 void PGC::exctractData()
@@ -168,6 +177,7 @@ void PGC::onAllCompleted()
 {
     spinner->hide();
     exctractButton->setEnabled(true);
+    this->setEnabled(true);
 }
 
 
@@ -178,12 +188,15 @@ void PGC::updateLog(QString message)
 
 void PGC::onQueryAppBook(QStringList list)
 {
+    spinner->hide();
     QStringList list1;
     for (int i = 0; i < list.size(); i++)
     {
        list1 << "000" + list.at(i) ;// = QString::fromLatin1(zero) + list.at(i);
     }
     booksSelect->getPopup().setTable(list1);
+
+    this->setEnabled(true);
 }
 
 //void PGC::onShowWS()
