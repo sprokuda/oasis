@@ -35,7 +35,7 @@ signals:
 
 private:
 
-    QCalendarWidget* cndrWidget;
+    QCalendarWidget* calendar;
     QLabel* label;
     QToolButton* todayButton;
     void paintEvent(QPaintEvent* event);

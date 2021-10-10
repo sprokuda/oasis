@@ -10,15 +10,15 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     font.setPointSize(10);
     this->setFont(font);
 
-    cndrWidget = new QCalendarWidget(this);
-    cndrWidget->setContentsMargins(0, 0, 0, 0);
-    cndrWidget->setLocale(QLocale(QLocale::English, QLocale::Australia));
+    calendar = new QCalendarWidget(this);
+    calendar->setContentsMargins(0, 0, 0, 0);
+    calendar->setLocale(QLocale(QLocale::English, QLocale::Australia));
 
-    cndrWidget->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
+    calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
 //    cndrWidget->setDateEditEnabled(false);
-    cndrWidget->setSelectedDate(QDate::currentDate());
+    calendar->setSelectedDate(QDate::currentDate());
 
-    QWidget* calendarNavBar = cndrWidget->findChild<QWidget*>("qt_calendar_navigationbar");
+    QWidget* calendarNavBar = calendar->findChild<QWidget*>("qt_calendar_navigationbar");
     if (calendarNavBar) 
     {
         QPalette pal = calendarNavBar->palette();
@@ -27,7 +27,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
         calendarNavBar->setPalette(pal);
     }
 
-    QToolButton* btn = cndrWidget->findChild<QToolButton*>("qt_calendar_prevmonth");
+    QToolButton* btn = calendar->findChild<QToolButton*>("qt_calendar_prevmonth");
     if (btn)
     {
         QIcon icon;
@@ -36,21 +36,21 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
         icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Selected, QIcon::On);
         btn->setIcon(icon);
 
-        btn = cndrWidget->findChild<QToolButton*>("qt_calendar_nextmonth");
+        btn = calendar->findChild<QToolButton*>("qt_calendar_nextmonth");
         icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
         icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Active, QIcon::On);
         icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Selected, QIcon::On);
         btn->setIcon(icon);
     }
 
-    QToolButton* call_btn = cndrWidget->findChild<QToolButton*>("qt_calendar_monthbutton");
+    QToolButton* call_btn = calendar->findChild<QToolButton*>("qt_calendar_monthbutton");
     if (call_btn)
     {
         QFont navigatorBarFont("Calibri", 10, QFont::Medium);
         call_btn->setFont(navigatorBarFont);
     }
 
-    call_btn = cndrWidget->findChild<QToolButton*>("qt_calendar_yearbutton");
+    call_btn = calendar->findChild<QToolButton*>("qt_calendar_yearbutton");
     if (call_btn)
     {
         QFont navigatorBarFont("Calibri", 10, QFont::Medium);
@@ -59,7 +59,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
     QHBoxLayout* cndrLayout = new QHBoxLayout;
     cndrLayout->addStretch();
-    cndrLayout->addWidget(cndrWidget);
+    cndrLayout->addWidget(calendar);
     cndrLayout->addStretch();
 
     label = new QLabel(this);
@@ -100,7 +100,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
-    connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
+    connect(calendar, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
     connect(todayButton, SIGNAL(clicked()), this,SLOT(onTodayButton()));
 
     delay = new callDelay();
@@ -155,7 +155,7 @@ void QtDatePickerPopup::setDate(const QString& text)
 void QtDatePickerPopup::onTodayButton()
 {
     label->setText("Today: " + QDate::currentDate().toString("dd/MM/yyyy"));
-    cndrWidget->setSelectedDate(QDate::currentDate());
+    calendar->setSelectedDate(QDate::currentDate());
     QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
     emit dateSelected(QDate::currentDate());
 }
