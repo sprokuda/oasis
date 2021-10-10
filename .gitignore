@@ -21,7 +21,6 @@ dist/
 
 # Maven
 target/
-dist/
 
 # JetBrains IDE
 .idea/
@@ -56,3 +55,5 @@ PGC/PGC/Release/PGC.tlog/PGC.write.1u.tlog
 PGC/PGC/Release/
 PGC/Debug/
 PGC/Release/
+/~$chnical Requirement Specification  V3.docx
+/~$example.xlsx
