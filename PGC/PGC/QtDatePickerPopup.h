@@ -14,12 +14,17 @@
 #include <QPainterPath>
 #include <QGraphicsDropShadowEffect>
 
+#include <QThread>
+
+#include "callDelay.h"
+
 class QtDatePickerPopup : public QWidget
 {
     Q_OBJECT
 
 public:
     QtDatePickerPopup(QWidget* parent = Q_NULLPTR);
+    ~QtDatePickerPopup();
     void setDate(const QString& text);
 public slots:
     void onTodayButton();
@@ -35,7 +40,11 @@ private:
     QToolButton* todayButton;
     void paintEvent(QPaintEvent* event);
 
+    QThread* thread;
+    callDelay* delay;
+
 private slots:
     void onCalendarDateSelected(const QDate& date);
+    void onDelayFinished();
 };
 

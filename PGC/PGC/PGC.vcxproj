@@ -170,6 +170,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="callDelay.cpp" />
     <ClCompile Include="dbHandler.cpp" />
     <ClCompile Include="QtDatePicker.cpp" />
     <ClCompile Include="QtDatePickerPopup.cpp" />
@@ -210,6 +211,7 @@
     <QtMoc Include="ThreadLogStream.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="callDelay.h" />
     <ClInclude Include="dbScripts.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

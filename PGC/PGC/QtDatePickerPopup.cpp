@@ -101,13 +101,34 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
     connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
-//    connect(cndrWidget, SIGNAL(clicked(QDate)), SLOT(hide()));
     connect(todayButton, SIGNAL(clicked()), this,SLOT(onTodayButton()));
+
+    delay = new callDelay();
+    thread = new QThread();
+    delay->moveToThread(thread);
+
+    connect(delay, SIGNAL(delayFinished()), this, SLOT(onDelayFinished()));
+    thread->start();
 }
+
+QtDatePickerPopup::~QtDatePickerPopup()
+{
+    thread->quit();
+    thread->wait();
+    delete delay;
+}
+
+
 
 void QtDatePickerPopup::onCalendarDateSelected(const QDate& date)
 {
+    QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
     emit dateSelected(date);
+}
+
+void QtDatePickerPopup::onDelayFinished()
+{
+    hide();
 }
 
 void QtDatePickerPopup::paintEvent(QPaintEvent* event)
@@ -135,6 +156,7 @@ void QtDatePickerPopup::onTodayButton()
 {
     label->setText("Today: " + QDate::currentDate().toString("dd/MM/yyyy"));
     cndrWidget->setSelectedDate(QDate::currentDate());
+    QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
     emit dateSelected(QDate::currentDate());
 }
 

@@ -48,6 +48,9 @@
     <QtMoc Include="ThreadLogStream.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="callDelay.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -75,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QtPassword.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="callDelay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
