@@ -113,8 +113,8 @@ void dbHandler::Extract(QString start,QString end)
 
     while (query.next())
     {
-            cout << query.value(0).toString().toStdString() << " ";
-            cout << query.value(1).toString().toStdString() << " ";
+            cout << query.value(0).toString().toStdString() << "\t";
+            cout << query.value(1).toString().toStdString() << "\t ";
             cout << query.value(2).toString().toStdString() << "\n";
     }
     cout << db.lastError().text().toStdString() << endl;
