@@ -34,7 +34,7 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_ITEM_ANALYSIS_726);
     query.exec(dlt_tbl_CHURN_727);
     query.exec(dlt_tbl_Production_728);
-    query.exec(dlt_fncn_unbkRecall_728);
+    query.exec(dlt_fncn_unbkRecall_729);
 
 }
 
@@ -82,7 +82,7 @@ void dbHandler::loadBooksAndFunctions()
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
-    query.exec(crt_fncn_unbkRecall_728);
+    query.exec(crt_fncn_unbkRecall_729);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
