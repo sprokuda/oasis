@@ -38,25 +38,28 @@ private:
 
     QLabel* startDateLabel;
     QtDatePicker* pickerStart;
+    QHBoxLayout* startDateLayout;
 
     QLabel* endDateLabel;
     QtDatePicker* pickerEnd;
-
-    QLabel* pickerLabel;
-    QtDatePicker* picker;
+    QHBoxLayout* endDateLayout;
 
 
     QLabel* prodColLabel;
     QComboBox* prodCol;
+    QHBoxLayout* prodColLayout;
 
     QLabel* incBooks;
     QtMultiSelect* booksSelect;
+    QHBoxLayout* booksLayout;
 
     QLabel* practiceNameLabel;
     QLineEdit* practiceName;
+    QHBoxLayout* practiceLayout;
 
     QPushButton* exctractButton;
     QPushButton* exitAppButton;
+    QHBoxLayout* buttonLayout;
 
     QTextBrowser* log;
 

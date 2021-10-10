@@ -31,7 +31,7 @@ PGC::PGC(QWidget *parent)
     
     startDateLabel = new QLabel("Start Date",this);
     pickerStart = new QtDatePicker(this);
-    QHBoxLayout* startDateLayout = new QHBoxLayout();
+    startDateLayout = new QHBoxLayout();
 //    startDateLayout->setContentsMargins(1, 1, 1, 1);
     startDateLayout->addStretch();
     startDateLayout->addWidget(startDateLabel);
@@ -39,7 +39,7 @@ PGC::PGC(QWidget *parent)
 
     endDateLabel = new QLabel("End Date",this);
     pickerEnd = new QtDatePicker(this);
-    QHBoxLayout* endDateLayout = new QHBoxLayout();
+    endDateLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     endDateLayout->addStretch();
     endDateLayout->addWidget(endDateLabel);
@@ -48,7 +48,7 @@ PGC::PGC(QWidget *parent)
     prodColLabel = new QLabel("Production Colums", this);
     prodCol = new QComboBox(this);
     prodCol->addItems({"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"});
-    QHBoxLayout* prodColLayout = new QHBoxLayout();
+    prodColLayout = new QHBoxLayout();
 //    prodColLayout->setContentsMargins(10, 10, 10, 10);
     prodColLayout->addStretch();
     prodColLayout->addWidget(prodColLabel);
@@ -58,7 +58,7 @@ PGC::PGC(QWidget *parent)
     booksSelect = new QtMultiSelect(*buttonFont, 26);
     QStringList books = { "000?","000?","000?","000?"};
     booksSelect->getPopup().setTable(books);
-    QHBoxLayout* booksLayout = new QHBoxLayout();
+    booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     booksLayout->addStretch();
     booksLayout->addWidget(incBooks);
@@ -68,7 +68,7 @@ PGC::PGC(QWidget *parent)
     practiceNameLabel = new QLabel("Practice Name", this);
     practiceName = new QLineEdit(this);
 
-    QHBoxLayout* practiceLayout = new QHBoxLayout();
+    practiceLayout = new QHBoxLayout();
 //    practiceLayout->setContentsMargins(10, 10, 10, 10);
     practiceLayout->addStretch();
     practiceLayout->addWidget(practiceNameLabel);
@@ -82,7 +82,7 @@ PGC::PGC(QWidget *parent)
 //    exitAppButton->setFixedSize(72, buttonHeight * 1.2);
     connect(exitAppButton, &QPushButton::clicked, this, &PGC::exitProgram);
 
-    QHBoxLayout* buttonLayout = new QHBoxLayout();
+    buttonLayout = new QHBoxLayout();
 //    buttonLayout->setContentsMargins(10, 10, 10, 10);
     buttonLayout->addStretch();
     buttonLayout->addWidget(exctractButton);
@@ -140,8 +140,21 @@ PGC::~PGC()
     thread->quit();
     thread->wait();
     delete handler;
+
+    delete pickerStart;
+    delete startDateLayout;
+
+    delete pickerEnd;
+    delete endDateLayout;
+
+    delete prodColLayout;
+
     delete booksSelect;
-    delete picker;
+    delete booksLayout;
+
+    delete practiceLayout;
+
+    delete buttonLayout;
 
     delete buttonFont;
     delete smallFont;
