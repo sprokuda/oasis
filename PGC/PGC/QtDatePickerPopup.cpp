@@ -11,6 +11,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setFont(font);
 
     calendar = new QCalendarWidget(this);
+    calendar->setMaximumDate(QDate::currentDate());
     calendar->setContentsMargins(0, 0, 0, 0);
     calendar->setLocale(QLocale(QLocale::English, QLocale::Australia));
 
