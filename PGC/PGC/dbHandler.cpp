@@ -30,6 +30,8 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_LAST_INV_722);
     query.exec(dlt_tbl_FUT_APP_723);
     query.exec(dlt_tbl_APP_BOOK_724);
+    query.exec(dlt_tbl_ITEMS_725);
+    query.exec(dlt_tbl_ITEM_ANALYSIS_726);
 }
 
 
@@ -54,6 +56,16 @@ void dbHandler::loadBooksAndFunctions()
 
     query.exec(crt_tbl_APP_BOOK_724);
     query.exec(ppl_tbl_APP_BOOK_724);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_tbl_ITEMS_725);
+    query.exec(ppl_tbl_ITEMS_725);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_tbl_ITEM_ANALYSIS_726);
+    query.exec(ppl_tbl_ITEM_ANALYSIS_726);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
@@ -83,18 +95,51 @@ void dbHandler::queryAppBook()
     list.sort();
     emit appBookReady(list);
 }
+
+void dbHandler::Extract(QString start,QString end)
+{
+
+    QSqlQuery query(db);
+
+//    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
+    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
+    cout << string_726.toStdString().c_str() << endl;
+
+    query.exec(string_726.toStdString().c_str());
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec("SELECT * FROM ITEM_ANALYSIS;");
+
+    while (query.next())
+    {
+            cout << query.value(0).toString().toStdString() << " ";
+            cout << query.value(1).toString().toStdString() << " ";
+            cout << query.value(2).toString().toStdString() << "\n";
+    }
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    emit extractionCompleted();
+}
+
 void dbHandler::doQueries()
 {
     const char* script = "SELECT * FROM pbpatmas;";
     QStringList list;
     QSqlQuery query(db);
 
-    query.exec(script);
-    cout << db.lastError().text().toStdString() << endl;
+    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("001").arg("002");
+
+//    query.exec(script);
+//    cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
     while (query.next())
     {
+        cout << query.value(0).toString().toStdString() << " ";
+        cout << query.value(1).toString().toStdString() << " ";
+        cout << query.value(2).toString().toStdString() << "\n";
     }
     cout << db.lastError().text().toStdString() << endl;
 

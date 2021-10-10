@@ -123,7 +123,7 @@ PGC::PGC(QWidget *parent)
     thread = new QThread();
 
     handler->moveToThread(thread);
-    connect(handler, SIGNAL(allCompleted()), this, SLOT(onAllCompleted()));
+    connect(handler, SIGNAL(extractionCompleted()), this, SLOT(onAllCompleted()));
     connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
     thread->start();
 
@@ -176,11 +176,14 @@ void PGC::exctractData()
     spinner->adjustPosition();
     exctractButton->setEnabled(false);
 
-    QMetaObject::invokeMethod(handler, "doQueries",
-        Qt::QueuedConnection
+    QString start = convertDateForMimer(pickerStart->getDate());
+    QString end = convertDateForMimer(pickerEnd->getDate());
+
+    QMetaObject::invokeMethod(handler, "Extract",
+        Qt::QueuedConnection,
 //                Qt::DirectConnection,
-//        Q_ARG(QString, aligner_file_path),
-//        Q_ARG(QString, patchFilePath),
+        Q_ARG(QString, start),
+        Q_ARG(QString, end)
 //        Q_ARG(QString, patched_file_path)
     );
 }
@@ -253,11 +256,14 @@ void PGC::onQueryAppBook(QStringList list)
     this->setEnabled(true);
 }
 
-//void PGC::onShowWS()
-//{
-//    sp->show();
-//    sp->adjustPosition();
-//}
+QString PGC::convertDateForMimer(const QString date)
+{
+    QStringList list = date.split("/");
+    auto day = list.at(0);
+    auto month = list.at(1);
+    auto year = list.at(2);
+    return year + "-" + month + "-" + day;
+}
 
 
 void PGC::moveEvent(QMoveEvent* event)

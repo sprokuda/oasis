@@ -80,6 +80,7 @@ private:
 
     void exctractData();
     bool checkBeforeExtract();
+    QString convertDateForMimer(const QString date);
     void exitProgram();
 
 
