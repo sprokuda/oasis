@@ -32,6 +32,10 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_APP_BOOK_724);
     query.exec(dlt_tbl_ITEMS_725);
     query.exec(dlt_tbl_ITEM_ANALYSIS_726);
+    query.exec(dlt_tbl_CHURN_727);
+    query.exec(dlt_tbl_Production_728);
+    query.exec(dlt_fncn_unbkRecall_728);
+
 }
 
 
@@ -69,6 +73,20 @@ void dbHandler::loadBooksAndFunctions()
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
+    query.exec(crt_tbl_CHURN_727);
+    query.exec(ppl_tbl_CHURN_727_1);
+    query.exec(ppl_tbl_CHURN_727_2);
+    query.exec(ppl_tbl_CHURN_727_3);
+    query.exec(ppl_tbl_CHURN_727_4);
+    query.exec(ppl_tbl_CHURN_727_5);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_fncn_unbkRecall_728);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+
 //    Sleep(3000);
     queryAppBook();
     //emit allCompleted();
@@ -98,8 +116,13 @@ void dbHandler::queryAppBook()
 
 void dbHandler::Extract(QString start,QString end)
 {
-
     QSqlQuery query(db);
+    query.exec(crt_tbl_Production_728);
+    //Will be populated with a stored procedure
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+
 
 //    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
     QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
@@ -116,6 +139,7 @@ void dbHandler::Extract(QString start,QString end)
             cout << query.value(0).toString().toStdString() << "\t";
             cout << query.value(1).toString().toStdString() << "\t ";
             cout << query.value(2).toString().toStdString() << "\n";
+            fflush(stdout);
     }
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
