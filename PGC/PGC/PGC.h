@@ -27,6 +27,7 @@ public:
     PGC(QWidget *parent = Q_NULLPTR);
     ~PGC();
     void initialLoad();
+
 public slots:
     void onAllCompleted();
     void updateLog(QString message);
@@ -78,6 +79,7 @@ private:
     QThread* thread;
 
     void exctractData();
+    bool checkBeforeExtract();
     void exitProgram();
 
 

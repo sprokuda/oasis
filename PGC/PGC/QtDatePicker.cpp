@@ -10,6 +10,7 @@ QtDatePicker::QtDatePicker(QWidget* parent)
 
     edit = new QLineEdit(QDate::currentDate().toString("dd/MM/yyyy"), this);
     edit->setContentsMargins(0, 0, 0, 0);
+    edit->setReadOnly(true);
     button = new QToolButton(this);
     button->setContentsMargins(0, 0, 0, 0);
     QIcon icon;
@@ -31,6 +32,11 @@ QtDatePicker::QtDatePicker(QWidget* parent)
 
     connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(dateSelected(QDate)), SLOT(setDate(QDate)));
+}
+
+QString QtDatePicker::getDate()
+{
+    return edit->text();
 }
 
 void QtDatePicker::setDate(QDate date)
@@ -74,15 +80,15 @@ bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
             emit editingFinished();
         }
     }
-    if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick))
-    {
-    //    auto* key_event = dynamic_cast<QKeyEvent*>(event);
-    //   if (key_event->key() == Qt::Key_Escape)
-    //    {
-            popup->hide();
-            emit editingFinished();
-    //    }
-    }
+    //if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick))
+    //{
+    ////    auto* key_event = dynamic_cast<QKeyEvent*>(event);
+    ////   if (key_event->key() == Qt::Key_Escape)
+    ////    {
+    //        popup->hide();
+    //        emit editingFinished();
+    ////    }
+    //}
     if ((object == popup) && (event->type() == QKeyEvent::WindowDeactivate)) {
         popup->hide();
         emit editingFinished();

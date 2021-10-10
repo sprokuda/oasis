@@ -9,6 +9,7 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     popup->installEventFilter(this);
     popup->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     edit = new QLineEdit("", this);
+    edit->setReadOnly(true);
     edit->setContentsMargins(0, 0, 0, 0);
 
     button = new QToolButton(this);
@@ -27,7 +28,6 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     setLayout(ctrlLayout);
 
     this->setFont(font);
-//    this->popup->setFixedSize(200, 200);
 
     connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
@@ -51,6 +51,11 @@ bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
     }
 
     return QWidget::eventFilter(object, event);
+}
+
+QString QtMultiSelect::getText()
+{
+    return edit->text();
 }
 
 

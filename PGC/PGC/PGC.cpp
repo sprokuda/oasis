@@ -116,7 +116,6 @@ PGC::PGC(QWidget *parent)
     setWindowTitle(tr("OASIS PGC Data Extractor"));
 
     this->setFont(*buttonFont);
-//    this->resize(mainWidth, mainHeight);
 
     spinner = new QtWaitingSpinner(this);
     handler = new dbHandler();
@@ -127,8 +126,6 @@ PGC::PGC(QWidget *parent)
     connect(handler, SIGNAL(allCompleted()), this, SLOT(onAllCompleted()));
     connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
     thread->start();
-
-//    QMetaObject::invokeMethod(handler, "queryAppBook", Qt::QueuedConnection);
 
 //    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
 
@@ -173,6 +170,8 @@ void PGC::initialLoad()
 void PGC::exctractData()
 {
     /* all querying routines are call from here*/
+    if (!checkBeforeExtract()) return;
+
     spinner->show();
     spinner->adjustPosition();
     exctractButton->setEnabled(false);
@@ -184,6 +183,48 @@ void PGC::exctractData()
 //        Q_ARG(QString, patchFilePath),
 //        Q_ARG(QString, patched_file_path)
     );
+}
+
+bool PGC::checkBeforeExtract()
+{
+    if(pickerStart->getDate() >= pickerEnd->getDate())
+    {
+        QMessageBox msgBox(this);
+        msgBox.setText("The Start Date cannot\nbe later or equial\nthan the End Date");
+        msgBox.setIcon(QMessageBox::Warning);
+        auto* ok = msgBox.addButton("Back to selection", QMessageBox::ActionRole);
+
+        msgBox.setFont(*buttonFont);
+
+        msgBox.exec();
+        return false;
+    }
+
+    if (booksSelect->getText().isEmpty())
+    {
+        QMessageBox msgBox(this);
+        msgBox.setText("Please select\nat least one book");
+        msgBox.setIcon(QMessageBox::Warning);
+        auto* ok = msgBox.addButton("Back to selection", QMessageBox::ActionRole);
+
+        msgBox.setFont(*buttonFont);
+
+        msgBox.exec();
+        return false;
+    }
+    if (practiceName->text().isEmpty())
+    {
+        QMessageBox msgBox(this);
+        msgBox.setText("Please enter\nthe Practice Name");
+        msgBox.setIcon(QMessageBox::Warning);
+        auto* ok = msgBox.addButton("Back to selection", QMessageBox::ActionRole);
+
+        msgBox.setFont(*buttonFont);
+
+        msgBox.exec();
+        return false;
+    }
+    return true;
 }
 
 void PGC::onAllCompleted()

@@ -17,6 +17,7 @@ public:
     QtDatePicker(QWidget* parent = Q_NULLPTR);
 
     void adjustPopupPosition();
+    QString getDate();
 
 public slots:
 

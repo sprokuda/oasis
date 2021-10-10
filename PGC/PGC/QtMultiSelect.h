@@ -17,7 +17,7 @@ public:
 
     void adjustPopupPosition();
     QtMultiSelectPopup& getPopup() { return *popup; };
-
+    QString getText();
 public slots:
 
 
