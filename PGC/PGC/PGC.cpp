@@ -56,8 +56,8 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(this);
-    QStringList books = { "000?","000?","000?","000?"};
-    booksSelect->getPopup().setTable(books);
+//    QStringList books = { "000?","000?","000?","000?"};
+//    booksSelect->getPopup().setTable(books);
     booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     booksLayout->addStretch();

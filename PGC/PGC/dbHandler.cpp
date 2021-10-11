@@ -36,9 +36,9 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_Production_728);
     query.exec(dlt_fncn_unbkRecall_729);
     query.exec(dlt_fncn_lostRecall_7210);
-    query.exec(crt_fncn_apptbookEnd_7211);
-    query.exec(crt_fncn_apptUsed_7212);
-    query.exec(crt_prcd_Production_7213);
+    query.exec(dlt_fncn_apptbookEnd_7211);
+    query.exec(dlt_fncn_apptUsed_7212);
+    query.exec(dlt_prcd_Production_7213);
 
 }
 
@@ -141,36 +141,84 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     fflush(stdout);
 
 
-//    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
-    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
-    cout << string_726.toStdString().c_str() << endl;
-
-    query.exec(string_726.toStdString().c_str());
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
-
-    query.exec("SELECT * FROM ITEM_ANALYSIS;");
-
-    while (query.next())
-    {
-            cout << query.value(0).toString().toStdString() << "\t";
-            cout << query.value(1).toString().toStdString() << "\t ";
-            cout << query.value(2).toString().toStdString() << "\n";
-            fflush(stdout);
-    }
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
+////    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
+//    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
+//    cout << string_726.toStdString().c_str() << endl;
+//
+//    query.exec(string_726.toStdString().c_str());
+//    cout << db.lastError().text().toStdString() << endl;
+//    fflush(stdout);
+//
+//    query.exec("SELECT * FROM ITEM_ANALYSIS;");
+//
+//    while (query.next())
+//    {
+//            cout << query.value(0).toString().toStdString() << "\t";
+//            cout << query.value(1).toString().toStdString() << "\t ";
+//            cout << query.value(2).toString().toStdString() << "\n";
+//            fflush(stdout);
+//    }
+//    cout << db.lastError().text().toStdString() << endl;
+//    fflush(stdout);
 
     QString appSlot = "$appSlot";
     QString iconCan = "$iconCan";
     QString iconNS = "$iconNS";
+    QString appStart = "$appStart";
+    QString appEnd = "$appEnd";
 
-    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(start).arg(end)
-                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2));
+    const char* glb_appSlot = "SELECT CAST(F2 AS INTEGER) + 1 AS appbooklength FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
+    query.exec(glb_appSlot);
+    query.next();
+    QString appSlot_tmp = query.value(0).toString();
+    bool ok;
+    int tmp =  60/appSlot_tmp.toInt(&ok);
+//    cout << tmp << endl;
+    appSlot = QString::number(tmp);
+    cout << appSlot.toStdString().c_str() << endl;
+
+
+    const char* glb_iconCan = "Select CAST(F5 AS INTEGER)  as CAN from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE' ; ";
+    query.exec(glb_iconCan);
+    query.next();
+    iconCan = query.value(0).toString();
+    cout << iconCan.toStdString().c_str() << endl;
+
+    const char* glb_iconNS = "Select CAST(F6 AS INTEGER)  as NS from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE'; ";
+    query.exec(glb_iconNS);
+    query.next();
+    iconNS = query.value(0).toString();
+    cout << iconNS.toStdString().c_str() << endl;
+
+    const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
+    query.exec(glb_appStart);
+    query.next();
+    appStart = query.value(0).toString();
+    cout << appStart.toStdString().c_str() << endl;
+
+    const char* glb_appEnd = " Select apptbookend() FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
+    query.exec(glb_appEnd);
+    query.next();
+    appEnd = query.value(0).toString();
+    cout << appEnd.toStdString().c_str() << endl;
+
+
+    QString startDate = "20200701";
+    QString endDate = "20200731";
+
+    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
+                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart.toInt(&ok)-1);
 
     cout << string_742.toStdString().c_str() << endl;
-//    query.exec(string_742.toStdString().c_str());
-
+    query.exec(string_742.toStdString().c_str());
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+    query.next();
+    QString result = query.value(0).toString();
+//    cout << query.value(0).toString().toStdString().c_str() << endl;
+    cout << query.value(0).toString().toStdString().c_str() << endl;
+//    cout << query.value(2).toString().toStdString().c_str() << endl;
+    fflush(stdout);
     emit extractionCompleted();
 }
 

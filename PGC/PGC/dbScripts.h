@@ -37,7 +37,7 @@ const char* ppl_tbl_CHURN_727_4 = "INSERT INTO CHURN SELECT PTNO, LASTVISITDATE+
 const char* ppl_tbl_CHURN_727_5 = "INSERT INTO CHURN SELECT PTNO, LASTVISITDATE+INTERVAL'18'MONTH FROM LAST_INV   WHERE LASTVISITDATE BETWEEN CURRENT_DATE-INTERVAL'12'MONTH  AND CURRENT_DATE ;";
 const char* dlt_tbl_CHURN_727 = "DROP TABLE CHURN;";
 
-const char* crt_tbl_Production_728 = "CREATE TABLE ITEMS ( ITEMCODE CHARACTER(5), DESCR CHARACTER (90)) ;";
+const char* crt_tbl_Production_728 = "CREATE TABLE Production( Prd DECIMAL (15,2)) ;";
 const char* ppl_tbl_Production_728 = "";
 const char* dlt_tbl_Production_728 = "DROP TABLE Production;";
 
@@ -147,7 +147,7 @@ const char* dlt_prcd_Production_7213 = "DROP PROCEDURE Production ;";
 
 //"Select sum(timeused * $appSlot) / 60 as ptHr from paapplns where picturenumber <> $iconCan and picturenumber <> $iconNS AND SKEY BETWEEN " & "'" & Format($startDate, "YYYYMMDD") & "%' AND " & "'" & Format($endDate, "YYYYMMDD") & "%' and patnumber < > '000000' and (substring(skey from 13 for 4) = '$incCol1' OR substring(skey from 13 for 4) = '$incCol2' OR substring(skey from 13 for 4) = '$incCol3') and patnumber < >'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > $appStart - 1;"
 const char* query_Hours_Worked_742 =
-"Select sum(timeused * %1) / 60 as ptHr from paapplns where picturenumber <> %2"
-"and picturenumber <> %3 AND SKEY BETWEEN '%4%' AND '%5%'"
-"and patnumber < > '000000' and (substring(skey from 13 for 4) = '%6' OR substring(skey from 13 for 4) = '%7'"
-"OR substring(skey from 13 for 4) = '%8') and patnumber < >'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %2 - 1;";
+"Select sum(timeused * %1)/60 as ptHr from paapplns where picturenumber <> %2 "
+"and picturenumber <> %3  AND SKEY BETWEEN '%4%'  AND '%5%' "
+"and patnumber <> '000000' and (substring(skey from 13 for 4) = '%6' OR substring(skey from 13 for 4) = '%7' "
+"OR substring(skey from 13 for 4) = '%8')  and patnumber <>'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %9;";
