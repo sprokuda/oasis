@@ -21,9 +21,6 @@
     <ClCompile Include="PGC.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <QtMoc Include="QtMonthYearSelector.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="QtDatePicker.h">
       <Filter>Header Files</Filter>
     </QtMoc>
@@ -54,9 +51,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="QtMonthYearSelector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QtDatePicker.cpp">

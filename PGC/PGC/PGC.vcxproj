@@ -174,7 +174,6 @@
     <ClCompile Include="dbHandler.cpp" />
     <ClCompile Include="QtDatePicker.cpp" />
     <ClCompile Include="QtDatePickerPopup.cpp" />
-    <ClCompile Include="QtMonthYearSelector.cpp" />
     <ClCompile Include="QtMultiSelect.cpp" />
     <ClCompile Include="QtMultiSelectPopup.cpp" />
     <ClCompile Include="QtPassword.cpp" />
@@ -182,9 +181,6 @@
     <QtMoc Include="PGC.h" />
     <ClCompile Include="PGC.cpp" />
     <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="QtMonthYearSelector.h" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QtDatePicker.h" />
