@@ -1,43 +1,11 @@
 #include "QtMultiSelectPopup.h"
 #include <QHeaderView>
 
-QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, QWidget* parent)
-    : QWidget(parent), font(qfont), buttonHeight(bHeight)
+QtMultiSelectPopup::QtMultiSelectPopup( QWidget* parent)
+    : QWidget(parent)  
 {
-    QFont headerFont(font.family(), 9);
-
-    table = new QTableWidget(3,2,this);
-    table->setHorizontalHeaderLabels({ "Book","Select" });
-    table->horizontalHeader()->setFont(headerFont);
-    table->verticalHeader()->setFont(headerFont);
-
-    edit_width = 80;
-    check_width = 64;
-    header_width = 20;
-
-    table->setColumnWidth(0, edit_width);
-    table->setColumnWidth(1, check_width);
-    table->verticalHeader()->setFixedWidth(header_width);
-    table->setFrameShape(QFrame::NoFrame);
-    table->setShowGrid(false);
-    table->horizontalHeader()->hide();
-    table->verticalHeader()->hide();
-
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->addWidget(table);
-//    mainLayout->setSizeConstraint(QLayout::SetFixedSize);
+    mainLayout = new QVBoxLayout(this);
     setLayout(mainLayout);
-
-    int l1, r1, t1, b1;
-    table->getContentsMargins(&l1, &t1, &r1, &b1);
-    int l, r, t, b;
-    mainLayout->getContentsMargins(&l, &t, &r, &b);
-    mainLayout->setSpacing(0);
-    total_width = edit_width + check_width +l+r+ 8;//6
-    int total_height = table->rowHeight(0)*3 + t+ b + 8;//6
-    table->setContentsMargins(0, 0, 0, 0);
-    this->setFixedSize(total_width, total_height);
-
 
     this->setAttribute(Qt::WA_TranslucentBackground);
     QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
@@ -45,41 +13,45 @@ QtMultiSelectPopup::QtMultiSelectPopup(const QFont& qfont, const int& bHeight, Q
     shadow_effect->setOffset(3);
     this->setGraphicsEffect(shadow_effect);
 
-    this->setFont(font);
-
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
-//    this->resize(total_width, total_height);
-
-//    connect(hideButton, SIGNAL(clicked()), SLOT(hide()));
 }
 
-int QtMultiSelectPopup::width()
+QtMultiSelectPopup::~QtMultiSelectPopup()
 {
-    return total_width;
-}
-
-void QtMultiSelectPopup::setTable(const QStringList& lst)
-{
-    if (lst.isEmpty()) return;
-//    int columnCheckBoxWidth;
-
-
-    for (size_t i = 0; i < lst.size(); i++)
+    for (auto it = layout_list.begin(); it != layout_list.end(); it++)
     {
-        QLineEdit* edit = new QLineEdit(lst[i]);
-        edit->setEnabled(false);
-        edit->setFont(font);
-        edit->setFixedWidth(edit_width);
-
-        table->setCellWidget(i, 0, edit);
-
-        QCheckBox* checkBox = new QCheckBox();
-        checkBox->setStyleSheet("text-align: center; margin-left:15%; margin-right:15%;");
-        QString word = lst[i];
-        connect(checkBox, &QCheckBox::toggled, this, [=](bool if_checked) { selectItem(if_checked, word); });
-
-        table->setCellWidget(i, 1, checkBox);
+        delete *it;
     }
+    for (auto it = edit_list.begin(); it != edit_list.end(); it++)
+    {
+        delete* it;
+    }
+}
+
+
+
+
+void QtMultiSelectPopup::setTable(const QStringList& list)
+{
+    if (list.isEmpty()) return;
+
+    for (int i = 0; i < list.size(); i++)
+    {
+        QLineEdit* edit = new QLineEdit(list.at(i), this);
+        edit_list.push_back(edit);
+        edit->setReadOnly(true);
+        edit->installEventFilter(this);
+        QCheckBox* box = new QCheckBox(this);
+        QHBoxLayout* layout = new QHBoxLayout();
+        //layout->addStrech();
+        layout->addWidget(edit);
+        layout->addWidget(box);
+        QString word = list[i];
+        connect(box, &QCheckBox::toggled, this, [=](bool if_checked) { selectItem(if_checked, word); });
+        mainLayout->addLayout(layout);
+        layout_list.push_back(layout);
+    }
+    mainLayout->installEventFilter(this);
 }
 
 void QtMultiSelectPopup::selectItem(bool state, const QString& item_text)
@@ -112,6 +84,19 @@ void QtMultiSelectPopup::paintEvent(QPaintEvent* event)
     painter.drawRect(bakcground_rect);
     painter.fillPath(background_path, Qt::white);
     event->accept();
+}
+
+bool QtMultiSelectPopup::eventFilter(QObject* object, QEvent* event)
+{
+
+    for (auto it = edit_list.begin(); it != edit_list.end(); it++)
+    {
+        if ((object == *it) && (event->type() == QEvent::MouseButtonRelease))
+        {
+            emit clickCatched(event->type());
+        }
+    }
+    return QWidget::eventFilter(object, event);
 }
 
 

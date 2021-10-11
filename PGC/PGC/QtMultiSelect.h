@@ -13,18 +13,18 @@ class QtMultiSelect : public QWidget
     Q_OBJECT
 
 public:
-    QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* parent = Q_NULLPTR);
+    QtMultiSelect(QWidget* parent = Q_NULLPTR);
 
     void adjustPopupPosition();
     QtMultiSelectPopup& getPopup() { return *popup; };
     QString getText();
 public slots:
 
-
 private slots:
     void onShowPopupButtonClicked();
     void onAddItem(const QString& item_text);
     void onRemoveItem(const QString& item_text);
+    void onClickCatch(int value);
 signals:
     void editingFinished();
 private:
@@ -34,7 +34,6 @@ private:
     QToolButton* button;
 
     QFont font;
-    int buttonHeight;
 
     QHBoxLayout* ctrlLayout;
 

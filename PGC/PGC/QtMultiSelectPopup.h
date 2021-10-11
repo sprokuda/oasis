@@ -19,27 +19,23 @@ class QtMultiSelectPopup : public QWidget//QFrame
     Q_OBJECT
 
 public:
-    QtMultiSelectPopup(const QFont& qfont, const int& bHeight, QWidget* parent = Q_NULLPTR);
-    void setTable(const QStringList& lst);
-    int width();
-    QTableWidget& getTable() { return *table; };
+    QtMultiSelectPopup(QWidget* parent = Q_NULLPTR);
+    ~QtMultiSelectPopup();
+    void setTable(const QStringList& list);
+
 signals:
     void addItem(const QString& text);
     void removeItem(const QString& text);
-
+    void clickCatched(int value);
+    void editingFinished();
 private:
 
-    int edit_width;
-    int check_width;
-    int header_width;
-    int total_width;
-
-    QTableWidget* table;
-//    QPushButton* hideButton;
-    QFont font;
-    int buttonHeight;
+    QVBoxLayout* mainLayout;
+    QList<QHBoxLayout*> layout_list;
+    QList<QLineEdit*> edit_list;
 
     void paintEvent(QPaintEvent* event);
+    bool eventFilter(QObject* object, QEvent* event);
 
 private slots:
 

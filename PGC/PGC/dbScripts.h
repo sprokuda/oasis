@@ -141,5 +141,5 @@ const char* crt_prcd_Production_7213 =
 "SET Prod = invoice + Adjust - discount - Writeoff;"
 "INSERT INTO PRODUCTION(Prd) VALUES(Prod);"
 "END"
-"@"
+"@";
 const char* dlt_prcd_Production_7213 = "DROP PROCEDURE Production ;";

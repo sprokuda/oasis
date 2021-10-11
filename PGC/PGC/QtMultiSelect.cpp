@@ -2,10 +2,10 @@
 
 extern QString workingDirectory;
 
-QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* parent)
-    : QWidget(parent), font(qfont), buttonHeight(bHeight)
+QtMultiSelect::QtMultiSelect( QWidget* parent)
+    : QWidget(parent) 
 {
-    popup = new QtMultiSelectPopup(font, buttonHeight, this);
+    popup = new QtMultiSelectPopup(this);
     popup->installEventFilter(this);
     popup->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     edit = new QLineEdit("", this);
@@ -32,6 +32,8 @@ QtMultiSelect::QtMultiSelect(const QFont& qfont, const int& bHeight, QWidget* pa
     connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
     connect(popup, SIGNAL(removeItem(QString)), SLOT(onRemoveItem(QString)));
+    connect(popup, SIGNAL(clickCatched(int)), SLOT(onClickCatch(int)));
+    connect(popup, SIGNAL(editingFinished),popup, SLOT(hide()));
 }
 
 bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
@@ -46,11 +48,23 @@ bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
         }
     }
     if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
-        popup->close();
+        popup->hide();
         emit editingFinished();
     }
 
+    if ((object == popup) && (event->type() == QEvent::MouseButtonRelease)) {
+        popup->hide();
+        emit editingFinished();
+    }
+
+
     return QWidget::eventFilter(object, event);
+}
+
+void QtMultiSelect::onClickCatch(int value)
+{
+//    edit->setText(QString::number(value));
+    popup->hide();
 }
 
 QString QtMultiSelect::getText()
@@ -68,10 +82,7 @@ void QtMultiSelect::adjustPopupPosition()
     int l, t, r, b;
     this->layout()->getContentsMargins(&l, &r, &t, &b);
 
-    int l1, t1, r1, b1;
-    this->layout()->getContentsMargins(&l1, &r1, &t1, &b1);
-
-    int lw = popup->getTable().lineWidth();
+    int lw = 1;// = this->lineWidth();
 
     QRect rect = edit->rect();
     QPoint bottomLeft = this->mapToGlobal(rect.topLeft());
