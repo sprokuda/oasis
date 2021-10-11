@@ -38,7 +38,8 @@ dbHandler::~dbHandler()
     query.exec(dlt_fncn_lostRecall_7210);
     query.exec(crt_fncn_apptbookEnd_7211);
     query.exec(crt_fncn_apptUsed_7212);
-    
+    query.exec(crt_prcd_Production_7213);
+
 }
 
 
@@ -100,6 +101,11 @@ void dbHandler::loadBooksAndFunctions()
     query.exec(crt_fncn_apptUsed_7212);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
+
+    query.exec(crt_prcd_Production_7213);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
 
     queryAppBook();
 }
