@@ -58,7 +58,55 @@ const char* crt_fncn_unbkRecall_729 =
 "@";
 const char* dlt_fncn_unbkRecall_729 = "DROP FUNCTION unbkRecall;";
 
+const char* crt_fncn_lostRecall_7210 =
+"@"
+"CREATE FUNCTION lostRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER"
+"READS SQL DATA"
+"BEGIN"
+"DECLARE lost INTEGER;"
+"DECLARE app INTEGER;"
+"SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate > RD - INTERVAL'1'DAY;"
+"IF app > 0 then"
+"SET lost = 0;"
+"ELSE SET lost = 1;"
+"END IF;"
+"RETURN(lost);"
+"END"
+"@";
+const char* dlt_fncn_lostRecall_7210 = "DROP FUNCTION lostRecall;";
 
+const char* crt_fncn_apptbookEnd_7211 =
+"@"
+"CREATE FUNCTION apptbookEnd() RETURNS INTEGER"
+"READS SQL DATA"
+"BEGIN"
+"DECLARE St INTEGER;"
+"DECLARE Hrs INTEGER;"
+"DECLARE En INTEGER;"
+"SELECT CAST(F1 AS INTEGER) INTO  St FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';"
+"SELECT CAST(F2 AS INTEGER) INTO  Hrs FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';"
+"SET En = St + Hrs + 1;"
+"RETURN(En);"
+"END"
+"@";
+const char* dlt_fncn_apptbookEnd_7211 = "DROP FUNCTION apptbookEnd;";
 
-
-
+const char* crt_fncn_apptUsed_7212 =
+"@"
+"CREATE FUNCTION apptUsed(SKEY VARCHAR(20), usd INTEGER, appEnd INTEGER) RETURNS INTEGER"
+"READS SQL DATA"
+"BEGIN"
+"DECLARE stHr INTEGER;"
+"DECLARE maxDur INTEGER;"
+"DECLARE usedTime INTEGER;"
+//"\r"
+"SET stHr = CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER);"
+"SET maxDur = (appEnd - StHr) * 60;"
+"IF usd > maxDur then"
+"SET usedTime = maxDur;"
+"ELSE SET usedTime = usd;"
+"END IF;"
+"RETURN(usedTime);"
+"END"
+"@";
+const char* dlt_fncn_apptUsed_7212 = "DROP FUNCTION apptUsed;";

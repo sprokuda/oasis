@@ -35,7 +35,10 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_CHURN_727);
     query.exec(dlt_tbl_Production_728);
     query.exec(dlt_fncn_unbkRecall_729);
-
+    query.exec(dlt_fncn_lostRecall_7210);
+    query.exec(crt_fncn_apptbookEnd_7211);
+    query.exec(crt_fncn_apptUsed_7212);
+    
 }
 
 
@@ -86,10 +89,19 @@ void dbHandler::loadBooksAndFunctions()
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
+    query.exec(crt_fncn_lostRecall_7210);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
 
-//    Sleep(3000);
+    query.exec(crt_fncn_apptbookEnd_7211);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec(crt_fncn_apptUsed_7212);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
     queryAppBook();
-    //emit allCompleted();
 }
 
 void dbHandler::queryAppBook()
