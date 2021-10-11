@@ -42,10 +42,10 @@ const char* ppl_tbl_Production_728 = "";
 const char* dlt_tbl_Production_728 = "DROP TABLE Production;";
 
 const char* crt_fncn_unbkRecall_729 =
-"@"
-"CREATE FUNCTION unbkRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER"
-"READS SQL DATA"
-"BEGIN"
+"@ "
+"CREATE FUNCTION unbkRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER "
+"READS SQL DATA "
+"BEGIN "
 "DECLARE unbooked INTEGER;"
 "DECLARE app INTEGER;"
 "SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate between RD and RD + INTERVAL'30'DAY;"
@@ -54,15 +54,15 @@ const char* crt_fncn_unbkRecall_729 =
 "ELSE SET unbooked = 1;"
 "END IF;"
 "RETURN(Unbooked);"
-"END"
-"@";
+"END "
+"@ ";
 const char* dlt_fncn_unbkRecall_729 = "DROP FUNCTION unbkRecall;";
 
 const char* crt_fncn_lostRecall_7210 =
-"@"
-"CREATE FUNCTION lostRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER"
-"READS SQL DATA"
-"BEGIN"
+"@ "
+"CREATE FUNCTION lostRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER "
+"READS SQL DATA "
+"BEGIN "
 "DECLARE lost INTEGER;"
 "DECLARE app INTEGER;"
 "SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate > RD - INTERVAL'1'DAY;"
@@ -71,15 +71,15 @@ const char* crt_fncn_lostRecall_7210 =
 "ELSE SET lost = 1;"
 "END IF;"
 "RETURN(lost);"
-"END"
-"@";
+"END "
+"@ ";
 const char* dlt_fncn_lostRecall_7210 = "DROP FUNCTION lostRecall;";
 
 const char* crt_fncn_apptbookEnd_7211 =
-"@"
-"CREATE FUNCTION apptbookEnd() RETURNS INTEGER"
-"READS SQL DATA"
-"BEGIN"
+"@ "
+"CREATE FUNCTION apptbookEnd() RETURNS INTEGER "
+"READS SQL DATA "
+"BEGIN "
 "DECLARE St INTEGER;"
 "DECLARE Hrs INTEGER;"
 "DECLARE En INTEGER;"
@@ -87,15 +87,15 @@ const char* crt_fncn_apptbookEnd_7211 =
 "SELECT CAST(F2 AS INTEGER) INTO  Hrs FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';"
 "SET En = St + Hrs + 1;"
 "RETURN(En);"
-"END"
-"@";
+"END "
+"@ ";
 const char* dlt_fncn_apptbookEnd_7211 = "DROP FUNCTION apptbookEnd;";
 
 const char* crt_fncn_apptUsed_7212 =
-"@"
-"CREATE FUNCTION apptUsed(SKEY VARCHAR(20), usd INTEGER, appEnd INTEGER) RETURNS INTEGER"
-"READS SQL DATA"
-"BEGIN"
+"@ "
+"CREATE FUNCTION apptUsed(SKEY VARCHAR(20), usd INTEGER, appEnd INTEGER) RETURNS INTEGER "
+"READS SQL DATA "
+"BEGIN "
 "DECLARE stHr INTEGER;"
 "DECLARE maxDur INTEGER;"
 "DECLARE usedTime INTEGER;"
@@ -107,15 +107,15 @@ const char* crt_fncn_apptUsed_7212 =
 "ELSE SET usedTime = usd;"
 "END IF;"
 "RETURN(usedTime);"
-"END"
-"@";
+"END "
+"@ ";
 const char* dlt_fncn_apptUsed_7212 = "DROP FUNCTION apptUsed;";
 
 const char* crt_prcd_Production_7213 =
-"@"
-"CREATE PROCEDURE  Production(IN A DATE, IN  B DATE)"
-"MODIFIES SQL DATA"
-"BEGIN"
+"@ "
+"CREATE PROCEDURE  Production(IN A DATE, IN  B DATE) "
+"MODIFIES SQL DATA "
+"BEGIN "
 "DECLARE invoice DECIMAL(15, 2);"
 "DECLARE Adjust DECIMAL(15, 2);"
 "DECLARE discount DECIMAL(15, 2);"
@@ -140,6 +140,6 @@ const char* crt_prcd_Production_7213 =
 "END IF;"
 "SET Prod = invoice + Adjust - discount - Writeoff;"
 "INSERT INTO PRODUCTION(Prd) VALUES(Prod);"
-"END"
-"@";
+"END "
+"@ ";
 const char* dlt_prcd_Production_7213 = "DROP PROCEDURE Production ;";
