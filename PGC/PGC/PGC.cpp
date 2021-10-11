@@ -178,12 +178,14 @@ void PGC::exctractData()
 
     QString start = convertDateForMimer(pickerStart->getDate());
     QString end = convertDateForMimer(pickerEnd->getDate());
+    QStringList books = booksSelect->getBooks();
 
     QMetaObject::invokeMethod(handler, "Extract",
         Qt::QueuedConnection,
 //                Qt::DirectConnection,
         Q_ARG(QString, start),
-        Q_ARG(QString, end)
+        Q_ARG(QString, end),
+        Q_ARG(QStringList, books)
 //        Q_ARG(QString, patched_file_path)
     );
 }

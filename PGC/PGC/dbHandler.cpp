@@ -106,16 +106,15 @@ void dbHandler::loadBooksAndFunctions()
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
-
     queryAppBook();
 }
 
 void dbHandler::queryAppBook()
 {
+    QSqlQuery query(db);
+
     const char* script = "SELECT * FROM APP_BOOK;";
     QStringList list;// = { "0022","0021","0023" };
-
-    QSqlQuery query(db);
 
     query.exec(script);
     cout << db.lastError().text().toStdString() << endl;
@@ -132,14 +131,14 @@ void dbHandler::queryAppBook()
     emit appBookReady(list);
 }
 
-void dbHandler::Extract(QString start,QString end)
+void dbHandler::Extract(QString start,QString end, QStringList books)
 {
     QSqlQuery query(db);
+
     query.exec(crt_tbl_Production_728);
     //Will be populated with a stored procedure
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
-
 
 
 //    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
@@ -161,6 +160,16 @@ void dbHandler::Extract(QString start,QString end)
     }
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
+
+    QString appSlot = "$appSlot";
+    QString iconCan = "$iconCan";
+    QString iconNS = "$iconNS";
+
+    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(start).arg(end)
+                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2));
+
+    cout << string_742.toStdString().c_str() << endl;
+//    query.exec(string_742.toStdString().c_str());
 
     emit extractionCompleted();
 }

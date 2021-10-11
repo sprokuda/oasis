@@ -143,3 +143,11 @@ const char* crt_prcd_Production_7213 =
 "END "
 "@ ";
 const char* dlt_prcd_Production_7213 = "DROP PROCEDURE Production ;";
+
+
+//"Select sum(timeused * $appSlot) / 60 as ptHr from paapplns where picturenumber <> $iconCan and picturenumber <> $iconNS AND SKEY BETWEEN " & "'" & Format($startDate, "YYYYMMDD") & "%' AND " & "'" & Format($endDate, "YYYYMMDD") & "%' and patnumber < > '000000' and (substring(skey from 13 for 4) = '$incCol1' OR substring(skey from 13 for 4) = '$incCol2' OR substring(skey from 13 for 4) = '$incCol3') and patnumber < >'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > $appStart - 1;"
+const char* query_Hours_Worked_742 =
+"Select sum(timeused * %1) / 60 as ptHr from paapplns where picturenumber <> %2"
+"and picturenumber <> %3 AND SKEY BETWEEN '%4%' AND '%5%'"
+"and patnumber < > '000000' and (substring(skey from 13 for 4) = '%6' OR substring(skey from 13 for 4) = '%7'"
+"OR substring(skey from 13 for 4) = '%8') and patnumber < >'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %2 - 1;";

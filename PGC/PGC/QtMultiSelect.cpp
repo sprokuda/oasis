@@ -72,6 +72,17 @@ QString QtMultiSelect::getText()
     return edit->text();
 }
 
+QStringList QtMultiSelect::getBooks()
+{
+    auto text = edit->text();
+
+    auto parts = text.split(";");
+//    parts.removeAt(parts.lastIndexOf(";"));
+    parts.removeAt(parts.size() - 1);
+
+    return parts;
+}
+
 
 void QtMultiSelect::adjustPopupPosition()
 {

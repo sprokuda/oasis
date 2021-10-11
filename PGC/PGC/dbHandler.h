@@ -20,7 +20,7 @@ public:
     Q_INVOKABLE void doQueries();
     Q_INVOKABLE void queryAppBook();
     Q_INVOKABLE void loadBooksAndFunctions();
-    Q_INVOKABLE void Extract(QString start, QString end);
+    Q_INVOKABLE void Extract(QString start, QString end, QStringList books);
     QSqlDatabase db;
 
 signals:
