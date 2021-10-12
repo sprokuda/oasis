@@ -17,6 +17,7 @@ QtMultiSelectPopup::QtMultiSelectPopup( QWidget* parent)
     this->setGraphicsEffect(shadow_effect);
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
+    installEventFilter(this);
 }
 
 QtMultiSelectPopup::~QtMultiSelectPopup()
@@ -41,6 +42,7 @@ void QtMultiSelectPopup::setTable(const QStringList& list)
     for (int i = 0; i < list.size(); i++)
     {
         QLineEdit* edit = new QLineEdit(list.at(i), this);
+        edit->setMaximumWidth(120);
         edit_list.push_back(edit);
         edit->setReadOnly(true);
         edit->installEventFilter(this);
@@ -98,6 +100,11 @@ bool QtMultiSelectPopup::eventFilter(QObject* object, QEvent* event)
         {
             emit clickCatched(event->type());
         }
+    }
+
+    if ((object == this) && (event->type() == QEvent::MouseButtonRelease))
+    {
+        emit clickCatched(event->type());
     }
     return QWidget::eventFilter(object, event);
 }
