@@ -8,7 +8,7 @@ QtMultiSelect::QtMultiSelect( QWidget* parent)
 {
     this->setFont(workingFont);
     popup = new QtMultiSelectPopup(this);
-    popup->installEventFilter(this);
+//    popup->installEventFilter(this);
     popup->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     edit = new QLineEdit("", this);
     edit->setReadOnly(true);
@@ -34,37 +34,6 @@ QtMultiSelect::QtMultiSelect( QWidget* parent)
     connect(popup, SIGNAL(removeItem(QString)), SLOT(onRemoveItem(QString)));
     connect(popup, SIGNAL(clickCatched(int)), SLOT(onClickCatch(int)));
     connect(popup, SIGNAL(editingFinished),popup, SLOT(hide()));
-}
-
-bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
-{
-    //if ((object == popup) && (event->type() == QEvent::KeyPress))
-    //{
-    //    auto* key_event = dynamic_cast<QKeyEvent*>(event);
-    //    if (key_event->key() == Qt::Key_Escape)
-    //    {
-    //        popup->hide();
-    //        emit editingFinished();
-    //    }
-    //}
-    //if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
-    //    popup->hide();
-    //    emit editingFinished();
-    //}
-
-    //if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick)) {
-    //    popup->hide();
-    //    emit editingFinished();
-    //}
-
-
-    //if ((object == popup) && (event->type() == QEvent::MouseButtonRelease)) {
-    //    popup->hide();
-    //    emit editingFinished();
-    //}
-
-
-    return QWidget::eventFilter(object, event);
 }
 
 void QtMultiSelect::onClickCatch(int value)
