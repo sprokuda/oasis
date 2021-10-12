@@ -1,14 +1,12 @@
 #include "QtDatePickerPopup.h"
 
 extern QString workingDirectory;
+extern QFont workingFont;
 
 QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     : QWidget(parent)
 {
-    QFont font = this->font();
-    font.setFamily("Calibri");
-    font.setPointSize(10);
-    this->setFont(font);
+    this->setFont(workingFont);
 
     calendar = new QCalendarWidget(this);
     calendar->setMaximumDate(QDate::currentDate());

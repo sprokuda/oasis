@@ -19,7 +19,7 @@ callDelay::~callDelay()
 
 void callDelay::doDelay()
 {
-    Sleep(50);
+    Sleep(250);
 	emit delayFinished();
 }
 

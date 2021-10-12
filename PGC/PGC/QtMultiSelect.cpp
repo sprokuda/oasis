@@ -1,10 +1,12 @@
 #include "QtMultiSelect.h"
 
 extern QString workingDirectory;
+extern QFont workingFont;
 
 QtMultiSelect::QtMultiSelect( QWidget* parent)
     : QWidget(parent) 
 {
+    this->setFont(workingFont);
     popup = new QtMultiSelectPopup(this);
     popup->installEventFilter(this);
     popup->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
@@ -26,8 +28,6 @@ QtMultiSelect::QtMultiSelect( QWidget* parent)
     ctrlLayout->setSpacing(0);
     ctrlLayout->setContentsMargins(0, 0, 0, 0);
     setLayout(ctrlLayout);
-
-    this->setFont(font);
 
     connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
@@ -52,10 +52,16 @@ bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
         emit editingFinished();
     }
 
-    if ((object == popup) && (event->type() == QEvent::MouseButtonRelease)) {
+    if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick)) {
         popup->hide();
         emit editingFinished();
     }
+
+
+    //if ((object == popup) && (event->type() == QEvent::MouseButtonRelease)) {
+    //    popup->hide();
+    //    emit editingFinished();
+    //}
 
 
     return QWidget::eventFilter(object, event);

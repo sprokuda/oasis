@@ -1,10 +1,12 @@
 #include "QtDatePicker.h"
 
 extern QString workingDirectory;
+extern QFont workingFont;
 
 QtDatePicker::QtDatePicker(QWidget* parent)
     : QWidget(parent)
 {
+    this->setFont(workingFont);
     popup = new QtDatePickerPopup(this);
     popup->installEventFilter(this);
 
@@ -28,7 +30,6 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     ctrlLayout->addWidget(button);
 
     setLayout(ctrlLayout);
-    
 
     connect(button, SIGNAL(clicked()), SLOT(onShowPopupButtonClicked()));
     connect(popup, SIGNAL(dateSelected(QDate)), SLOT(setDate(QDate)));
@@ -90,6 +91,10 @@ bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
     ////    }
     //}
     if ((object == popup) && (event->type() == QKeyEvent::WindowDeactivate)) {
+        popup->hide();
+        emit editingFinished();
+    }
+    if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick)) {
         popup->hide();
         emit editingFinished();
     }

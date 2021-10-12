@@ -1,33 +1,12 @@
 #include "PGC.h"
 
 extern QString workingDirectory;
+extern QFont workingFont;
 
 PGC::PGC(QWidget *parent)
     : QWidget(parent)
 {
-    buttonFont = new QFont("Calibri", 10, QFont::Medium);
-    smallFont = new QFont("Calibri", 8, QFont::Medium);
-    bigFont = new QFont("Calibri", 12, QFont::Medium);
-
-//    companyLogoQLabel = new QLabel(this);
-//    QPixmap logo = QPixmap(workingDirectory + "\\centaur-logo.png").scaled({ 100,36 }, Qt::KeepAspectRatioByExpanding);
-//    companyLogoQLabel->setPixmap(logo);
-//
-//    programLogoQLineEdit = new QLineEdit(this);
-////    programLogoQLineEdit->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter);
-//    programLogoQLineEdit->setEnabled(false);
-//    programLogoQLineEdit->setFixedHeight(36); //logo image height
-//    programLogoQLineEdit->setFixedWidth(180);
-//    programLogoQLineEdit->setFont(*bigFont);
-//
-//    programLogoQLineEdit->setText("OASIS PGC Data Extractor");
-//    programLogoQLineEdit->setAlignment(Qt::AlignCenter);
-//
-//    QHBoxLayout* logoLayout = new QHBoxLayout();
-//    logoLayout->addStretch();
-//    logoLayout->setContentsMargins(10, 10, 10, 10);
-//    logoLayout->addWidget(companyLogoQLabel);
-//    logoLayout->addWidget(programLogoQLineEdit);
+    this->setFont(workingFont);
     
     startDateLabel = new QLabel("Start Date",this);
     pickerStart = new QtDatePicker(this);
@@ -56,8 +35,8 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(this);
-//    QStringList books = { "000?","000?","000?","000?"};
-//    booksSelect->getPopup().setTable(books);
+    QStringList books = { "000?","000?","000?","000?"};
+    booksSelect->getPopup().setTable(books);
     booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     booksLayout->addStretch();
@@ -115,8 +94,6 @@ PGC::PGC(QWidget *parent)
     setLayout(mainLayout);
     setWindowTitle(tr("OASIS PGC Data Extractor"));
 
-    this->setFont(*buttonFont);
-
     spinner = new QtWaitingSpinner(this);
     handler = new dbHandler();
 
@@ -152,10 +129,6 @@ PGC::~PGC()
     delete practiceLayout;
 
     delete buttonLayout;
-
-    delete buttonFont;
-    delete smallFont;
-    delete bigFont;
 }
 
 void PGC::initialLoad()
@@ -192,14 +165,21 @@ void PGC::exctractData()
 
 bool PGC::checkBeforeExtract()
 {
-    if(pickerStart->getDate() >= pickerEnd->getDate())
+    bool ok;
+    QStringList list1 = pickerStart->getDate().split("/");
+    QDate start = QDate(list1.at(2).toInt(&ok), list1.at(1).toInt(&ok), list1.at(0).toInt(&ok));
+
+    QStringList list2 = pickerStart->getDate().split("/");
+    QDate end = QDate(list2.at(2).toInt(&ok), list2.at(1).toInt(&ok), list2.at(0).toInt(&ok));
+
+    if(start >= end)
     {
         QMessageBox msgBox(this);
         msgBox.setText("The Start Date cannot\nbe later or equial\nthan the End Date");
         msgBox.setIcon(QMessageBox::Warning);
         auto* ok = msgBox.addButton("Back to selection", QMessageBox::ActionRole);
 
-        msgBox.setFont(*buttonFont);
+        msgBox.setFont(workingFont);
 
         msgBox.exec();
         return false;
@@ -212,7 +192,7 @@ bool PGC::checkBeforeExtract()
         msgBox.setIcon(QMessageBox::Warning);
         auto* ok = msgBox.addButton("Back to selection", QMessageBox::ActionRole);
 
-        msgBox.setFont(*buttonFont);
+        msgBox.setFont(workingFont);
 
         msgBox.exec();
         return false;
@@ -224,7 +204,7 @@ bool PGC::checkBeforeExtract()
         msgBox.setIcon(QMessageBox::Warning);
         auto* ok = msgBox.addButton("Back to selection", QMessageBox::ActionRole);
 
-        msgBox.setFont(*buttonFont);
+        msgBox.setFont(workingFont);
 
         msgBox.exec();
         return false;
@@ -298,7 +278,7 @@ void PGC::exitProgram()
     auto* ok = msgBox.addButton("Exit Program", QMessageBox::ActionRole);
     auto* cancel = msgBox.addButton(QMessageBox::Cancel);
 
-    msgBox.setFont(*buttonFont);
+    msgBox.setFont(workingFont);
 
     msgBox.exec();
 

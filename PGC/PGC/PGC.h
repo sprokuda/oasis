@@ -9,6 +9,7 @@
 #include <QComboBox>
 #include <QMessageBox>
 #include <QTextBrowser>
+#include <QFont>
 
 #include <Qthread>
 
@@ -63,10 +64,6 @@ private:
     QHBoxLayout* buttonLayout;
 
     QTextBrowser* log;
-
-    QFont* buttonFont;
-    QFont* smallFont;
-    QFont* bigFont;
 
     size_t buttonWidth = 170;
     size_t buttonHeight = 30;

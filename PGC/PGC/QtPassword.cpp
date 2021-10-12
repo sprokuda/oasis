@@ -1,8 +1,11 @@
 #include "QtPassword.h"
 
+extern QFont workingFont;
+
 QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 		:QWidget(parent), font(qfont), buttonHeight(bHeight)
 {
+	this->setFont(workingFont);
 	label = new QLabel("Enter password:", this);
 	edit = new QLineEdit(this);
 	okButton = new QPushButton("Conform", this);

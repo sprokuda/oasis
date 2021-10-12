@@ -15,10 +15,14 @@ using namespace filesystem;
 
 QString workingDirectory;
 
+QFont workingFont;
+
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     ThreadLogStream qout(std::cout);
+
+    workingFont = QFont("Calibri", 10);
 
     workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
     qDebug() << workingDirectory;
