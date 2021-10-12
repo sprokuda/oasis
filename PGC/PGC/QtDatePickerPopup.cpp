@@ -103,6 +103,8 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
 
+    installEventFilter(this);
+
     connect(calendar, SIGNAL(clicked(QDate)), SLOT(onCalendarDateSelected(QDate)));
     connect(todayButton, SIGNAL(clicked()), this,SLOT(onTodayButton()));
 
@@ -133,6 +135,32 @@ void QtDatePickerPopup::onDelayFinished()
 {
     hide();
 }
+
+
+bool QtDatePickerPopup::eventFilter(QObject* object, QEvent* event)
+{
+
+    if ((object == this) && (event->type() == QEvent::KeyPress))
+    {
+        auto* key_event = dynamic_cast<QKeyEvent*>(event);
+        if (key_event->key() == Qt::Key_Escape)
+        {
+            QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
+        }
+    }
+
+    if ((object == this) && (event->type() == QKeyEvent::WindowDeactivate)) 
+    {
+        QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
+    }
+
+    if ((object == this) && (event->type() == QEvent::MouseButtonDblClick)) {
+        QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
+    }
+
+return QWidget::eventFilter(object, event);
+}
+
 
 void QtDatePickerPopup::paintEvent(QPaintEvent* event)
 {
