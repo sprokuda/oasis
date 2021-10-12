@@ -6,7 +6,9 @@ extern QFont workingFont;
 QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     : QWidget(parent)
 {
-    this->setFont(workingFont);
+    QFont localFont(workingFont.family(), workingFont.pointSize() - 1);
+    this->setFont(localFont);
+//    this->setFont(workingFont);
 
     calendar = new QCalendarWidget(this);
     calendar->setMaximumDate(QDate::currentDate());
@@ -16,6 +18,8 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
 //    cndrWidget->setDateEditEnabled(false);
     calendar->setSelectedDate(QDate::currentDate());
+
+    QTableView* tw = calendar->findChild<QTableView*>("qt_calendar_calendarview");
 
     QWidget* calendarNavBar = calendar->findChild<QWidget*>("qt_calendar_navigationbar");
     if (calendarNavBar) 
@@ -46,14 +50,14 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     if (call_btn)
     {
         QFont navigatorBarFont("Calibri", 10, QFont::Medium);
-        call_btn->setFont(navigatorBarFont);
+        call_btn->setFont(localFont);
     }
 
     call_btn = calendar->findChild<QToolButton*>("qt_calendar_yearbutton");
     if (call_btn)
     {
         QFont navigatorBarFont("Calibri", 10, QFont::Medium);
-        call_btn->setFont(navigatorBarFont);
+        call_btn->setFont(localFont);
     }
 
     QHBoxLayout* cndrLayout = new QHBoxLayout;

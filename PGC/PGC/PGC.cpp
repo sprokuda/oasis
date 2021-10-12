@@ -70,7 +70,7 @@ PGC::PGC(QWidget *parent)
     buttonLayout->addStretch();
 
     log = new QTextBrowser(this);
-
+    log->setFont(QFont(workingFont.family(), workingFont.pointSize() - 1));
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
     mainLayout->addLayout(startDateLayout);
     int l, t, r, b;
@@ -169,7 +169,7 @@ bool PGC::checkBeforeExtract()
     QStringList list1 = pickerStart->getDate().split("/");
     QDate start = QDate(list1.at(2).toInt(&ok), list1.at(1).toInt(&ok), list1.at(0).toInt(&ok));
 
-    QStringList list2 = pickerStart->getDate().split("/");
+    QStringList list2 = pickerEnd->getDate().split("/");
     QDate end = QDate(list2.at(2).toInt(&ok), list2.at(1).toInt(&ok), list2.at(0).toInt(&ok));
 
     if(start >= end)

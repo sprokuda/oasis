@@ -6,9 +6,9 @@ extern QFont workingFont;
 QtDatePicker::QtDatePicker(QWidget* parent)
     : QWidget(parent)
 {
-    this->setFont(workingFont);
     popup = new QtDatePickerPopup(this);
     popup->installEventFilter(this);
+
 
     edit = new QLineEdit(QDate::currentDate().toString("dd/MM/yyyy"), this);
     edit->setContentsMargins(0, 0, 0, 0);

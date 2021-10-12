@@ -69,7 +69,7 @@ bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
 
 void QtMultiSelect::onClickCatch(int value)
 {
-//    edit->setText(QString::number(value));
+    edit->setText(QString::number(value));
     popup->hide();
 }
 

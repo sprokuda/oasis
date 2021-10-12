@@ -6,6 +6,7 @@
 #include <QToolButton>
 #include <QLabel>
 #include <QDate>
+#include <QTableView>
 
 #include <QDesktopWidget>
 #include <QApplication>
