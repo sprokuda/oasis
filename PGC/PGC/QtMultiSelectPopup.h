@@ -14,6 +14,10 @@
 #include <QPainterPath>
 #include <QGraphicsDropShadowEffect>
 
+#include <QThread>
+
+#include "callDelay.h"
+
 class QtMultiSelectPopup : public QWidget//QFrame
 {
     Q_OBJECT
@@ -34,13 +38,16 @@ private:
     QList<QHBoxLayout*> layout_list;
     QList<QLineEdit*> edit_list;
 
+    QThread* thread;
+    callDelay* delay;
+
     void paintEvent(QPaintEvent* event);
     bool eventFilter(QObject* object, QEvent* event);
 
 private slots:
 
     void selectItem(bool state, const QString& item_text);
-
+    void onDelayFinished();
     void addDummyItem(const int state);
 };
 

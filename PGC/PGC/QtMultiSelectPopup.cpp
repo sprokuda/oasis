@@ -18,7 +18,15 @@ QtMultiSelectPopup::QtMultiSelectPopup( QWidget* parent)
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     installEventFilter(this);
+
+    delay = new callDelay();
+    thread = new QThread();
+    delay->moveToThread(thread);
+
+    connect(delay, SIGNAL(delayFinished()), this, SLOT(onDelayFinished()));
+    thread->start();
 }
+
 
 QtMultiSelectPopup::~QtMultiSelectPopup()
 {
@@ -30,9 +38,17 @@ QtMultiSelectPopup::~QtMultiSelectPopup()
     {
         delete* it;
     }
+
+    thread->quit();
+    thread->wait();
+    delete delay;
 }
 
 
+void QtMultiSelectPopup::onDelayFinished()
+{
+    hide();
+}
 
 
 void QtMultiSelectPopup::setTable(const QStringList& list)
@@ -98,13 +114,15 @@ bool QtMultiSelectPopup::eventFilter(QObject* object, QEvent* event)
     {
         if ((object == *it) && (event->type() == QEvent::MouseButtonRelease))
         {
-            emit clickCatched(event->type());
+//            emit clickCatched(event->type());
+            QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
         }
     }
 
     if ((object == this) && (event->type() == QEvent::MouseButtonRelease))
     {
-        emit clickCatched(event->type());
+//        emit clickCatched(event->type());
+        QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
     }
     return QWidget::eventFilter(object, event);
 }
