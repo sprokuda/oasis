@@ -35,6 +35,5 @@ private:
     QLineEdit* edit;
     QToolButton* button;
 
-    bool eventFilter(QObject* object, QEvent* event);
 };
 

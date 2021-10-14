@@ -7,8 +7,6 @@ QtDatePicker::QtDatePicker(QWidget* parent)
     : QWidget(parent)
 {
     popup = new QtDatePickerPopup(this);
-    popup->installEventFilter(this);
-
 
     edit = new QLineEdit(QDate::currentDate().toString("dd/MM/yyyy"), this);
     edit->setContentsMargins(0, 0, 0, 0);
@@ -65,35 +63,5 @@ void QtDatePicker::onShowPopupButtonClicked()
 }
 
 
-bool QtDatePicker::eventFilter(QObject* object, QEvent* event)
-{
-    if ((object == popup) && (event->type() == QEvent::KeyPress))
-    {
-        auto* key_event = dynamic_cast<QKeyEvent*>(event);
-        if (key_event->key() == Qt::Key_Escape)
-        {
-            popup->hide();
-            emit editingFinished();
-        }
-    }
-    //if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick))
-    //{
-    ////    auto* key_event = dynamic_cast<QKeyEvent*>(event);
-    ////   if (key_event->key() == Qt::Key_Escape)
-    ////    {
-    //        popup->hide();
-    //        emit editingFinished();
-    ////    }
-    //}
-    if ((object == popup) && (event->type() == QKeyEvent::WindowDeactivate)) {
-        popup->hide();
-        emit editingFinished();
-    }
-    if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick)) {
-        popup->hide();
-        emit editingFinished();
-    }
-    return QWidget::eventFilter(object, event);
-}
 
 

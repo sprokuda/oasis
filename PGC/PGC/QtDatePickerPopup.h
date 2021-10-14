@@ -40,6 +40,7 @@ private:
     QLabel* label;
     QToolButton* todayButton;
     void paintEvent(QPaintEvent* event);
+    bool eventFilter(QObject* object, QEvent* event);
 
     QThread* thread;
     callDelay* delay;

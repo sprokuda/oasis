@@ -39,7 +39,5 @@ private:
 
     QHBoxLayout* ctrlLayout;
 
-    bool eventFilter(QObject* object, QEvent* event);
-
 };
 

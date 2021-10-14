@@ -116,13 +116,36 @@ bool QtMultiSelectPopup::eventFilter(QObject* object, QEvent* event)
         if ((object == *it) && (event->type() == QEvent::MouseButtonRelease))
         {
 //            emit clickCatched(event->type());
+//            hide();
             QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
         }
     }
 
-    if ((object == this) && (event->type() == QEvent::MouseButtonRelease))
+    if ((object == this) && (event->type() == QEvent::KeyPress))
+    {
+        auto* key_event = dynamic_cast<QKeyEvent*>(event);
+        if (key_event->key() == Qt::Key_Escape)
+        {
+            QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
+        }
+    }
+
+    if ((object == this) && (event->type() == QKeyEvent::WindowDeactivate))
+    {
+        //        emit clickCatched(event->type());
+        //hide();
+        QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
+    }
+
+    if ((object == this) && (event->type() == QEvent::MouseButtonPress))
     {
 //        emit clickCatched(event->type());
+        QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
+    }
+
+    if ((object == this) && (event->type() == QEvent::MouseButtonDblClick))
+    {
+        //        emit clickCatched(event->type());
         QMetaObject::invokeMethod(delay, "doDelay", Qt::QueuedConnection);
     }
     return QWidget::eventFilter(object, event);
