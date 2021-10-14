@@ -36,36 +36,6 @@ QtMultiSelect::QtMultiSelect( QWidget* parent)
     connect(popup, SIGNAL(editingFinished),popup, SLOT(hide()));
 }
 
-bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
-{
-    //if ((object == popup) && (event->type() == QEvent::KeyPress))
-    //{
-    //    auto* key_event = dynamic_cast<QKeyEvent*>(event);
-    //    if (key_event->key() == Qt::Key_Escape)
-    //    {
-    //        popup->hide();
-    //        emit editingFinished();
-    //    }
-    //}
-    //if ((object == popup) && (event->type() == QEvent::WindowDeactivate)) {
-    //    popup->hide();
-    //    emit editingFinished();
-    //}
-
-    //if ((object == popup) && (event->type() == QEvent::MouseButtonDblClick)) {
-    //    popup->hide();
-    //    emit editingFinished();
-    //}
-
-
-    //if ((object == popup) && (event->type() == QEvent::MouseButtonRelease)) {
-    //    popup->hide();
-    //    emit editingFinished();
-    //}
-
-
-    return QWidget::eventFilter(object, event);
-}
 
 void QtMultiSelect::selectAllBooks()
 {
