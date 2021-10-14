@@ -63,6 +63,7 @@ void QtMultiSelectPopup::setTable(const QStringList& list)
         edit->setReadOnly(true);
         edit->installEventFilter(this);
         QCheckBox* box = new QCheckBox(this);
+        box_list.push_back(box);
         QHBoxLayout* layout = new QHBoxLayout();
         //layout->addStrech();
         layout->addWidget(edit);

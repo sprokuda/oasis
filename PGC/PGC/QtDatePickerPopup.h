@@ -26,7 +26,7 @@ class QtDatePickerPopup : public QWidget
 public:
     QtDatePickerPopup(QWidget* parent = Q_NULLPTR);
     ~QtDatePickerPopup();
-    void setDate(const QString& text);
+    void setDate(const QDate& date);
 public slots:
     void onTodayButton();
 

@@ -18,12 +18,12 @@ public:
 
     void adjustPopupPosition();
     QString getDate();
-
+    void setDate(QDate date);
 public slots:
 
 private slots:
     void onShowPopupButtonClicked();
-    void setDate(QDate date);
+
 signals:
 
     void editingFinished();

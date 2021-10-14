@@ -67,6 +67,15 @@ bool QtMultiSelect::eventFilter(QObject* object, QEvent* event)
     return QWidget::eventFilter(object, event);
 }
 
+void QtMultiSelect::selectAllBooks()
+{
+    auto& list = popup->getBoxList();
+    for (auto it = list.begin(); it != list.end(); it++)
+    {
+        (*it)->setCheckState(Qt::Checked);
+    }
+}
+
 void QtMultiSelect::onClickCatch(int value)
 {
     edit->setText(QString::number(value));

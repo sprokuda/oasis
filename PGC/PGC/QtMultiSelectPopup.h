@@ -26,7 +26,7 @@ public:
     QtMultiSelectPopup(QWidget* parent = Q_NULLPTR);
     ~QtMultiSelectPopup();
     void setTable(const QStringList& list);
-
+    QList<QCheckBox*>& getBoxList() { return box_list; };
 signals:
     void addItem(const QString& text);
     void removeItem(const QString& text);
@@ -37,6 +37,7 @@ private:
     QVBoxLayout* mainLayout;
     QList<QHBoxLayout*> layout_list;
     QList<QLineEdit*> edit_list;
+    QList<QCheckBox*> box_list;
 
     QThread* thread;
     callDelay* delay;

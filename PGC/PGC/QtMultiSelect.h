@@ -19,6 +19,7 @@ public:
     QtMultiSelectPopup& getPopup() { return *popup; };
     QString getText();
     QStringList getBooks();
+    void selectAllBooks();
 public slots:
 
 private slots:

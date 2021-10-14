@@ -40,17 +40,12 @@ QString QtDatePicker::getDate()
     return edit->text();
 }
 
-void QtDatePicker::setDate(QDate date)
+void QtDatePicker::setDate(const QDate date)
 {
     edit->setText(date.toString("dd/MM/yyyy"));
- //   popup->close();
-
-    int begin = 2;
-    int end = 5;
- //   edit->setSelection(3, 4);
-
-    //QString::number(QDate::currentDate().month()) + "/" + QString::number(QDate::currentDate().year())
+    popup->setDate(date);
 }
+
 
 void QtDatePicker::adjustPopupPosition()
 {
@@ -65,7 +60,7 @@ void QtDatePicker::adjustPopupPosition()
 void QtDatePicker::onShowPopupButtonClicked()
 {
         adjustPopupPosition();
-        popup->setDate(QDate::currentDate().toString("dd/MM/yyyy"));
+        popup->setDate(QDate::currentDate());
         popup->show();
 }
 

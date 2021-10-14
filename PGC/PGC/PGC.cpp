@@ -10,6 +10,7 @@ PGC::PGC(QWidget *parent)
     
     startDateLabel = new QLabel("Start Date",this);
     pickerStart = new QtDatePicker(this);
+    pickerStart->setDate(QDate(2020, 7, 1));
     startDateLayout = new QHBoxLayout();
 //    startDateLayout->setContentsMargins(1, 1, 1, 1);
     startDateLayout->addStretch();
@@ -18,6 +19,7 @@ PGC::PGC(QWidget *parent)
 
     endDateLabel = new QLabel("End Date",this);
     pickerEnd = new QtDatePicker(this);
+    pickerEnd->setDate(QDate(2020, 9, 30));
     endDateLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     endDateLayout->addStretch();
@@ -35,8 +37,9 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(this);
-    QStringList books = { "000?","000?","000?","000?"};
+    QStringList books = { "book1","book2","book3","book4"};
     booksSelect->getPopup().setTable(books);
+    booksSelect->selectAllBooks();
     booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     booksLayout->addStretch();
@@ -46,6 +49,7 @@ PGC::PGC(QWidget *parent)
 
     practiceNameLabel = new QLabel("Practice Name", this);
     practiceName = new QLineEdit(this);
+    practiceName->setText("test practice");
 
     practiceLayout = new QHBoxLayout();
 //    practiceLayout->setContentsMargins(10, 10, 10, 10);
