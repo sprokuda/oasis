@@ -28,5 +28,12 @@ signals:
     void appBookReady(QStringList list);
     void extractionCompleted();
 
+private:
+    const int appSlot = 5;
+    const int iconCan;
+    int iconNS;
+    int appStart;
+    int appEnd;
+
 };
 

@@ -161,39 +161,31 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 //    cout << db.lastError().text().toStdString() << endl;
 //    fflush(stdout);
 
-    QString appSlot = "$appSlot";
-    QString iconCan = "$iconCan";
-    QString iconNS = "$iconNS";
-    QString appStart = "$appStart";
-    QString appEnd = "$appEnd";
+//    appSlot = 5;
+    iconCan = 111;
+    iconNS = 222;
+    appStart = 22;
+    appEnd = 33;
 
-    const char* glb_appSlot = "SELECT CAST(F2 AS INTEGER) + 1 AS appbooklength FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
-    query.exec(glb_appSlot);
-    query.next();
-    QString appSlot_tmp = query.value(0).toString();
-    bool ok;
-    int tmp =  60/appSlot_tmp.toInt(&ok);
-//    cout << tmp << endl;
-    appSlot = QString::number(tmp);
-    cout << appSlot.toStdString().c_str() << endl;
 
+    cout << appSlot << endl;
 
     const char* glb_iconCan = "Select CAST(F5 AS INTEGER)  as CAN from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE' ; ";
     query.exec(glb_iconCan);
     query.next();
-    iconCan = query.value(0).toString();
-    cout << iconCan.toStdString().c_str() << endl;
+    iconCan = query.value(0).toInt();
+    cout << iconCan << endl;
 
     const char* glb_iconNS = "Select CAST(F6 AS INTEGER)  as NS from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE'; ";
     query.exec(glb_iconNS);
     query.next();
-    iconNS = query.value(0).toString();
-    cout << iconNS.toStdString().c_str() << endl;
+    iconNS = query.value(0).toInt();
+    cout << iconNS << endl;
 
     const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
     query.exec(glb_appStart);
     query.next();
-//    appStart = query.value(0).toInt();
+    appStart = query.value(0).toInt();
     cout << appStart << endl;
 
     const char* glb_appEnd = " Select apptbookend() FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
