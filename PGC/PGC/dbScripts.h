@@ -151,3 +151,13 @@ const char* query_Hours_Worked_742 =
 "and picturenumber <> %3  AND SKEY BETWEEN '%4%'  AND '%5%' "
 "and patnumber <> '000000' and (substring(skey from 13 for 4) = '%6' OR substring(skey from 13 for 4) = '%7' "
 "OR substring(skey from 13 for 4) = '%8')  and patnumber <>'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %9;";
+
+const char* query_Hours_Worked_742_base =
+"Select sum(timeused * %1)/60 as ptHr from paapplns where picturenumber <> %2 "
+"AND picturenumber <> %3 "
+"AND SKEY BETWEEN '%4%'  AND '%5%' "
+"AND patnumber <> '000000'"
+"AND patnumber <>'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
+"AND ";
+const char* query_Hours_Worked_742_book =
+"(substring(skey from 13 for 4) = '%1' OR";

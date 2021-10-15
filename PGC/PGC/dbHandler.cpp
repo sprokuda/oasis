@@ -193,23 +193,40 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
     query.exec(glb_appStart);
     query.next();
-    appStart = query.value(0).toString();
-    cout << appStart.toStdString().c_str() << endl;
+//    appStart = query.value(0).toInt();
+    cout << appStart << endl;
 
     const char* glb_appEnd = " Select apptbookend() FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
     query.exec(glb_appEnd);
     query.next();
-    appEnd = query.value(0).toString();
-    cout << appEnd.toStdString().c_str() << endl;
+//    appEnd = query.value(0).toInt();
+    cout << appEnd << endl;
 
 
     QString startDate = "20200701";
     QString endDate = "20200731";
 
-    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
-                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart.toInt(&ok)-1);
 
-    cout << string_742.toStdString().c_str() << endl;
+
+
+
+    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
+                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart-1);
+
+    QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
+    for (int i = 0; i < books.size(); i++)
+    {
+        if (i < books.size() - 1)
+            string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)));
+        else
+        {
+            string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)).remove(QString("OR")));
+            string_742_new.append(";");
+        }
+    }
+
+
+    cout << string_742_new.toStdString().c_str() << endl;
     query.exec(string_742.toStdString().c_str());
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
