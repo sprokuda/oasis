@@ -141,63 +141,8 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     fflush(stdout);
 
 
-////    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
-//    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
-//    cout << string_726.toStdString().c_str() << endl;
-//
-//    query.exec(string_726.toStdString().c_str());
-//    cout << db.lastError().text().toStdString() << endl;
-//    fflush(stdout);
-//
-//    query.exec("SELECT * FROM ITEM_ANALYSIS;");
-//
-//    while (query.next())
-//    {
-//            cout << query.value(0).toString().toStdString() << "\t";
-//            cout << query.value(1).toString().toStdString() << "\t ";
-//            cout << query.value(2).toString().toStdString() << "\n";
-//            fflush(stdout);
-//    }
-//    cout << db.lastError().text().toStdString() << endl;
-//    fflush(stdout);
-
-//    appSlot = 5;
-    iconCan = 111;
-    iconNS = 222;
-    appStart = 22;
-    appEnd = 33;
-
-
-    cout << appSlot << endl;
-
-    const char* glb_iconCan = "Select CAST(F5 AS INTEGER)  as CAN from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE' ; ";
-    query.exec(glb_iconCan);
-    query.next();
-    iconCan = query.value(0).toInt();
-    cout << iconCan << endl;
-
-    const char* glb_iconNS = "Select CAST(F6 AS INTEGER)  as NS from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE'; ";
-    query.exec(glb_iconNS);
-    query.next();
-    iconNS = query.value(0).toInt();
-    cout << iconNS << endl;
-
-    const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
-    query.exec(glb_appStart);
-    query.next();
-    appStart = query.value(0).toInt();
-    cout << appStart << endl;
-
-    const char* glb_appEnd = " Select apptbookend() FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
-    query.exec(glb_appEnd);
-    query.next();
-//    appEnd = query.value(0).toInt();
-    cout << appEnd << endl;
-
-
-    QString startDate = "20200701";
-    QString endDate = "20200731";
-
+    setGlobals(start, end);
+    makeItemAnalysisTable(start, end);
 
 
 
@@ -230,6 +175,87 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     fflush(stdout);
     emit extractionCompleted();
 }
+
+
+int dbHandler::apptBookEnd()
+{
+    const char* crt_st = "SELECT CAST(F1 AS INTEGER) FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
+    const char* crt_hrs = "SELECT CAST(F2 AS INTEGER) INTO  FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000'";
+
+    QSqlQuery query(db);
+
+    query.exec(crt_st);
+    query.next();
+    int st = query.value(0).toInt();
+
+    query.exec(crt_hrs);
+    query.next();
+    int hrs = query.value(0).toInt();
+
+    return st + hrs + 1;
+}
+
+void dbHandler::makeItemAnalysisTable(QString start, QString end)
+{
+    QSqlQuery query(db);
+    //    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
+    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
+    cout << string_726.toStdString().c_str() << endl;
+
+    query.exec(string_726.toStdString().c_str());
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+    query.exec("SELECT * FROM ITEM_ANALYSIS;");
+
+    while (query.next())
+    {
+            cout << query.value(0).toString().toStdString() << "\t";
+            cout << query.value(1).toString().toStdString() << "\t ";
+            cout << query.value(2).toString().toStdString() << "\n";
+            fflush(stdout);
+    }
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+}
+
+void dbHandler::setGlobals(QString start, QString end)
+{
+    iconCan = 111;
+    iconNS = 222;
+    appStart = 22;
+    appEnd = 33;
+
+    QSqlQuery query(db);
+
+    startDate = start.remove("-");
+    endDate = end.remove("-");
+
+    cout << appSlot << endl;
+
+    const char* glb_iconCan = "Select CAST(F5 AS INTEGER)  as CAN from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE' ; ";
+    query.exec(glb_iconCan);
+    query.next();
+    iconCan = query.value(0).toInt();
+    cout << iconCan << endl;
+
+    const char* glb_iconNS = "Select CAST(F6 AS INTEGER)  as NS from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE'; ";
+    query.exec(glb_iconNS);
+    query.next();
+    iconNS = query.value(0).toInt();
+    cout << iconNS << endl;
+
+    const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
+    query.exec(glb_appStart);
+    query.next();
+    appStart = query.value(0).toInt();
+    cout << appStart << endl;
+
+    appEnd = apptBookEnd();
+    cout << appEnd << endl;
+}
+
+
 
 void dbHandler::doQueries()
 {

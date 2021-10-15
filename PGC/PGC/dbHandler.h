@@ -30,10 +30,16 @@ signals:
 
 private:
     const int appSlot = 5;
-    const int iconCan;
+    int iconCan;
     int iconNS;
     int appStart;
     int appEnd;
+    QString startDate;
+    QString endDate;
+
+    int apptBookEnd();
+    void setGlobals(QString start, QString end);
+    void makeItemAnalysisTable(QString start, QString end);
 
 };
 
