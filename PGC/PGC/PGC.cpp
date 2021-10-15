@@ -19,7 +19,7 @@ PGC::PGC(QWidget *parent)
 
     endDateLabel = new QLabel("End Date",this);
     pickerEnd = new QtDatePicker(this);
-    pickerEnd->setDate(QDate(2020, 9, 30));
+    pickerEnd->setDate(QDate(2020, 7, 31));
     endDateLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     endDateLayout->addStretch();
@@ -37,8 +37,8 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(this);
-    QStringList books = { "book1","book2","book3","book4"};
-    booksSelect->getPopup().setTable(books);
+//    QStringList books = { "book1","book2","book3","book4"};
+//    booksSelect->getPopup().setTable(books);
     booksSelect->selectAllBooks();
     booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
@@ -238,7 +238,7 @@ void PGC::onQueryAppBook(QStringList list)
        list1 << "000" + list.at(i) ;// = QString::fromLatin1(zero) + list.at(i);
     }
     booksSelect->getPopup().setTable(list1);
-
+    booksSelect->selectAllBooks();
     this->setEnabled(true);
 }
 

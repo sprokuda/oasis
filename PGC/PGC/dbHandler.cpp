@@ -26,6 +26,7 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
 dbHandler::~dbHandler()
 {
     QSqlQuery query(db);
+#if 0
     query.exec(dlt_tbl_FIRST_INV_721);
     query.exec(dlt_tbl_LAST_INV_722);
     query.exec(dlt_tbl_FUT_APP_723);
@@ -39,13 +40,15 @@ dbHandler::~dbHandler()
     query.exec(dlt_fncn_apptbookEnd_7211);
     query.exec(dlt_fncn_apptUsed_7212);
     query.exec(dlt_prcd_Production_7213);
-
+#endif
 }
 
 
 void dbHandler::loadBooksAndFunctions()
 {
     QSqlQuery query(db);
+
+#if 0
 
     query.exec(crt_tbl_FIRST_INV_721);
     query.exec(ppl_tbl_FIRST_INV_721);
@@ -87,8 +90,14 @@ void dbHandler::loadBooksAndFunctions()
     fflush(stdout);
 
     query.exec(crt_fncn_unbkRecall_729);
+    query.next();
+    cout << query.value(0).toString().toStdString() << endl;
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
+
+//    cout << crt_fncn_unbkRecall_729 << endl;
+//    fflush(stdout);
+
 
     query.exec(crt_fncn_lostRecall_7210);
     cout << db.lastError().text().toStdString() << endl;
@@ -105,6 +114,8 @@ void dbHandler::loadBooksAndFunctions()
     query.exec(crt_prcd_Production_7213);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
+
+#endif
 
     queryAppBook();
 }
@@ -147,24 +158,26 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 
 
 
-    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
-                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart-1);
+//    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
+//                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart-1);
 
     QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     for (int i = 0; i < books.size(); i++)
     {
+        if(i == 0) string_742_new.append("(");
+
         if (i < books.size() - 1)
             string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)));
         else
         {
             string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)).remove(QString("OR")));
-            string_742_new.append(";");
+            string_742_new.append(");");
         }
     }
 
 
     cout << string_742_new.toStdString().c_str() << endl;
-    query.exec(string_742.toStdString().c_str());
+    query.exec(string_742_new.toStdString().c_str());
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
     query.next();
@@ -208,13 +221,13 @@ void dbHandler::makeItemAnalysisTable(QString start, QString end)
 
     query.exec("SELECT * FROM ITEM_ANALYSIS;");
 
-    while (query.next())
-    {
-            cout << query.value(0).toString().toStdString() << "\t";
-            cout << query.value(1).toString().toStdString() << "\t ";
-            cout << query.value(2).toString().toStdString() << "\n";
-            fflush(stdout);
-    }
+    //while (query.next())
+    //{
+    //        cout << query.value(0).toString().toStdString() << "\t";
+    //        cout << query.value(1).toString().toStdString() << "\t ";
+    //        cout << query.value(2).toString().toStdString() << "\n";
+    //        fflush(stdout);
+    //}
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 }

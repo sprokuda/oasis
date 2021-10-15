@@ -42,19 +42,19 @@ const char* ppl_tbl_Production_728 = "";
 const char* dlt_tbl_Production_728 = "DROP TABLE Production;";
 
 const char* crt_fncn_unbkRecall_729 =
-"@ "
-"CREATE FUNCTION unbkRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER "
-"READS SQL DATA "
-"BEGIN "
-"DECLARE unbooked INTEGER;"
-"DECLARE app INTEGER;"
-"SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate between RD and RD + INTERVAL'30'DAY;"
-"IF app > 0 then "
-"SET unbooked = 0;"
-"ELSE SET unbooked = 1;"
-"END IF;"
-"RETURN(Unbooked);"
-"END "
+"@ \n"
+"CREATE FUNCTION unbkRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER \n"
+"READS SQL DATA \n"
+"BEGIN \n"
+"DECLARE unbooked INTEGER; \n"
+"DECLARE app INTEGER; \n"
+"SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate between RD and RD + INTERVAL'30'DAY; \n"
+"IF app > 0 then \n"
+"SET unbooked = 0; \n"
+"ELSE SET unbooked = 1; \n"
+"END IF; \n"
+"RETURN(Unbooked); \n"
+"END \n"
 "@ ";
 const char* dlt_fncn_unbkRecall_729 = "DROP FUNCTION unbkRecall;";
 
@@ -156,8 +156,9 @@ const char* query_Hours_Worked_742_base =
 "Select sum(timeused * %1)/60 as ptHr from paapplns where picturenumber <> %2 "
 "AND picturenumber <> %3 "
 "AND SKEY BETWEEN '%4%'  AND '%5%' "
-"AND patnumber <> '000000'"
-"AND patnumber <>'' AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
+"AND patnumber <> '000000' "
+"AND patnumber <>'' "
+"AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
 "AND ";
 const char* query_Hours_Worked_742_book =
-"(substring(skey from 13 for 4) = '%1' OR";
+"substring(skey from 13 for 4) = '%1' OR ";
