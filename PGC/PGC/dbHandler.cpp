@@ -163,30 +163,39 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 //    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
 //                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart-1);
 
-    QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
-    for (int i = 0; i < books.size(); i++)
-    {
-        if(i == 0) string_742_new.append("(");
+    //QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
+    //for (int i = 0; i < books.size(); i++)
+    //{
+    //    if(i == 0) string_742_new.append("(");
 
-        if (i < books.size() - 1)
-            string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)));
-        else
-        {
-            string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)).remove(QString("OR")));
-            string_742_new.append(");");
-        }
-    }
+    //    if (i < books.size() - 1)
+    //        string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)));
+    //    else
+    //    {
+    //        string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)).remove(QString("OR")));
+    //        string_742_new.append(");");
+    //    }
+    //}
 
-    cout << string_742_new.toStdString().c_str() << endl;
-    query.exec(string_742_new.toStdString().c_str());
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
-    query.next();
-    QString result = query.value(0).toString();
-    cout << result.toStdString() << endl;
-    fflush(stdout);
+    //cout << string_742_new.toStdString().c_str() << endl;
+    //query.exec(string_742_new.toStdString().c_str());
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
+    //query.next();
+    //QString result = query.value(0).toString();
+    //cout << result.toStdString() << endl;
+    //fflush(stdout);
 
-    cout << getUnbookedRecalls("2021-07-01", "2021-07-05") << endl;
+    QDateTime time(QDate::currentDate());
+    auto start_time = time.currentMSecsSinceEpoch();
+
+    //cout << getUnbookedRecalls("2021-07-01", "2021-07-31") << endl;
+    //cout << time.currentMSecsSinceEpoch() - start_time << endl;
+    //fflush(stdout);
+
+    start_time = time.currentMSecsSinceEpoch();
+    cout << getLostRecalls("2021-07-01", "2021-07-31") << endl;
+    cout << time.currentMSecsSinceEpoch() - start_time << endl;
     fflush(stdout);
 
     emit extractionCompleted();
@@ -321,6 +330,59 @@ int dbHandler::getUnbookedRecalls(QString start, QString end)
 //        cout << datecreated.toStdString() << endl;
 //        cout << unbkRecall(patnumber, datecreated) << endl;
         result += unbkRecall(patnumber, datecreated);
+    }
+    return result;
+}
+
+
+int dbHandler::lostRecall(QString PT, QString RD)
+{
+    QSqlQuery query(db);
+//    const char* script = "SELECT  count(SKEY)  from paapplns where patnumber = '%1' and entrydate between date'%2' and date'%3' + INTERVAL'30'DAY;";
+    const char* script = "SELECT  count(SKEY)  from paapplns where patnumber = '%1' and entrydate > date'%2' - INTERVAL'1'DAY";
+    QString str = QString(script).arg(PT).arg(RD);
+
+    query.exec(str.toStdString().c_str());
+    query.next();
+//  cout << query.value(0).toString().toStdString() << endl;
+    int app = query.value(0).toInt();
+    int lost;
+    if (app > 0) lost = 0;
+    else lost = 1;
+
+    return lost;
+
+//@ 
+//CREATE FUNCTION lostRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER
+//READS SQL DATA
+//BEGIN
+//DECLARE lost INTEGER;
+//DECLARE app INTEGER;
+//SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate > RD - INTERVAL'1'DAY;
+//IF app > 0 then
+//SET lost = 0;
+//ELSE SET lost = 1;
+//END IF;
+//RETURN(lost);
+//END
+//@
+}
+
+int dbHandler::getLostRecalls(QString start, QString end)
+{
+    int result = 0;
+    QSqlQuery query(db);
+    QString str = QString("Select * from ptpatnts where details like 'Recall%'  and datecreated between date'%1' and date'%2';").arg(start).arg(end);
+
+    query.exec(str.toStdString().c_str());
+    while (query.next())
+    {
+        QString patnumber = query.value(0).toString();
+        //        cout << patnumber.toStdString() << endl;
+        QString datecreated = query.value(4).toString();
+        //        cout << datecreated.toStdString() << endl;
+        //        cout << unbkRecall(patnumber, datecreated) << endl;
+        result += lostRecall(patnumber, datecreated);
     }
     return result;
 }

@@ -6,9 +6,9 @@
 #include <QSqlRecord>
 #include <QSqlError>
 #include <QVariant>
+#include <QDateTime>
 #include <iostream>
-#include <vector>
-//#include "dbScripts.h"
+
 
 class dbHandler : public QObject
 {
@@ -47,5 +47,9 @@ private:
 
     int unbkRecall(QString PT, QString RD);
     int getUnbookedRecalls(QString start, QString end);
+
+    int lostRecall(QString PT, QString RD);
+    int getLostRecalls(QString start, QString end);
 };
+
 
