@@ -7,7 +7,7 @@
 #include <QSqlError>
 #include <QVariant>
 #include <iostream>
-
+#include <vector>
 //#include "dbScripts.h"
 
 class dbHandler : public QObject
@@ -37,9 +37,15 @@ private:
     QString startDate;
     QString endDate;
 
+    QString start_date;
+    QString end_date;
+
     int apptBookEnd();
     void setGlobals(QString start, QString end);
     void makeItemAnalysisTable(QString start, QString end);
 
+
+    int unbkRecall(QString PT, QString RD);
+    int getUnbookedRecalls(QString start, QString end);
 };
 

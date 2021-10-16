@@ -3,6 +3,8 @@
 #include "dbHandler.h"
 #include "dbScripts.h"
 
+
+
 using namespace std;
 
 //extern const char* crt_tbl_FIRST_INV_721;
@@ -175,17 +177,18 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
         }
     }
 
-
     cout << string_742_new.toStdString().c_str() << endl;
     query.exec(string_742_new.toStdString().c_str());
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
     query.next();
     QString result = query.value(0).toString();
-//    cout << query.value(0).toString().toStdString().c_str() << endl;
-    cout << query.value(0).toString().toStdString().c_str() << endl;
-//    cout << query.value(2).toString().toStdString().c_str() << endl;
+    cout << result.toStdString() << endl;
     fflush(stdout);
+
+    cout << getUnbookedRecalls("2021-07-01", "2021-07-05") << endl;
+    fflush(stdout);
+
     emit extractionCompleted();
 }
 
@@ -241,6 +244,9 @@ void dbHandler::setGlobals(QString start, QString end)
 
     QSqlQuery query(db);
 
+    start_date = start;
+    end_date = end;
+
     startDate = start.remove("-");
     endDate = end.remove("-");
 
@@ -268,7 +274,56 @@ void dbHandler::setGlobals(QString start, QString end)
     cout << appEnd << endl;
 }
 
+int dbHandler::unbkRecall(QString PT, QString RD)
+{
+    QSqlQuery query(db);
+    const char* script = "SELECT  count(SKEY)  from paapplns where patnumber = '%1' and entrydate between date'%2' and date'%3' + INTERVAL'30'DAY;";
+    QString str =  QString(script).arg(PT).arg(RD).arg(RD);
 
+    query.exec(str.toStdString().c_str());
+    query.next();
+ //   cout << query.value(0).toString().toStdString() << endl;
+    int app = query.value(0).toInt();
+    int unbooked;
+    if (app > 0) unbooked = 0;
+    else unbooked = 1;
+
+    return unbooked;
+    
+//@ 
+//CREATE FUNCTION unbkRecall(PT VARCHAR(6), RD DATE) RETURNS INTEGER
+//READS SQL DATA
+//BEGIN
+//DECLARE unbooked INTEGER;
+//DECLARE app INTEGER;
+//SELECT  count(SKEY)  INTO app  from paapplns where patnumber = PT and entrydate between RD and RD + INTERVAL'30'DAY;
+//IF app > 0 then
+//SET unbooked = 0;
+//ELSE SET unbooked = 1;
+//END IF;
+//RETURN(Unbooked);
+//END
+//@
+}
+
+int dbHandler::getUnbookedRecalls(QString start, QString end)
+{
+    int result = 0;
+    QSqlQuery query(db);
+    QString str = QString("Select * from ptpatnts where details like 'Recall%'  and datecreated between date'%1' and date'%2';").arg(start).arg(end);
+
+    query.exec(str.toStdString().c_str());
+    while (query.next())
+    {
+        QString patnumber = query.value(0).toString();
+//        cout << patnumber.toStdString() << endl;
+        QString datecreated = query.value(4).toString();
+//        cout << datecreated.toStdString() << endl;
+//        cout << unbkRecall(patnumber, datecreated) << endl;
+        result += unbkRecall(patnumber, datecreated);
+    }
+    return result;
+}
 
 void dbHandler::doQueries()
 {
