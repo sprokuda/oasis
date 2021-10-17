@@ -29,20 +29,23 @@ signals:
     void extractionCompleted();
 
 private:
-    const int appSlot = 5;
-    int iconCan;
-    int iconNS;
-    int appStart;
-    int appEnd;
-    QString startDate;
-    QString endDate;
+    const int m_appSlot = 5;
+    int m_iconCan;
+    int m_iconNS;
+    int m_appStart;
+    int m_appEnd;
+    QString m_startDate;
+    QString m_endDate;
 
-    QString start_date;
-    QString end_date;
+    QString m_start_date;
+    QString m_end_date;
+
+    QStringList m_books;
 
     int apptBookEnd();
-    void setGlobals(QString start, QString end);
+    void setGlobals(QString start, QString end, QStringList books);
     void makeItemAnalysisTable(QString start, QString end);
+    QString appendBooksToString(const char*& base, QString start_date, QString end_date);
 
 
     int unbkRecall(QString PT, QString RD);
@@ -50,6 +53,8 @@ private:
 
     int lostRecall(QString PT, QString RD);
     int getLostRecalls(QString start, QString end);
+
+    int apptUsed(QString SKEY, int usd, int appEnd);
 };
 
 

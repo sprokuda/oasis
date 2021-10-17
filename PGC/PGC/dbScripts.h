@@ -160,5 +160,5 @@ const char* query_Hours_Worked_742_base =
 "AND patnumber <>'' "
 "AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
 "AND ";
-const char* query_Hours_Worked_742_book =
+const char* append_book =
 "substring(skey from 13 for 4) = '%1' OR ";

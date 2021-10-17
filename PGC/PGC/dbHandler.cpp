@@ -154,37 +154,20 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     fflush(stdout);
 
 
-    setGlobals(start, end);
+    setGlobals(start, end, books);
     makeItemAnalysisTable(start, end);
 
-
-
-
-//    QString string_742 = QString(query_Hours_Worked_742).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate)
-//                                .arg(books.at(0)).arg(books.at(1)).arg(books.at(2)).arg(appStart-1);
-
     //QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
-    //for (int i = 0; i < books.size(); i++)
-    //{
-    //    if(i == 0) string_742_new.append("(");
+    QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
 
-    //    if (i < books.size() - 1)
-    //        string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)));
-    //    else
-    //    {
-    //        string_742_new.append(QString(query_Hours_Worked_742_book).arg(books.at(i)).remove(QString("OR")));
-    //        string_742_new.append(");");
-    //    }
-    //}
-
-    //cout << string_742_new.toStdString().c_str() << endl;
-    //query.exec(string_742_new.toStdString().c_str());
-    //cout << db.lastError().text().toStdString() << endl;
-    //fflush(stdout);
-    //query.next();
-    //QString result = query.value(0).toString();
-    //cout << result.toStdString() << endl;
-    //fflush(stdout);
+    cout << query_Hours_Worked_742.toStdString().c_str() << endl;
+    query.exec(query_Hours_Worked_742.toStdString().c_str());
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+    query.next();
+    QString result = query.value(0).toString();
+    cout << result.toStdString() << endl;
+    fflush(stdout);
 
     QDateTime time(QDate::currentDate());
     auto start_time = time.currentMSecsSinceEpoch();
@@ -194,7 +177,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     //fflush(stdout);
 
     start_time = time.currentMSecsSinceEpoch();
-    cout << getLostRecalls("2021-07-01", "2021-07-31") << endl;
+    cout << getLostRecalls(start, end) << endl;
     cout << time.currentMSecsSinceEpoch() - start_time << endl;
     fflush(stdout);
 
@@ -225,7 +208,7 @@ void dbHandler::makeItemAnalysisTable(QString start, QString end)
     QSqlQuery query(db);
     //    QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg("'2020-01-01'").arg("'2020-12-31'");
     QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
-    cout << string_726.toStdString().c_str() << endl;
+//    cout << string_726.toStdString().c_str() << endl;
 
     query.exec(string_726.toStdString().c_str());
     cout << db.lastError().text().toStdString() << endl;
@@ -244,43 +227,63 @@ void dbHandler::makeItemAnalysisTable(QString start, QString end)
     fflush(stdout);
 }
 
-void dbHandler::setGlobals(QString start, QString end)
+void dbHandler::setGlobals(QString start, QString end, QStringList books)
 {
-    iconCan = 111;
-    iconNS = 222;
-    appStart = 22;
-    appEnd = 33;
+    m_iconCan = 111;
+    m_iconNS = 222;
+    m_appStart = 22;
+    m_appEnd = 33;
+    this->m_books = books;
 
     QSqlQuery query(db);
 
-    start_date = start;
-    end_date = end;
+    m_start_date = start;
+    m_end_date = end;
 
-    startDate = start.remove("-");
-    endDate = end.remove("-");
+    m_startDate = start.remove("-");
+    m_endDate = end.remove("-");
 
-    cout << appSlot << endl;
+    cout << m_appSlot << endl;
 
     const char* glb_iconCan = "Select CAST(F5 AS INTEGER)  as CAN from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE' ; ";
     query.exec(glb_iconCan);
     query.next();
-    iconCan = query.value(0).toInt();
-    cout << iconCan << endl;
+    m_iconCan = query.value(0).toInt();
+    cout << m_iconCan << endl;
 
     const char* glb_iconNS = "Select CAST(F6 AS INTEGER)  as NS from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE'; ";
     query.exec(glb_iconNS);
     query.next();
-    iconNS = query.value(0).toInt();
-    cout << iconNS << endl;
+    m_iconNS = query.value(0).toInt();
+    cout << m_iconNS << endl;
 
     const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
     query.exec(glb_appStart);
     query.next();
-    appStart = query.value(0).toInt();
-    cout << appStart << endl;
+    m_appStart = query.value(0).toInt();
+    cout << m_appStart << endl;
 
-    appEnd = apptBookEnd();
-    cout << appEnd << endl;
+    m_appEnd = apptBookEnd();
+    cout << m_appEnd << endl;
+}
+
+
+QString dbHandler::appendBooksToString(const char*& base, QString start_date, QString end_date)
+{
+        QString str= QString(base).arg(m_appSlot).arg(m_iconCan).arg(m_iconNS).arg(start_date).arg(end_date).arg(m_appStart - 1);
+    for (int i = 0; i < m_books.size(); i++)
+    {
+        if(i == 0) str.append("(");
+
+        if (i < m_books.size() - 1)
+            str.append(QString(append_book).arg(m_books.at(i)));
+        else
+        {
+            str.append(QString(append_book).arg(m_books.at(i)).remove(QString("OR")));
+            str.append(");");
+        }
+    }
+    return str;
 }
 
 int dbHandler::unbkRecall(QString PT, QString RD)
@@ -338,7 +341,6 @@ int dbHandler::getUnbookedRecalls(QString start, QString end)
 int dbHandler::lostRecall(QString PT, QString RD)
 {
     QSqlQuery query(db);
-//    const char* script = "SELECT  count(SKEY)  from paapplns where patnumber = '%1' and entrydate between date'%2' and date'%3' + INTERVAL'30'DAY;";
     const char* script = "SELECT  count(SKEY)  from paapplns where patnumber = '%1' and entrydate > date'%2' - INTERVAL'1'DAY";
     QString str = QString(script).arg(PT).arg(RD);
 
@@ -386,6 +388,46 @@ int dbHandler::getLostRecalls(QString start, QString end)
     }
     return result;
 }
+
+
+int dbHandler::apptUsed(QString SKEY, int usd, int appEnd)
+{
+    bool ok;
+    int stHr = QString(QString(SKEY.at(17)) + QString(SKEY.at(18))).toInt(&ok);
+    cout << stHr << endl;
+    int maxDur = (appEnd - stHr) * 60;
+    int usedTime = 0;
+    if (usd > maxDur) usedTime = maxDur;
+    else usedTime = usd;
+
+    return usedTime;
+
+    //@ 
+    //    CREATE FUNCTION apptUsed(SKEY VARCHAR(20), usd INTEGER, appEnd INTEGER) RETURNS INTEGER
+    //    READS SQL DATA
+    //    BEGIN
+    //    DECLARE stHr INTEGER;
+    //DECLARE maxDur INTEGER;
+    //DECLARE usedTime INTEGER;
+
+    //SET stHr = CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER);
+    //SET maxDur = (appEnd - StHr) * 60;
+    //IF usd > maxDur then
+    //    SET usedTime = maxDur;
+    //ELSE SET usedTime = usd;
+    //END IF;
+    //RETURN(usedTime);
+    //END
+    //    @
+}
+
+
+//int dbHandler::getNonPtHr(QString start, QString end)
+//{
+////    Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '20200101%' AND '20201231%' and (patnumber = '000000' or patnumber = '') and (substring(skey from 13 for 4) = '0001' OR substring(skey from 13 for 4) = '0002' OR substring(skey from 13 for 4) = '0005') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5;
+//
+//
+//}
 
 void dbHandler::doQueries()
 {
