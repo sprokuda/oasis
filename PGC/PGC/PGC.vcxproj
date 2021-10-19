@@ -172,6 +172,7 @@
   <ItemGroup>
     <ClCompile Include="callDelay.cpp" />
     <ClCompile Include="dbHandler.cpp" />
+    <ClCompile Include="dbHandlerFunctions.cpp" />
     <ClCompile Include="QtDatePicker.cpp" />
     <ClCompile Include="QtDatePickerPopup.cpp" />
     <ClCompile Include="QtMultiSelect.cpp" />

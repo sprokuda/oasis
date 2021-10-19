@@ -1,5 +1,5 @@
 #include<windows.h>
-
+#include <iomanip>
 #include "dbHandler.h"
 #include "dbScripts.h"
 
@@ -182,7 +182,9 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     //fflush(stdout);
 
 
-    cout << getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
+    //cout << getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
+
+    cout << setprecision(12) << getProduction(m_start_date, m_end_date) << endl;
 
     emit extractionCompleted();
 }

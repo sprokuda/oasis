@@ -56,6 +56,8 @@ private:
 
     int apptUsed(QString SKEY, int usd, int appEnd);
     int getNonPatientRelatedHours(QString start, QString end);
+
+    double getProduction(QString start, QString end);
 };
 
 
