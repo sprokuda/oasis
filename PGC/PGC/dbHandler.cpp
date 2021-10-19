@@ -397,7 +397,7 @@ int dbHandler::apptUsed(QString SKEY, int usd, int appEnd)
 {
     bool ok;
     int stHr = QString(QString(SKEY.at(16)) + QString(SKEY.at(17))).toInt(&ok);
-    cout << stHr << endl;
+//    cout << stHr << endl;
     int maxDur = (appEnd - stHr) * 60;
     int usedTime = 0;
     if (usd > maxDur) usedTime = maxDur;
@@ -429,7 +429,7 @@ int dbHandler::getNonPatientRelatedHours(QString start, QString end)
 {
 //    Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '20200101%' AND '20201231%' and (patnumber = '000000' or patnumber = '') and (substring(skey from 13 for 4) = '0001' OR substring(skey from 13 for 4) = '0002' OR substring(skey from 13 for 4) = '0005') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5;
 //    const char* base = "Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5 AND ";
-    const char* base = "Select * from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5 AND ";
+    const char* base = "Select * from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %3 AND ";
     QString str = QString(base).arg(start).arg(end).arg(m_appStart - 1);
     for (int i = 0; i < m_books.size(); i++)
     {
