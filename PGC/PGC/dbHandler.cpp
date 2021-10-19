@@ -182,9 +182,13 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     //fflush(stdout);
 
 
-    //cout << getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
-
+    cout << getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
+    QDateTime time(QDate::currentDate());
+    auto start_time = time.currentMSecsSinceEpoch();
     cout << setprecision(12) << getProduction(m_start_date, m_end_date) << endl;
+    cout << time.currentMSecsSinceEpoch() - start_time << endl;
+    fflush(stdout);
+
 
     emit extractionCompleted();
 }
@@ -193,7 +197,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 int dbHandler::apptBookEnd()
 {
     const char* crt_st = "SELECT CAST(F1 AS INTEGER) FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
-    const char* crt_hrs = "SELECT CAST(F2 AS INTEGER) INTO  FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000'";
+    const char* crt_hrs = "SELECT CAST(F2 AS INTEGER) FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000'";
 
     QSqlQuery query(db);
 
@@ -457,7 +461,7 @@ int dbHandler::getNonPatientRelatedHours(QString start, QString end)
         QString SKEY = query.value(0).toString();
         int timeused = query.value(17).toInt();
 
-        result += apptUsed(SKEY, timeused * m_appSlot, 21);// "21" is hardcoded instead of value of m_appEnd
+        result += apptUsed(SKEY, timeused * m_appSlot, m_appEnd);// "21" is hardcoded instead of value of m_appEnd
     }
     return result/60;
 }
