@@ -18,9 +18,9 @@ public:
 
     void adjustPopupPosition();
     QString getDate();
-    void setDate(QDate date);
+   
 public slots:
-
+    void setDate(QDate date);
 private slots:
     void onShowPopupButtonClicked();
 
