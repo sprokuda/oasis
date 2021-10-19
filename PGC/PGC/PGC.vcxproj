@@ -171,6 +171,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callDelay.cpp" />
+    <ClCompile Include="csvWriter.cpp" />
     <ClCompile Include="dbHandler.cpp" />
     <ClCompile Include="dbHandlerFunctions.cpp" />
     <ClCompile Include="QtDatePicker.cpp" />
@@ -209,6 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="callDelay.h" />
+    <QtMoc Include="csvWriter.h" />
     <ClInclude Include="dbScripts.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
