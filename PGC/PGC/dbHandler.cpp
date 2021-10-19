@@ -157,29 +157,32 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     setGlobals(start, end, books);
     makeItemAnalysisTable(start, end);
 
-    //QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
-    QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
+    ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
+    //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
 
-    cout << query_Hours_Worked_742.toStdString().c_str() << endl;
-    query.exec(query_Hours_Worked_742.toStdString().c_str());
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
-    query.next();
-    QString result = query.value(0).toString();
-    cout << result.toStdString() << endl;
-    fflush(stdout);
+    //cout << query_Hours_Worked_742.toStdString().c_str() << endl;
+    //query.exec(query_Hours_Worked_742.toStdString().c_str());
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
+    //query.next();
+    //QString result = query.value(0).toString();
+    //cout << result.toStdString() << endl;
+    //fflush(stdout);
 
-    QDateTime time(QDate::currentDate());
-    auto start_time = time.currentMSecsSinceEpoch();
+    //QDateTime time(QDate::currentDate());
+    //auto start_time = time.currentMSecsSinceEpoch();
 
-    //cout << getUnbookedRecalls("2021-07-01", "2021-07-31") << endl;
+    //cout << getUnbookedRecalls(start, end) << endl;
     //cout << time.currentMSecsSinceEpoch() - start_time << endl;
     //fflush(stdout);
 
-    start_time = time.currentMSecsSinceEpoch();
-    cout << getLostRecalls(start, end) << endl;
-    cout << time.currentMSecsSinceEpoch() - start_time << endl;
-    fflush(stdout);
+    //start_time = time.currentMSecsSinceEpoch();
+    //cout << getLostRecalls(start, end) << endl;
+    //cout << time.currentMSecsSinceEpoch() - start_time << endl;
+    //fflush(stdout);
+
+
+    cout << getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
 
     emit extractionCompleted();
 }
@@ -393,7 +396,7 @@ int dbHandler::getLostRecalls(QString start, QString end)
 int dbHandler::apptUsed(QString SKEY, int usd, int appEnd)
 {
     bool ok;
-    int stHr = QString(QString(SKEY.at(17)) + QString(SKEY.at(18))).toInt(&ok);
+    int stHr = QString(QString(SKEY.at(16)) + QString(SKEY.at(17))).toInt(&ok);
     cout << stHr << endl;
     int maxDur = (appEnd - stHr) * 60;
     int usedTime = 0;
@@ -422,12 +425,40 @@ int dbHandler::apptUsed(QString SKEY, int usd, int appEnd)
 }
 
 
-//int dbHandler::getNonPtHr(QString start, QString end)
-//{
-////    Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '20200101%' AND '20201231%' and (patnumber = '000000' or patnumber = '') and (substring(skey from 13 for 4) = '0001' OR substring(skey from 13 for 4) = '0002' OR substring(skey from 13 for 4) = '0005') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5;
-//
-//
-//}
+int dbHandler::getNonPatientRelatedHours(QString start, QString end)
+{
+//    Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '20200101%' AND '20201231%' and (patnumber = '000000' or patnumber = '') and (substring(skey from 13 for 4) = '0001' OR substring(skey from 13 for 4) = '0002' OR substring(skey from 13 for 4) = '0005') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5;
+//    const char* base = "Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5 AND ";
+    const char* base = "Select * from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5 AND ";
+    QString str = QString(base).arg(start).arg(end).arg(m_appStart - 1);
+    for (int i = 0; i < m_books.size(); i++)
+    {
+        if (i == 0) str.append("(");
+
+        if (i < m_books.size() - 1)
+            str.append(QString(append_book).arg(m_books.at(i)));
+        else
+        {
+            str.append(QString(append_book).arg(m_books.at(i)).remove(QString("OR")));
+            str.append(");");
+        }
+    }
+
+    cout << str.toStdString() << endl;
+
+    QSqlQuery query(db);
+    int result = 0;
+
+    query.exec(str.toStdString().c_str());
+    while (query.next())
+    {
+        QString SKEY = query.value(0).toString();
+        int timeused = query.value(17).toInt();
+
+        result += apptUsed(SKEY, timeused * m_appSlot, 21);// "21" is hardcoded instead of value of m_appEnd
+    }
+    return result/60;
+}
 
 void dbHandler::doQueries()
 {
