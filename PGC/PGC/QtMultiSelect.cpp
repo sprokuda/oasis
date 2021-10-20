@@ -33,7 +33,7 @@ QtMultiSelect::QtMultiSelect( QWidget* parent)
     connect(popup, SIGNAL(addItem(QString)), SLOT(onAddItem(QString)));
     connect(popup, SIGNAL(removeItem(QString)), SLOT(onRemoveItem(QString)));
     connect(popup, SIGNAL(clickCatched(int)), SLOT(onClickCatch(int)));
-    connect(popup, SIGNAL(editingFinished),popup, SLOT(hide()));
+    connect(popup, SIGNAL(editingFinished()),popup, SLOT(hide()));
 }
 
 
