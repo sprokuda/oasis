@@ -32,6 +32,32 @@ public:
         out << "\n";
     };
 
+    void writeArray(const QString& header, vector<pair<QString,QString>> data)
+    {
+        QTextStream out(file);
+        out << header;
+        out << ",";
+        for (auto it = data.begin(); it != data.end(); it++)
+        {
+            out << ",";
+            out << it->first <<"\t" << it->second;
+        }
+        out << "\n";
+    };
+
+    void writeHeader(const vector<QString>& data)
+    {
+        QTextStream out(file);
+        out << "Headers";
+        out << ",Snapshot";
+        for (auto it = data.begin(); it != data.end(); it++)
+        {
+            out << ",";
+            out << *it;
+        }
+        out << "\n";
+    };
+
     void csvWriter::writeMonthly(const QString& header, const QStringList& data);
 
 private:
