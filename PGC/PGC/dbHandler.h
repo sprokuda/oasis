@@ -46,6 +46,9 @@ private:
 
     csvWriter* writer;
 
+    vector<pair<QString, QString>> dates;
+    vector<QString> m_months;
+
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books);
     void makeItemAnalysisTable(QString start, QString end);
@@ -62,6 +65,8 @@ private:
     int getNonPatientRelatedHours(QString start, QString end);
 
     double getProduction(QString start, QString end);
+
+    void generateDates();
 };
 
 

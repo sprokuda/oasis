@@ -151,14 +151,9 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 {
     QSqlQuery query(db);
 
-    query.exec(crt_tbl_Production_728);
-    //Will be populated with a stored procedure
-    cout << db.lastError().text().toStdString() << "\n";
-    fflush(stdout);
-
 
     setGlobals(start, end, books);
-    makeItemAnalysisTable(start, end);
+//    makeItemAnalysisTable(start, end);
 
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
@@ -186,6 +181,8 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     vector<QString> tmp = { "01","02","03","04" };
 
     writer->writeArray("test", tmp);
+
+    generateDates();
 
     //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
     //QDateTime time(QDate::currentDate());
@@ -257,28 +254,30 @@ void dbHandler::setGlobals(QString start, QString end, QStringList books)
     m_startDate = start.remove("-");
     m_endDate = end.remove("-");
 
-    cout << m_appSlot << endl;
+    generateDates();
+
+    cout << "$appSlot = " << m_appSlot << endl;
 
     const char* glb_iconCan = "Select CAST(F5 AS INTEGER)  as CAN from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE' ; ";
     query.exec(glb_iconCan);
     query.next();
     m_iconCan = query.value(0).toInt();
-    cout << m_iconCan << endl;
+    cout << "$iconCan = " << m_iconCan << endl;
 
     const char* glb_iconNS = "Select CAST(F6 AS INTEGER)  as NS from sytblent where substring (skey from 1 for 9 ) = 'APPSIXRFE'; ";
     query.exec(glb_iconNS);
     query.next();
     m_iconNS = query.value(0).toInt();
-    cout << m_iconNS << endl;
+    cout << "$iconNS = " << m_iconNS << endl;
 
     const char* glb_appStart = "SELECT CAST(F1 AS INTEGER) as appStart FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
     query.exec(glb_appStart);
     query.next();
     m_appStart = query.value(0).toInt();
-    cout << m_appStart << endl;
+    cout << "$appStart = " << m_appStart << endl;
 
     m_appEnd = apptBookEnd();
-    cout << m_appEnd << endl;
+    cout << "$appEnd = " << m_appEnd << endl;
 }
 
 
