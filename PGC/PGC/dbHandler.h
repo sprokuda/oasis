@@ -46,8 +46,9 @@ private:
 
     csvWriter* writer;
 
-    vector<pair<QString, QString>> dates;
+    vector<pair<QString, QString>> m_dates;
     vector<QString> m_months;
+    vector<QString> m_header_months;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books);

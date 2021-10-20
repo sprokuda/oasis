@@ -153,6 +153,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 
 
     setGlobals(start, end, books);
+
 //    makeItemAnalysisTable(start, end);
 
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
@@ -180,9 +181,8 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     //fflush(stdout);
     vector<QString> tmp = { "01","02","03","04" };
 
-    writer->writeArray("test", tmp);
+    writer->writeArray("test", m_months);
 
-    generateDates();
 
     //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
     //QDateTime time(QDate::currentDate());
