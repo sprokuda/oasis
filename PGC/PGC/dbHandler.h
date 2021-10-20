@@ -50,10 +50,16 @@ private:
     vector<QString> m_months;
     vector<QString> m_header_months;
 
+    vector<int> m_HoursWorked;
+
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books);
+    void generateDates();
     void makeItemAnalysisTable(QString start, QString end);
     QString appendBooksToString(const char*& base, QString start_date, QString end_date);
+
+    void getHoursWorked();
+    
 
 
     int unbkRecall(QString PT, QString RD);
@@ -67,7 +73,7 @@ private:
 
     double getProduction(QString start, QString end);
 
-    void generateDates();
+
 };
 
 

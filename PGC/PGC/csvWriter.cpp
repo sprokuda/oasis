@@ -75,8 +75,5 @@ csvWriter::~csvWriter()
 ////    file->write(data);
 //}
 
-void csvWriter::writeMonthly(const QString& header, const QStringList& data)
-{
 
-}
 

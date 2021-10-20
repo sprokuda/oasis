@@ -58,7 +58,7 @@ public:
         out << "\n";
     };
 
-    void csvWriter::writeMonthly(const QString& header, const QStringList& data);
+
 
 private:
     QFile* file;
