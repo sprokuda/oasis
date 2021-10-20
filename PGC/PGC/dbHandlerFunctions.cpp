@@ -134,7 +134,7 @@ void dbHandler::getHoursWorked()
 	m_HoursWorked.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-	QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
+	QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
 
 	//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
 	query.exec(query_Hours_Worked_742.toStdString().c_str());

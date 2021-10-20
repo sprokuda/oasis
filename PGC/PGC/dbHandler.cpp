@@ -154,7 +154,8 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 
     setGlobals(start, end, books);
 
-//    makeItemAnalysisTable(start, end);
+    makeItemAnalysisTable(start, end);
+    getHoursWorked();
 
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
@@ -181,7 +182,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     //fflush(stdout);
     vector<QString> tmp = { "01","02","03","04" };
 
-    writer->writeArray("test", m_months);
+ //   writer->writeArray("test", m_HoursWorked);
 
 
     //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
