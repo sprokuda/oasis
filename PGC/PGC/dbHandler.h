@@ -9,6 +9,8 @@
 #include <QDateTime>
 #include <iostream>
 
+#include "csvWriter.h"
+
 
 class dbHandler : public QObject
 {
@@ -41,6 +43,8 @@ private:
     QString m_end_date;
 
     QStringList m_books;
+
+    csvWriter* writer;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books);

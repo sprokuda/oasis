@@ -18,11 +18,13 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
 
     if (!db.open())
     {
-        cout << "error:\n";
-        cout << db.lastError().text().toStdString() << endl;
+        cout << "error: " << endl;
+        fflush(stdout);
+        cout << "error: " << db.lastError().text().toStdString() << endl;
         fflush(stdout);
     }
 
+    writer = new csvWriter();
 }
 
 dbHandler::~dbHandler()
@@ -43,6 +45,7 @@ dbHandler::~dbHandler()
     query.exec(dlt_fncn_apptUsed_7212);
     query.exec(dlt_prcd_Production_7213);
 #endif
+    delete writer;
 }
 
 
@@ -150,7 +153,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 
     query.exec(crt_tbl_Production_728);
     //Will be populated with a stored procedure
-    cout << db.lastError().text().toStdString() << endl;
+    cout << db.lastError().text().toStdString() << "\n";
     fflush(stdout);
 
 
@@ -180,14 +183,16 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     //cout << getLostRecalls(start, end) << endl;
     //cout << time.currentMSecsSinceEpoch() - start_time << endl;
     //fflush(stdout);
+    vector<QString> tmp = { "01","02","03","04" };
 
+    writer->writeArray("test", tmp);
 
-    cout << getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
-    QDateTime time(QDate::currentDate());
-    auto start_time = time.currentMSecsSinceEpoch();
-    cout << setprecision(12) << getProduction(m_start_date, m_end_date) << endl;
-    cout << time.currentMSecsSinceEpoch() - start_time << endl;
-    fflush(stdout);
+    //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
+    //QDateTime time(QDate::currentDate());
+    //auto start_time = time.currentMSecsSinceEpoch();
+    //cout << setprecision(12) << getProduction(m_start_date, m_end_date) << endl;
+    //cout << time.currentMSecsSinceEpoch() - start_time << endl;
+    //fflush(stdout);
 
 
     emit extractionCompleted();
