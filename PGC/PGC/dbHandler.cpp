@@ -156,7 +156,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
 
     makeItemAnalysisTable(start, end);
     getHoursWorked();
-
+    getHoursCancelled();
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
 

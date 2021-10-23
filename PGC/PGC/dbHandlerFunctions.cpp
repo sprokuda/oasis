@@ -3,6 +3,7 @@
 using namespace std;
 
 extern const char* query_Hours_Worked_742_base;
+extern const char* query_Hours_Cancelled_743_base;
 
 double dbHandler::getProduction(QString start, QString end)
 {
@@ -147,5 +148,26 @@ void dbHandler::getHoursWorked()
 	m_HoursWorked.push_back(result);
 	}
 	writer->writeArray("Hours Worked", m_HoursWorked);
+}
+
+void dbHandler::getHoursCancelled()
+{
+	QSqlQuery query(db);
+	m_HoursWorked.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Hours_Cancelled_743 = appendBooksToString(query_Hours_Cancelled_743_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
+
+		//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
+		query.exec(query_Hours_Cancelled_743.toStdString().c_str());
+		//cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = query.value(0).toString().toInt();
+		//cout << result.toStdString() << endl;
+		//fflush(stdout);
+		m_HoursCancelled.push_back(result);
+	}
+	writer->writeArray("Hours Cancelled", m_HoursCancelled);
 }
 

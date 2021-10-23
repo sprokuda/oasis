@@ -51,6 +51,7 @@ private:
     vector<QString> m_header_months;
 
     vector<int> m_HoursWorked;
+    vector<int> m_HoursCancelled;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books);
@@ -59,7 +60,7 @@ private:
     QString appendBooksToString(const char*& base, QString start_date, QString end_date);
 
     void getHoursWorked();
-    
+    void getHoursCancelled();
 
 
     int unbkRecall(QString PT, QString RD);
