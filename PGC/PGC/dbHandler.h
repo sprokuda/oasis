@@ -59,6 +59,8 @@ private:
     void generateDates();
     void makeItemAnalysisTable(QString start, QString end);
     QString appendBooksToString(const char*& base, QString start_date, QString end_date);
+    QString daysInMonth(const int& month);
+    int daysInFebuary(const int& year);
 
     void getHoursWorked();
     void getHoursCancelled();

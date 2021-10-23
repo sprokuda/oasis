@@ -39,6 +39,50 @@ double dbHandler::getProduction(QString start, QString end)
 	return invoice + adjust - discount - writeoff;;
 }
 
+QString dbHandler::daysInMonth(const int& month)
+{
+	int result = 0;
+	switch (month)
+	{
+	case 1: result = 31; break;
+	case 2: result = 28; break;//todo leap years
+	case 3: result = 31; break;
+	case 4: result = 30; break;
+	case 5: result = 31; break;
+	case 6: result = 30; break;
+	case 7: result = 31; break;
+	case 8: result = 31; break;
+	case 9: result = 30; break;
+	case 10: result = 31; break;
+	case 11: result = 30; break;
+	case 12: result = 31; break;
+	default: result = 33;
+	}
+	return QString::number(result);
+}
+
+int dbHandler::daysInFebuary(const int& year)//todo - implement
+{
+	int result = 0;
+	switch (year)
+	{
+	case 1: result = 31; break;
+	case 2: result = 28; break;//todo leap years
+	case 3: result = 31; break;
+	case 4: result = 30; break;
+	case 5: result = 31; break;
+	case 6: result = 30; break;
+	case 7: result = 31; break;
+	case 8: result = 31; break;
+	case 9: result = 30; break;
+	case 10: result = 31; break;
+	case 11: result = 30; break;
+	case 12: result = 31; break;
+	default: result = 28;
+	}
+	return result;
+}
+
 void dbHandler::generateDates()
 {
 	auto first_month = m_start_date.split("-").at(1).toInt();
@@ -180,4 +224,9 @@ void dbHandler::getNonPatientRelatedHours()
 		m_NonPatientRelatedHours.push_back(NonPatientRelatedHours(it->first.remove("-"), it->second.remove("-")));
 	}
 	writer->writeArray("Non-Patient Related Hours", m_NonPatientRelatedHours);
+}
+
+void dbHandler::getCalendarHours()
+{
+
 }
