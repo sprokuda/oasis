@@ -5,6 +5,12 @@ using namespace std;
 extern const char* query_Hours_Worked_742_base;
 extern const char* query_Hours_Cancelled_743_base;
 extern const char* query_Number_Of_appointments_748_base;
+extern const char* query_All_Patients_749;
+extern const char* query_Active_Patients_7410;
+
+extern const char* query_New_Patients_7411_base;
+extern const char* query_Churned_Patients_7412_base;
+extern const char* query_Unique_Patients_7413_base;
 
 double dbHandler::getProduction(QString start, QString end)
 {
@@ -279,4 +285,82 @@ void dbHandler::getNumberOfAppointments()
 		m_NumberOfAppointments.push_back(result);
 	}
 	writer->writeArray("Number of Appointments", m_NumberOfAppointments);
+}
+
+
+void dbHandler::getAllAndActivePatients()
+{
+	QSqlQuery query(db);
+
+	query.exec(query_All_Patients_749);
+	//cout << db.lastError().text().toStdString() << endl;
+	//fflush(stdout);
+	query.next();
+	auto result = query.value(0).toString().toInt();
+	writer->writeSnapshot("All Patients", result);
+	query.exec(query_Active_Patients_7410);
+	//cout << db.lastError().text().toStdString() << endl;
+	//fflush(stdout);
+	query.next();
+	result = query.value(0).toString().toInt();
+	writer->writeSnapshot("Active Patients", result);
+}
+
+
+void dbHandler::getNewPatients()
+{
+	QSqlQuery query(db);
+	m_NewPatients.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_New_Patients_7411 = QString(query_New_Patients_7411_base).arg(it->first.remove("-")).arg(it->second.remove("-"));//m_startDate, m_endDate;
+
+//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		query.exec(query_New_Patients_7411.toStdString().c_str());
+		//cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = query.value(0).toString().toInt();
+		m_NewPatients.push_back(result);
+	}
+	writer->writeArray("New Patients", m_NewPatients);
+}
+
+
+void dbHandler::getChurnedPatients()
+{
+	QSqlQuery query(db);
+	m_ChurnedPatients.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Churned_Patients_7412 = QString(query_Churned_Patients_7412_base).arg(it->first.remove("-")).arg(it->second.remove("-"));//m_startDate, m_endDate;
+
+//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		query.exec(query_Churned_Patients_7412.toStdString().c_str());
+		//cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = query.value(0).toString().toInt();
+		m_ChurnedPatients.push_back(result);
+	}
+	writer->writeArray("Churned Patients", m_ChurnedPatients);
+}
+
+void dbHandler::getUniquePatients()
+{
+	QSqlQuery query(db);
+	m_UniquePatients.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Unique_Patients_7413 = QString(query_Unique_Patients_7413_base).arg(it->first.remove("-")).arg(it->second.remove("-"));//m_startDate, m_endDate;
+
+//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		query.exec(query_Unique_Patients_7413.toStdString().c_str());
+		//cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = query.value(0).toString().toInt();
+		m_UniquePatients.push_back(result);
+	}
+	writer->writeArray("Unique Patients", m_UniquePatients);
 }

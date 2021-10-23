@@ -178,3 +178,19 @@ const char* query_Number_Of_appointments_748_base =
 "AND patnumber <>'' "
 "AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
 "AND ";
+
+
+const char* query_All_Patients_749 =
+"Select count(*) as tot from pbpatmas where patnumber < '900000' and inactiveflag <> -1;";
+
+const char* query_Active_Patients_7410 =
+"Select count(*)  as actPat from LAST_INV where LASTVISITDATE BETWEEN CURRENT_DATE-INTERVAL'18'MONTH and CURRENT_DATE;";
+
+const char* query_New_Patients_7411_base =
+"Select  count(*) as newPat  from FIRST_INV  where INV between date'%1' and date'%2';"; 
+
+const char* query_Churned_Patients_7412_base =
+"Select  count (*) as churnPat  from CHURN  where CHURNDATE  between date'%1' and date'%2' and PTNO NOT IN (SELECT PTNO FROM FUT_APP);";
+
+const char* query_Unique_Patients_7413_base =
+"Select  count ( distinct patnumber) as uniqPt  from pbarcmas  where transtype = 1 and deleted <> -1 and entrydate between date'%1' and date'%2';";

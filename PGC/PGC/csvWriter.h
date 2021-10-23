@@ -34,6 +34,20 @@ public:
         out << "\n";
     };
 
+    template<typename T>
+    void writeSnapshot(const QString& header, T data, QString prefix = QString::QString(""), QString postfix = QString::QString(""))
+    {
+        QTextStream out(file);
+        out << header;
+        out << ",";
+
+        out << prefix;
+        out << data;
+        out << postfix;
+
+        out << "\n";
+    };
+
     void writeArray(const QString& header, vector<pair<QString,QString>> data)
     {
         QTextStream out(file);

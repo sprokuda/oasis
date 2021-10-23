@@ -59,6 +59,9 @@ private:
     vector<int> m_AvailableHours;
     vector<int> m_Utilisation;
     vector<int> m_NumberOfAppointments;
+    vector<int> m_NewPatients;
+    vector<int> m_ChurnedPatients;
+    vector<int> m_UniquePatients;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice);
@@ -75,6 +78,10 @@ private:
     void getOtherHours();
     void getUtilisation();
     void getNumberOfAppointments();
+    void getAllAndActivePatients();
+    void getNewPatients();
+    void getChurnedPatients();
+    void getUniquePatients();
 
 
     int unbkRecall(QString PT, QString RD);
