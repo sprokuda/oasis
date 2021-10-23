@@ -164,7 +164,7 @@ const char* append_book =
 "substring(skey from 13 for 4) = '%1' OR ";
 
 const char* query_Hours_Cancelled_743_base =
-"Select sum(timeused * %1) / 60 as cnHr  from paapplns where(picturenumber = %2 OR  picturenumber = $iconNS)"
+"Select sum(timeused * %1) / 60 as cnHr  from paapplns where(picturenumber = %2 OR  picturenumber = %3)"
 "AND SKEY BETWEEN '%4%'  AND '%5%' "
 "AND patnumber <> '000000' "
 "AND patnumber <>'' "
