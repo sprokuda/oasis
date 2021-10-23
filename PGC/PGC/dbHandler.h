@@ -58,14 +58,14 @@ private:
     vector<int> m_CalendarHours;
     vector<int> m_AvailableHours;
     vector<int> m_Utilisation;
-
+    vector<int> m_NumberOfAppointments;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice);
     void generateDates();
     void makeItemAnalysisTable(QString start, QString end);
     QString appendBooksToString(const char*& base, QString start_date, QString end_date);
-    QString appendBooksToStringNoAppSlot(const char*& base, QString start_date, QString end_date)
+    QString appendBooksToStringNoAppSlot(const char*& base, QString start_date, QString end_date);
     QString daysInMonth(const int& month);
     int daysInFebuary(const int& year);
 

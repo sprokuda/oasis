@@ -170,3 +170,11 @@ const char* query_Hours_Cancelled_743_base =
 "AND patnumber <>'' "
 "AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
 "AND ";
+
+const char* query_Number_Of_appointments_748_base =
+"Select count(*) % 1 as ptac from paapplns where picturenumber <> % 2 and picturenumber <> % 3"
+"AND SKEY BETWEEN '%4%'  AND '%5%' "
+"AND patnumber <> '000000' "
+"AND patnumber <>'' "
+"AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %6 "
+"AND ";

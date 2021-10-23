@@ -24,7 +24,7 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
         fflush(stdout);
     }
 
-    writer = new csvWriter();
+    
 }
 
 dbHandler::~dbHandler()
@@ -149,6 +149,7 @@ void dbHandler::queryAppBook()
 
 void dbHandler::Extract(QString start, QString end, QStringList books, int prod_columns, QString practice)
 {
+    auto writer = make_unique<csvWriter>();
     QSqlQuery query(db);
 
 
@@ -160,6 +161,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getNonPatientRelatedHours();
     getOtherHours();
     getUtilisation();
+    getNumberOfAppointments();
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
 
@@ -301,6 +303,24 @@ QString dbHandler::appendBooksToString(const char*& base, QString start_date, QS
     for (int i = 0; i < m_books.size(); i++)
     {
         if(i == 0) str.append("(");
+
+        if (i < m_books.size() - 1)
+            str.append(QString(append_book).arg(m_books.at(i)));
+        else
+        {
+            str.append(QString(append_book).arg(m_books.at(i)).remove(QString("OR")));
+            str.append(");");
+        }
+    }
+    return str;
+}
+
+QString dbHandler::appendBooksToStringNoAppSlot(const char*& base, QString start_date, QString end_date)
+{
+    QString str = QString(base).arg("").arg(m_iconCan).arg(m_iconNS).arg(start_date).arg(end_date).arg(m_appStart - 1);
+    for (int i = 0; i < m_books.size(); i++)
+    {
+        if (i == 0) str.append("(");
 
         if (i < m_books.size() - 1)
             str.append(QString(append_book).arg(m_books.at(i)));
