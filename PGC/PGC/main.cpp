@@ -25,10 +25,10 @@ void MessageOutput(QtMsgType type, const QMessageLogContext& context, const QStr
 //        cout << "QtDebugMsg: " << msg.toStdString() << endl;
         break;
     case QtInfoMsg:
-        cout << "QtInfoMsg: " << msg.toStdString() << endl;
+//        cout << "QtInfoMsg: " << msg.toStdString() << endl;
         break;
     case QtWarningMsg:
-        cout << "QtWarningMsg: " << msg.toStdString() << endl;
+//        cout << "QtWarningMsg: " << msg.toStdString() << endl;
         break;
     case QtCriticalMsg:
 //        cout << "QtCriticalMsg: " << msg.toStdString() << endl;

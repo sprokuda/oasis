@@ -37,9 +37,9 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(this);
-//   QStringList books = { "book1","book2","book3","book4"};
-//    booksSelect->getPopup().setTable(books);
-//    booksSelect->selectAllBooks();
+    QStringList books = { "book1","book2","book3","book4"};
+    booksSelect->getPopup().setTable(books);
+    booksSelect->selectAllBooks();
     booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     booksLayout->addStretch();
@@ -157,12 +157,20 @@ void PGC::exctractData()
     QString end = convertDateForMimer(pickerEnd->getDate());
     QStringList books = booksSelect->getBooks();
 
+    int prod_columns = prodCol->currentText().toInt();
+    cout << prod_columns  << endl;
+
+    QString practice = practiceName->text();
+    cout << practice.toStdString() << endl;
+
     QMetaObject::invokeMethod(handler, "Extract",
         Qt::QueuedConnection,
 //                Qt::DirectConnection,
         Q_ARG(QString, start),
         Q_ARG(QString, end),
-        Q_ARG(QStringList, books)
+        Q_ARG(QStringList, books),
+        Q_ARG(int, prod_columns),
+        Q_ARG(QString, practice)
 //        Q_ARG(QString, patched_file_path)
     );
 }

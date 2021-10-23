@@ -19,7 +19,7 @@ public:
     ~csvWriter();
 
     template<typename T>
-    void writeArray(const QString& header, vector<T> data)
+    void writeArray(const QString& header, vector<T> data, QString prefix = QString::QString(""), QString postfix = QString::QString(""))
     {
         QTextStream out(file);
         out << header;
@@ -27,7 +27,9 @@ public:
         for (auto it = data.begin(); it != data.end(); it++)
         {
             out << ",";
+            out << prefix;
             out << *it;
+            out << postfix;
         }
         out << "\n";
     };

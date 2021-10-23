@@ -226,7 +226,35 @@ void dbHandler::getNonPatientRelatedHours()
 	writer->writeArray("Non-Patient Related Hours", m_NonPatientRelatedHours);
 }
 
-void dbHandler::getCalendarHours()
+void dbHandler::getOtherHours()
 {
+	m_CalendarHours.clear();
+	m_AvailableHours.clear();
+
+	for (auto it = m_NonPatientRelatedHours.begin(); it != m_NonPatientRelatedHours.end(); it++)
+	{
+		auto calendar_hours = m_dates.size() * 30 * m_bookLength * m_prodCol;
+		m_CalendarHours.push_back(calendar_hours);
+		m_AvailableHours.push_back(calendar_hours - *it);
+	}
+	writer->writeArray("Calendar Hours", m_CalendarHours);
+	writer->writeArray("Available Hours", m_AvailableHours);
+}
+
+void dbHandler::getUtilisation()
+{
+	m_Utilisation.clear();
+
+	auto it1 = m_HoursWorked.begin();
+	auto it2 = m_AvailableHours.begin();
+	for (; it1 != m_HoursWorked.end() && it2 != m_AvailableHours.end(); ++it1 , ++it2)
+	{
+		if(*it2 != 0)
+			m_Utilisation.push_back(*it1 / (*it2));
+		else
+			m_Utilisation.push_back(0);
+
+	}
+	writer->writeArray("Utilisation", m_Utilisation,"","%");
 
 }

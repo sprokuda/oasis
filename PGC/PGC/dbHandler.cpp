@@ -147,17 +147,19 @@ void dbHandler::queryAppBook()
     emit appBookReady(list);
 }
 
-void dbHandler::Extract(QString start,QString end, QStringList books)
+void dbHandler::Extract(QString start, QString end, QStringList books, int prod_columns, QString practice)
 {
     QSqlQuery query(db);
 
 
-    setGlobals(start, end, books);
+    setGlobals(start, end, books, prod_columns, practice);
 
     makeItemAnalysisTable(start, end);
     getHoursWorked();
     getHoursCancelled();
     getNonPatientRelatedHours();
+    getOtherHours();
+    getUtilisation();
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
 
@@ -240,7 +242,7 @@ void dbHandler::makeItemAnalysisTable(QString start, QString end)
     fflush(stdout);
 }
 
-void dbHandler::setGlobals(QString start, QString end, QStringList books)
+void dbHandler::setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice)
 {
     m_iconCan = 111;
     m_iconNS = 222;
@@ -257,6 +259,16 @@ void dbHandler::setGlobals(QString start, QString end, QStringList books)
     m_endDate = end.remove("-");
 
     generateDates();
+
+    
+    const char* glb_bookLength = "SELECT CAST(F2 AS INTEGER) +1 AS appbooklength FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
+    query.exec(glb_bookLength);
+    query.next();
+    m_bookLength = query.value(0).toInt();
+    cout << "$bookLength = " << m_bookLength << endl;
+
+    m_prodCol = prod_columns;
+    cout << "$prodCol = " << m_prodCol << endl;
 
     cout << "$appSlot = " << m_appSlot << endl;
 

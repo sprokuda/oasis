@@ -22,7 +22,7 @@ public:
     Q_INVOKABLE void doQueries();
     Q_INVOKABLE void queryAppBook();
     Q_INVOKABLE void loadBooksAndFunctions();
-    Q_INVOKABLE void Extract(QString start, QString end, QStringList books);
+    Q_INVOKABLE void Extract(QString start, QString end, QStringList books, int prod_columns, QString practice);
     QSqlDatabase db;
 
 signals:
@@ -31,6 +31,8 @@ signals:
     void extractionCompleted();
 
 private:
+    int m_bookLength;
+    int m_prodCol;
     const int m_appSlot = 5;
     int m_iconCan;
     int m_iconNS;
@@ -53,9 +55,13 @@ private:
     vector<int> m_HoursWorked;
     vector<int> m_HoursCancelled;
     vector<int> m_NonPatientRelatedHours;
+    vector<int> m_CalendarHours;
+    vector<int> m_AvailableHours;
+    vector<int> m_Utilisation;
+
 
     int apptBookEnd();
-    void setGlobals(QString start, QString end, QStringList books);
+    void setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice);
     void generateDates();
     void makeItemAnalysisTable(QString start, QString end);
     QString appendBooksToString(const char*& base, QString start_date, QString end_date);
@@ -65,6 +71,9 @@ private:
     void getHoursWorked();
     void getHoursCancelled();
     void getNonPatientRelatedHours();
+    void getOtherHours();
+    void getUtilisation();
+
 
     int unbkRecall(QString PT, QString RD);
     int getUnbookedRecalls(QString start, QString end);
