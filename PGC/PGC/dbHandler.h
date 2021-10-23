@@ -52,6 +52,7 @@ private:
 
     vector<int> m_HoursWorked;
     vector<int> m_HoursCancelled;
+    vector<int> m_NonPatientRelatedHours;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books);
@@ -61,7 +62,7 @@ private:
 
     void getHoursWorked();
     void getHoursCancelled();
-
+    void getNonPatientRelatedHours();
 
     int unbkRecall(QString PT, QString RD);
     int getUnbookedRecalls(QString start, QString end);
@@ -70,7 +71,7 @@ private:
     int getLostRecalls(QString start, QString end);
 
     int apptUsed(QString SKEY, int usd, int appEnd);
-    int getNonPatientRelatedHours(QString start, QString end);
+    int NonPatientRelatedHours(QString start, QString end);
 
     double getProduction(QString start, QString end);
 

@@ -157,6 +157,7 @@ void dbHandler::Extract(QString start,QString end, QStringList books)
     makeItemAnalysisTable(start, end);
     getHoursWorked();
     getHoursCancelled();
+    getNonPatientRelatedHours();
     ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
     //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
 
@@ -436,7 +437,7 @@ int dbHandler::apptUsed(QString SKEY, int usd, int appEnd)
 }
 
 
-int dbHandler::getNonPatientRelatedHours(QString start, QString end)
+int dbHandler::NonPatientRelatedHours(QString start, QString end)
 {
 //    Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '20200101%' AND '20201231%' and (patnumber = '000000' or patnumber = '') and (substring(skey from 13 for 4) = '0001' OR substring(skey from 13 for 4) = '0002' OR substring(skey from 13 for 4) = '0005') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5;
 //    const char* base = "Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5 AND ";
@@ -455,7 +456,7 @@ int dbHandler::getNonPatientRelatedHours(QString start, QString end)
         }
     }
 
-    cout << str.toStdString() << endl;
+//    cout << str.toStdString() << endl;
 
     QSqlQuery query(db);
     int result = 0;
