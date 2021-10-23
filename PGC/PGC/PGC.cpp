@@ -37,9 +37,9 @@ PGC::PGC(QWidget *parent)
 
     incBooks = new QLabel("Include\nAppointment\nBooks", this);
     booksSelect = new QtMultiSelect(this);
-    QStringList books = { "book1","book2","book3","book4"};
-    booksSelect->getPopup().setTable(books);
-    booksSelect->selectAllBooks();
+//    QStringList books = { "book1","book2","book3","book4"};
+//    booksSelect->getPopup().setTable(books);
+//    booksSelect->selectAllBooks();
     booksLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     booksLayout->addStretch();
@@ -158,10 +158,7 @@ void PGC::exctractData()
     QStringList books = booksSelect->getBooks();
 
     int prod_columns = prodCol->currentText().toInt();
-    cout << prod_columns  << endl;
-
     QString practice = practiceName->text();
-    cout << practice.toStdString() << endl;
 
     QMetaObject::invokeMethod(handler, "Extract",
         Qt::QueuedConnection,

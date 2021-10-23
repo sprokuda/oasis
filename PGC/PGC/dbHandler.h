@@ -46,7 +46,7 @@ private:
 
     QStringList m_books;
 
-    csvWriter* writer;
+    unique_ptr<csvWriter> writer;
 
     vector<pair<QString, QString>> m_dates;
     vector<QString> m_months;

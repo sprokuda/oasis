@@ -16,29 +16,29 @@ csvWriter::csvWriter(QObject* parent) : QObject(parent)
         cout << "QDir returned: " << dir.mkdir(dir1) << endl;
     dir.cd(dir1);
 
-    const QFileInfo outputDir1(dir1);
+    const QFileInfo outputDir1(dir.absolutePath().toStdString().c_str());
     if ((!outputDir1.exists()) || (!outputDir1.isDir()) || (!outputDir1.isWritable())) 
     {
         cout << "output directory does not exist, is not a directory, or is not writeable"
-            << outputDir1.absoluteFilePath().toStdString() << endl;
+            << "\t" << outputDir1.absoluteFilePath().toStdString() << endl;
     }
 
     if (!QDir(dir2).exists())
         cout << "QDir returned: " << dir.mkdir(dir2) << endl;
     dir.cd(dir2);
 
-    const QFileInfo outputDir2(dir2);
+    const QFileInfo outputDir2(dir.absolutePath().toStdString().c_str());
     if ((!outputDir2.exists()) || (!outputDir2.isDir()) || (!outputDir2.isWritable()))
     {
         cout << "output directory does not exist, is not a directory, or is not writeable"
-            << outputDir2.absoluteFilePath().toStdString() << endl;
+            << "\t" << outputDir2.absoluteFilePath().toStdString() << endl;
     }
 
     QString fileName = QDate::currentDate().toString("yyyyMMdd") + "__" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".csv");
-    auto tmp = dir.absolutePath() +"\\" + fileName;
-    cout << "some text" << endl;
+    cout << (dir.absolutePath() + "\\" + fileName).toStdString() << endl;
     fflush(stdout);
-    file = new QFile(tmp);
+
+    file = new QFile(dir.absolutePath() + "\\" + fileName);
 
     if (!file->open(QIODevice::WriteOnly | QIODevice::Text))
     {

@@ -45,7 +45,7 @@ dbHandler::~dbHandler()
     query.exec(dlt_fncn_apptUsed_7212);
     query.exec(dlt_prcd_Production_7213);
 #endif
-    delete writer;
+
 }
 
 
@@ -149,7 +149,7 @@ void dbHandler::queryAppBook()
 
 void dbHandler::Extract(QString start, QString end, QStringList books, int prod_columns, QString practice)
 {
-    auto writer = make_unique<csvWriter>();
+    writer = make_unique<csvWriter>();
     QSqlQuery query(db);
 
 
@@ -162,17 +162,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getOtherHours();
     getUtilisation();
     getNumberOfAppointments();
-    ////QString string_742_new = QString(query_Hours_Worked_742_base).arg(appSlot).arg(iconCan).arg(iconNS).arg(startDate).arg(endDate).arg(appStart - 1);
-    //QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, m_startDate, m_endDate);
-
-    //cout << query_Hours_Worked_742.toStdString().c_str() << endl;
-    //query.exec(query_Hours_Worked_742.toStdString().c_str());
-    //cout << db.lastError().text().toStdString() << endl;
-    //fflush(stdout);
-    //query.next();
-    //QString result = query.value(0).toString();
-    //cout << result.toStdString() << endl;
-    //fflush(stdout);
+ 
 
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();

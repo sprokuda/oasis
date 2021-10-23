@@ -268,7 +268,7 @@ void dbHandler::getNumberOfAppointments()
 	{
 		QString query_Number_Of_appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_appointments_748_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
 
-		//cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Number_Of_appointments_748.toStdString().c_str());
 		//cout << db.lastError().text().toStdString() << endl;
 		//fflush(stdout);
