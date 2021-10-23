@@ -153,7 +153,7 @@ void dbHandler::getHoursWorked()
 void dbHandler::getHoursCancelled()
 {
 	QSqlQuery query(db);
-	m_HoursWorked.clear();
+	m_HoursCancelled.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
 		QString query_Hours_Cancelled_743 = appendBooksToString(query_Hours_Cancelled_743_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
@@ -171,3 +171,13 @@ void dbHandler::getHoursCancelled()
 	writer->writeArray("Hours Cancelled", m_HoursCancelled);
 }
 
+
+void dbHandler::getNonPatientRelatedHours()
+{
+	m_NonPatientRelatedHours.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		m_NonPatientRelatedHours.push_back(NonPatientRelatedHours(it->first.remove("-"), it->second.remove("-")));
+	}
+	writer->writeArray("Non-Patient Related Hours", m_NonPatientRelatedHours);
+}
