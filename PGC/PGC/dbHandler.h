@@ -65,6 +65,7 @@ private:
     void generateDates();
     void makeItemAnalysisTable(QString start, QString end);
     QString appendBooksToString(const char*& base, QString start_date, QString end_date);
+    QString appendBooksToStringNoAppSlot(const char*& base, QString start_date, QString end_date)
     QString daysInMonth(const int& month);
     int daysInFebuary(const int& year);
 
@@ -73,6 +74,7 @@ private:
     void getNonPatientRelatedHours();
     void getOtherHours();
     void getUtilisation();
+    void getNumberOfAppointments();
 
 
     int unbkRecall(QString PT, QString RD);

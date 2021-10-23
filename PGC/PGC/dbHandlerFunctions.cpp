@@ -4,6 +4,7 @@ using namespace std;
 
 extern const char* query_Hours_Worked_742_base;
 extern const char* query_Hours_Cancelled_743_base;
+extern const char* query_Number_Of_appointments_748_base;
 
 double dbHandler::getProduction(QString start, QString end)
 {
@@ -257,4 +258,25 @@ void dbHandler::getUtilisation()
 	}
 	writer->writeArray("Utilisation", m_Utilisation,"","%");
 
+}
+
+void dbHandler::getNumberOfAppointments()
+{
+	QSqlQuery query(db);
+	m_NumberOfAppointments.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Number_Of_appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_appointments_748_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
+
+		//cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		query.exec(query_Number_Of_appointments_748.toStdString().c_str());
+		//cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = query.value(0).toString().toInt();
+		//cout << result.toStdString() << endl;
+		//fflush(stdout);
+		m_NumberOfAppointments.push_back(result);
+	}
+	writer->writeArray("Number of Appointments", m_NumberOfAppointments);
 }
