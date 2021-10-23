@@ -4,7 +4,7 @@ using namespace std;
 
 extern const char* query_Hours_Worked_742_base;
 extern const char* query_Hours_Cancelled_743_base;
-extern const char* query_Number_Of_appointments_748_base;
+extern const char* query_Number_Of_Appointments_748_base;
 extern const char* query_All_Patients_749;
 extern const char* query_Active_Patients_7410;
 
@@ -272,10 +272,10 @@ void dbHandler::getNumberOfAppointments()
 	m_NumberOfAppointments.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		QString query_Number_Of_appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_appointments_748_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
+		QString query_Number_Of_Appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_Appointments_748_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
 
-		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
-		query.exec(query_Number_Of_appointments_748.toStdString().c_str());
+		cout << query_Number_Of_Appointments_748.toStdString().c_str() << endl;
+		query.exec(query_Number_Of_Appointments_748.toStdString().c_str());
 		//cout << db.lastError().text().toStdString() << endl;
 		//fflush(stdout);
 		query.next();
