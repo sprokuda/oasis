@@ -13,6 +13,7 @@ extern const char* query_Churned_Patients_7412_base;
 extern const char* query_Unique_Patients_7413_base;
 
 extern const char* query_Lapsed_Patients_7414;
+extern const char* query_Total_Recalls_7418_base;
 
 double dbHandler::getProduction(QString start, QString end)
 {
@@ -435,4 +436,54 @@ void dbHandler::getUnbookedRecalls()
 		m_UnbookedRecalls.push_back(UnbookedRecalls(QString(it->first), QString(it->second)));
 	}
 	writer->writeArray("Unbooked Recalls", m_UnbookedRecalls);
+}
+
+
+void dbHandler::getTotalRecalls()
+{
+	QSqlQuery query(db);
+	m_TotalRecalls.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Total_Recalls_7418 = QString(query_Total_Recalls_7418_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
+
+//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		query.exec(query_Total_Recalls_7418.toStdString().c_str());
+		//cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = query.value(0).toString().toInt();
+		m_TotalRecalls.push_back(result);
+	}
+	writer->writeArray("Total Recalls", m_TotalRecalls);
+}
+
+
+void dbHandler::getRecallEffectiveness()
+{
+	m_RecallEffectiveness.clear();
+
+	auto it1 = m_TotalRecalls.begin();
+	auto it2 = m_UnbookedRecalls.begin();
+	for (; it1 != m_NewPatients.end() && it2 != m_UniquePatients.end(); ++it1, ++it2)
+	{
+		if (*it1 != 0)
+			m_RecallEffectiveness.push_back((100 * ((*it1) - (*it2))/ (*it1)));
+		else
+			m_RecallEffectiveness.push_back(0);
+
+	}
+	writer->writeArray("Recall Effectiveness %", m_RecallEffectiveness, "", "%");
+
+}
+
+
+void dbHandler::getLostRecalls()
+{
+	m_LostRecalls.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		m_LostRecalls.push_back(LostRecalls(QString(it->first), QString(it->second)));
+	}
+	writer->writeArray("Lost Recalls", m_LostRecalls);
 }

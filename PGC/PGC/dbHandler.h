@@ -65,6 +65,9 @@ private:
     vector<int> m_NewPatientPercent;
     vector<int> m_NetPatientGain;
     vector<int> m_UnbookedRecalls;
+    vector<int> m_TotalRecalls;
+    vector<int> m_RecallEffectiveness;
+    vector<int> m_LostRecalls;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice);
@@ -89,13 +92,15 @@ private:
     void getNewPatientPercent();
     void getNetPatientGain();
     void getUnbookedRecalls();
-
+    void getTotalRecalls();
+    void getRecallEffectiveness();
+    void getLostRecalls();
 
     int unbkRecall(QString PT, QString RD);
     int UnbookedRecalls(QString start, QString end);
 
     int lostRecall(QString PT, QString RD);
-    int getLostRecalls(QString start, QString end);
+    int LostRecalls(QString start, QString end);
 
     int apptUsed(QString SKEY, int usd, int appEnd);
     int NonPatientRelatedHours(QString start, QString end);

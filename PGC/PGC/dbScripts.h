@@ -197,3 +197,6 @@ const char* query_Unique_Patients_7413_base =
 
 const char* query_Lapsed_Patients_7414 =
 "Select count(*) as lapsedpt from LAST_INV where LASTVISITDATE BETWEEN CURRENT_DATE-INTERVAL'36'MONTH and CURRENT_DATE-INTERVAL'18'MONTH;";
+
+const char* query_Total_Recalls_7418_base =
+"Select  count(*) as totRecall from ptpatnts where details like 'Recall%'  and datecreated   between date'%1' and date'%2';"; 
