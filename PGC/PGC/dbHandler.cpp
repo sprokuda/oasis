@@ -180,7 +180,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     //fflush(stdout);
     vector<QString> tmp = { "01","02","03","04" };
 
- //   writer->writeArray("test", m_HoursWorked);
+    writer->writeArray("dates", m_dates);
 
 
     //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;

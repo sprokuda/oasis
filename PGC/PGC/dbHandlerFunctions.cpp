@@ -240,11 +240,29 @@ void dbHandler::getOtherHours()
 	m_CalendarHours.clear();
 	m_AvailableHours.clear();
 
-	for (auto it = m_NonPatientRelatedHours.begin(); it != m_NonPatientRelatedHours.end(); it++)
+	auto numberOfMonth = [](const QString& start, const QString& end)
 	{
-		auto calendar_hours = 1 * 30 * m_bookLength * m_prodCol;
+		auto start_year = start.split("-").at(0).toInt();
+		auto start_month = start.split("-").at(1).toInt();
+
+		auto end_year = end.split("-").at(0).toInt();
+		auto end_month = end.split("-").at(1).toInt();
+
+		if (end_year == start_year)
+			return end_month - start_month + 1;
+		//else if (end_year == start_year + 1)
+		//	return (12 - start_month) + end_month + 1;
+		else
+			return (end_year - start_year - 1)*12 + (12 - start_month) + end_month + 1;
+	};
+
+	auto it1 = m_dates.begin();
+	auto it2 = m_NonPatientRelatedHours.begin();
+	for (; it1 != m_dates.end() || it2 != m_NonPatientRelatedHours.end(); it1++, it2++)
+	{
+		auto calendar_hours = numberOfMonth(it1->first,it1->second) * 30 * m_bookLength * m_prodCol;
 		m_CalendarHours.push_back(calendar_hours);
-		m_AvailableHours.push_back(calendar_hours - *it);
+		m_AvailableHours.push_back(calendar_hours - *it2);
 	}
 	writer->writeArray("Calendar Hours", m_CalendarHours);
 	writer->writeArray("Available Hours", m_AvailableHours);
@@ -317,7 +335,7 @@ void dbHandler::getNewPatients()
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
 		QString query_New_Patients_7411 = QString(query_New_Patients_7411_base).arg(it->first).arg(it->second);
-		cout << query_New_Patients_7411.toStdString().c_str() << endl;
+//		cout << query_New_Patients_7411.toStdString().c_str() << endl;
 		query.exec(query_New_Patients_7411.toStdString().c_str());
 		//cout << db.lastError().text().toStdString() << endl;
 		//fflush(stdout);
