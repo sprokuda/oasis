@@ -70,24 +70,23 @@ QString dbHandler::daysInMonth(const int& month)
 
 int dbHandler::daysInFebuary(const int& year)//todo - implement
 {
-	int result = 0;
-	switch (year)
-	{
-	case 1: result = 31; break;
-	case 2: result = 28; break;//todo leap years
-	case 3: result = 31; break;
-	case 4: result = 30; break;
-	case 5: result = 31; break;
-	case 6: result = 30; break;
-	case 7: result = 31; break;
-	case 8: result = 31; break;
-	case 9: result = 30; break;
-	case 10: result = 31; break;
-	case 11: result = 30; break;
-	case 12: result = 31; break;
-	default: result = 28;
+	int days = 28;
+
+	if (year % 4 == 0) {
+		if (year % 100 == 0) {
+			if (year % 400 == 0)
+				days = 29;//cout << year << " is a leap year.";
+			else
+				days = 28;// cout << year << " is not a leap year.";
+		}
+		else
+			days = 29;//cout << year << " is a leap year.";
 	}
-	return result;
+	else
+		days = 28;//cout << year << " is not a leap year.";
+
+//	if (days == 29) cout << year << endl;
+	return days;
 }
 
 void dbHandler::generateDates()
@@ -107,13 +106,13 @@ void dbHandler::generateDates()
 	n_monthes = (last_year - first_year - 1) * 12 + (12 - first_month) + last_month + 1;
 //	cout << "number of monthes = " << n_monthes << endl;
 
-	auto lastDayOfMonth=[](int month) 
+	auto lastDayOfMonth=[=](int month, int year) 
 	{  
 		int result = 0;
 		switch (month)
 		{
 		case 1: result = 31; break;
-		case 2: result = 28; break;//todo leap years
+		case 2: result = daysInFebuary(year); break;//todo leap years
 		case 3: result = 31; break;
 		case 4: result = 30; break;
 		case 5: result = 31; break;
@@ -129,7 +128,7 @@ void dbHandler::generateDates()
 		return QString::number(result);
 	};
 
-	auto nameOfMonth = [](int month)
+	auto nameOfMonth = [=](int month)
 	{
 		QString result = 0;
 		switch (month)
@@ -164,7 +163,7 @@ void dbHandler::generateDates()
 		if (str_month.size() == 1) str_month = "0" + str_month;
 
 		auto local_date_start = QString::number(year) + "-" + str_month + "-" + QString("01");
-		auto local_date_end = QString::number(year) + "-" + str_month + "-" + lastDayOfMonth(month);
+		auto local_date_end = QString::number(year) + "-" + str_month + "-" + lastDayOfMonth(month,year);
 //		cout << local_date_start.toStdString() << "\t" << local_date_end.toStdString() << endl;
 
 		m_dates.push_back(make_pair(local_date_start, local_date_end)); 
