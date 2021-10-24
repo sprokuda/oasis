@@ -12,6 +12,8 @@ extern const char* query_New_Patients_7411_base;
 extern const char* query_Churned_Patients_7412_base;
 extern const char* query_Unique_Patients_7413_base;
 
+extern const char* query_Lapsed_Patients_7414;
+
 double dbHandler::getProduction(QString start, QString end)
 {
 	QSqlQuery query(db);
@@ -72,20 +74,17 @@ int dbHandler::daysInFebuary(const int& year)//todo - implement
 {
 	int days = 28;
 
-	if (year % 4 == 0) {
-		if (year % 100 == 0) {
-			if (year % 400 == 0)
-				days = 29;//cout << year << " is a leap year.";
-			else
-				days = 28;// cout << year << " is not a leap year.";
+	if (year % 4 == 0) 
+	{
+		if (year % 100 == 0) 
+		{
+			if (year % 400 == 0) days = 29;//cout << year << " is a leap year.";
+			else days = 28;// cout << year << " is not a leap year.";
 		}
-		else
-			days = 29;//cout << year << " is a leap year.";
+		else days = 29;//cout << year << " is a leap year.";
 	}
-	else
-		days = 28;//cout << year << " is not a leap year.";
+	else days = 28;//cout << year << " is not a leap year.";
 
-//	if (days == 29) cout << year << endl;
 	return days;
 }
 
@@ -382,4 +381,48 @@ void dbHandler::getUniquePatients()
 		m_UniquePatients.push_back(result);
 	}
 	writer->writeArray("Unique Patients", m_UniquePatients);
+}
+
+void dbHandler::getLapsedPatients()
+{
+	QSqlQuery query(db);
+
+	query.exec(query_Lapsed_Patients_7414);
+	//cout << db.lastError().text().toStdString() << endl;
+	//fflush(stdout);
+	query.next();
+	auto result = query.value(0).toString().toInt();
+	writer->writeSnapshot("Lapsed Patients", result);
+}
+
+void dbHandler::getNewPatientPercent()
+{
+	m_NewPatientPercent.clear();
+
+	auto it1 = m_NewPatients.begin();
+	auto it2 = m_UniquePatients.begin();
+	for (; it1 != m_NewPatients.end() && it2 != m_UniquePatients.end(); ++it1, ++it2)
+	{
+		if (*it2 != 0)
+			m_NewPatientPercent.push_back((100 * (*it1) / (*it2)));
+		else
+			m_NewPatientPercent.push_back(0);
+
+	}
+	writer->writeArray("New Patient %", m_NewPatientPercent, "", "%");
+
+}
+
+void dbHandler::getNetPatientGain()
+{
+	m_NetPatientGain.clear();
+
+	auto it1 = m_NewPatients.begin();
+	auto it2 = m_ChurnedPatients.begin();
+	for (; it1 != m_NewPatients.end() && it2 != m_ChurnedPatients.end(); ++it1, ++it2)
+	{
+			m_NetPatientGain.push_back(*it1 - *it2);
+	}
+	writer->writeArray("Net Patient Gain", m_NetPatientGain, "", "");
+
 }
