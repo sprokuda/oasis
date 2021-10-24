@@ -424,5 +424,15 @@ void dbHandler::getNetPatientGain()
 			m_NetPatientGain.push_back(*it1 - *it2);
 	}
 	writer->writeArray("Net Patient Gain", m_NetPatientGain, "", "");
+}
 
+
+void dbHandler::getUnbookedRecalls()
+{
+	m_UnbookedRecalls.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		m_UnbookedRecalls.push_back(UnbookedRecalls(QString(it->first), QString(it->second)));
+	}
+	writer->writeArray("Unbooked Recalls", m_UnbookedRecalls);
 }

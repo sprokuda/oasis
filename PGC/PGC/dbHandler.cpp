@@ -363,7 +363,7 @@ int dbHandler::unbkRecall(QString PT, QString RD)
 //@
 }
 
-int dbHandler::getUnbookedRecalls(QString start, QString end)
+int dbHandler::UnbookedRecalls(QString start, QString end)
 {
     int result = 0;
     QSqlQuery query(db);

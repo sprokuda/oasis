@@ -57,3 +57,5 @@ PGC/Debug/
 PGC/Release/
 /~$chnical Requirement Specification  V3.docx
 /~$example.xlsx
+*.xlsx
+*.csv
