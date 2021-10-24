@@ -10,7 +10,7 @@ PGC::PGC(QWidget *parent)
     
     startDateLabel = new QLabel("Start Date",this);
     pickerStart = new QtDatePicker(this);
-    pickerStart->setDate(QDate(2020, 7, 3));
+    pickerStart->setDate(QDate(2020, 1, 1));
     startDateLayout = new QHBoxLayout();
 //    startDateLayout->setContentsMargins(1, 1, 1, 1);
     startDateLayout->addStretch();
@@ -19,7 +19,7 @@ PGC::PGC(QWidget *parent)
 
     endDateLabel = new QLabel("End Date",this);
     pickerEnd = new QtDatePicker(this);
-    pickerEnd->setDate(QDate(2021, 7, 15));
+    pickerEnd->setDate(QDate(2020, 12, 31));
     endDateLayout = new QHBoxLayout();
 //    endDateLayout->setContentsMargins(1, 1, 1, 1);
     endDateLayout->addStretch();

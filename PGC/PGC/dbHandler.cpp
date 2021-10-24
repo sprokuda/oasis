@@ -166,6 +166,9 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getNewPatients();
     getChurnedPatients();
     getUniquePatients();
+    getLapsedPatients();
+    getNewPatientPercent();
+    getNetPatientGain();
 
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();
@@ -178,15 +181,6 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     //cout << getLostRecalls(start, end) << endl;
     //cout << time.currentMSecsSinceEpoch() - start_time << endl;
     //fflush(stdout);
-    vector<QString> tmp = { "01","02","03","04" };
-
-    writer->writeArray("dates", m_dates);
-
-    for (int i = 1900; i < 2300; i++)
-    {
-        daysInFebuary(i);
-    }
-
 
     //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
     //QDateTime time(QDate::currentDate());

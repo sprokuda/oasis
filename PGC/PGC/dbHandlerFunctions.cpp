@@ -85,7 +85,7 @@ int dbHandler::daysInFebuary(const int& year)//todo - implement
 	}
 	else days = 28;//cout << year << " is not a leap year.";
 
-	return days;
+	return 28;// days;
 }
 
 void dbHandler::generateDates()
