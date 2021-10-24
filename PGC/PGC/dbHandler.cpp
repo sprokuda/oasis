@@ -162,7 +162,10 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getOtherHours();
     getUtilisation();
     getNumberOfAppointments();
- 
+    getAllAndActivePatients();
+    getNewPatients();
+    getChurnedPatients();
+    getUniquePatients();
 
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();

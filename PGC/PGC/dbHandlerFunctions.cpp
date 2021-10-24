@@ -186,7 +186,8 @@ void dbHandler::getHoursWorked()
 	m_HoursWorked.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-	QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
+	QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, 
+		QString(it->first).remove("-"), QString(it->second).remove("-"));
 
 	//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
 	query.exec(query_Hours_Worked_742.toStdString().c_str());
@@ -207,7 +208,8 @@ void dbHandler::getHoursCancelled()
 	m_HoursCancelled.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		QString query_Hours_Cancelled_743 = appendBooksToString(query_Hours_Cancelled_743_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
+		QString query_Hours_Cancelled_743 = appendBooksToString(query_Hours_Cancelled_743_base, 
+			QString(it->first).remove("-"), QString(it->second).remove("-"));
 
 		//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
 		query.exec(query_Hours_Cancelled_743.toStdString().c_str());
@@ -228,7 +230,7 @@ void dbHandler::getNonPatientRelatedHours()
 	m_NonPatientRelatedHours.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		m_NonPatientRelatedHours.push_back(NonPatientRelatedHours(it->first.remove("-"), it->second.remove("-")));
+		m_NonPatientRelatedHours.push_back(NonPatientRelatedHours(QString(it->first).remove("-"), QString(it->second).remove("-")));
 	}
 	writer->writeArray("Non-Patient Related Hours", m_NonPatientRelatedHours);
 }
@@ -272,9 +274,10 @@ void dbHandler::getNumberOfAppointments()
 	m_NumberOfAppointments.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		QString query_Number_Of_Appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_Appointments_748_base, it->first.remove("-"), it->second.remove("-"));//m_startDate, m_endDate;
+		QString query_Number_Of_Appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_Appointments_748_base, 
+			QString(it->first).remove("-"), QString(it->second).remove("-"));
 
-		cout << query_Number_Of_Appointments_748.toStdString().c_str() << endl;
+//		cout << query_Number_Of_Appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Number_Of_Appointments_748.toStdString().c_str());
 		//cout << db.lastError().text().toStdString() << endl;
 		//fflush(stdout);
@@ -313,9 +316,8 @@ void dbHandler::getNewPatients()
 	m_NewPatients.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		QString query_New_Patients_7411 = QString(query_New_Patients_7411_base).arg(it->first.remove("-")).arg(it->second.remove("-"));//m_startDate, m_endDate;
-
-//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
+		QString query_New_Patients_7411 = QString(query_New_Patients_7411_base).arg(it->first).arg(it->second);
+		cout << query_New_Patients_7411.toStdString().c_str() << endl;
 		query.exec(query_New_Patients_7411.toStdString().c_str());
 		//cout << db.lastError().text().toStdString() << endl;
 		//fflush(stdout);
@@ -333,7 +335,7 @@ void dbHandler::getChurnedPatients()
 	m_ChurnedPatients.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		QString query_Churned_Patients_7412 = QString(query_Churned_Patients_7412_base).arg(it->first.remove("-")).arg(it->second.remove("-"));//m_startDate, m_endDate;
+		QString query_Churned_Patients_7412 = QString(query_Churned_Patients_7412_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
 //		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Churned_Patients_7412.toStdString().c_str());
@@ -352,7 +354,7 @@ void dbHandler::getUniquePatients()
 	m_UniquePatients.clear();
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
-		QString query_Unique_Patients_7413 = QString(query_Unique_Patients_7413_base).arg(it->first.remove("-")).arg(it->second.remove("-"));//m_startDate, m_endDate;
+		QString query_Unique_Patients_7413 = QString(query_Unique_Patients_7413_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
 //		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Unique_Patients_7413.toStdString().c_str());
