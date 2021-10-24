@@ -182,6 +182,11 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
 
     writer->writeArray("dates", m_dates);
 
+    for (int i = 1900; i < 2300; i++)
+    {
+        daysInFebuary(i);
+    }
+
 
     //cout<< getNonPatientRelatedHours(m_startDate, m_endDate) << endl;
     //QDateTime time(QDate::currentDate());

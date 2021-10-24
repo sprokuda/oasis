@@ -194,3 +194,6 @@ const char* query_Churned_Patients_7412_base =
 
 const char* query_Unique_Patients_7413_base =
 "Select  count ( distinct patnumber) as uniqPt  from pbarcmas  where transtype = 1 and deleted <> -1 and entrydate between date'%1' and date'%2';";
+
+const char* query_Lapsed_Patients_7414 =
+"Select count(*) as lapsedpt from LAST_INV where LASTVISITDATE BETWEEN CURRENT_DATE-INTERVAL'36'MONTH and CURRENT_DATE-INTERVAL'18'MONTH;";
