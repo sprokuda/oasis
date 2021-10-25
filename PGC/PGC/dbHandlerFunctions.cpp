@@ -86,7 +86,7 @@ int dbHandler::daysInFebuary(const int& year)//todo - implement
 	}
 	else days = 28;//cout << year << " is not a leap year.";
 
-	return 28;// days;
+	return days;//28
 }
 
 void dbHandler::generateDates()
@@ -465,7 +465,7 @@ void dbHandler::getRecallEffectiveness()
 
 	auto it1 = m_TotalRecalls.begin();
 	auto it2 = m_UnbookedRecalls.begin();
-	for (; it1 != m_NewPatients.end() && it2 != m_UniquePatients.end(); ++it1, ++it2)
+	for (; it1 != m_TotalRecalls.end() && it2 != m_UniquePatients.end(); ++it1, ++it2)
 	{
 		if (*it1 != 0)
 			m_RecallEffectiveness.push_back((100 * ((*it1) - (*it2))/ (*it1)));

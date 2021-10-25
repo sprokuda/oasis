@@ -169,7 +169,9 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getLapsedPatients();
     getNewPatientPercent();
     getNetPatientGain();
-//    getUnbookedRecalls();
+    getUnbookedRecalls();
+    getTotalRecalls();
+    getRecallEffectiveness();
     getLostRecalls();
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();
