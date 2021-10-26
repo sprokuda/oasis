@@ -22,16 +22,16 @@ void MessageOutput(QtMsgType type, const QMessageLogContext& context, const QStr
     QByteArray localMsg = msg.toLocal8Bit();
     switch (type) {
     case QtDebugMsg:
-//        cout << "QtDebugMsg: " << msg.toStdString() << endl;
+        cout << "QtDebugMsg: " << msg.toStdString() << endl;
         break;
     case QtInfoMsg:
-//        cout << "QtInfoMsg: " << msg.toStdString() << endl;
+        cout << "QtInfoMsg: " << msg.toStdString() << endl;
         break;
     case QtWarningMsg:
-//        cout << "QtWarningMsg: " << msg.toStdString() << endl;
+        cout << "QtWarningMsg: " << msg.toStdString() << endl;
         break;
     case QtCriticalMsg:
-//        cout << "QtCriticalMsg: " << msg.toStdString() << endl;
+        cout << "QtCriticalMsg: " << msg.toStdString() << endl;
         break;
     case QtFatalMsg:
         cout << "QtFatalMsg: " << msg.toStdString() << endl;

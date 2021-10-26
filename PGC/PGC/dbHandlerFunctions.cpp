@@ -14,6 +14,9 @@ extern const char* query_Unique_Patients_7413_base;
 
 extern const char* query_Lapsed_Patients_7414;
 extern const char* query_Total_Recalls_7418_base;
+extern const char* query_Total_Incomplete_Treatment_Value_7421;
+extern const char* query_Treatment_Plans_Created_7422_base;
+extern const char* query_Treatment_Plans_Not_Accepted_7423_base;
 
 double dbHandler::getProduction(QString start, QString end)
 {
@@ -486,4 +489,76 @@ void dbHandler::getLostRecalls()
 		m_LostRecalls.push_back(LostRecalls(QString(it->first), QString(it->second)));
 	}
 	writer->writeArray("Lost Recalls", m_LostRecalls);
+}
+
+
+
+void dbHandler::getTotalIncompleteTreatmentValue()
+{
+	QSqlQuery query(db);
+
+	query.exec(query_Total_Incomplete_Treatment_Value_7421);
+	//cout << db.lastError().text().toStdString() << endl;
+	//fflush(stdout);
+	query.next();
+	auto result = (int)query.value(0).toString().toDouble();
+	writer->writeSnapshot("Total Incomplete Treatment Value", result,"\"$","\"");
+}
+
+void dbHandler::getTreatmentPlansCreated()
+{
+	QSqlQuery query(db);
+	m_TreatmentPlansCreated.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Treatment_Plans_Created_7422 = QString(query_Treatment_Plans_Created_7422_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
+
+//		cout << query_Treatment_Plans_Created_7422.toStdString().c_str() << endl;
+		query.exec(query_Treatment_Plans_Created_7422.toStdString().c_str());
+//		cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = (int)query.value(0).toString().toDouble();
+//		cout << query.value(0).toString().toStdString() << endl;
+		m_TreatmentPlansCreated.push_back(result);
+	}
+	writer->writeArray("Treatment Plans Created", m_TreatmentPlansCreated, "\"$", "\"");
+}
+
+
+void dbHandler::getTreatmentPlansNotAccepted()
+{
+	QSqlQuery query(db);
+	m_TreatmentPlansNotAccepted.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		QString query_Treatment_Plans_Not_Accepted_7423 = QString(query_Treatment_Plans_Not_Accepted_7423_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
+
+//		cout << query_Treatment_Plans_Not_Accepted_7423.toStdString().c_str() << endl;
+		query.exec(query_Treatment_Plans_Not_Accepted_7423.toStdString().c_str());
+//		cout << db.lastError().text().toStdString() << endl;
+		//fflush(stdout);
+		query.next();
+		auto result = (int)query.value(0).toString().toDouble();
+		m_TreatmentPlansNotAccepted.push_back(result);
+	}
+	writer->writeArray("Treatment Plans Not Accepted", m_TreatmentPlansNotAccepted, "\"$", "\"");
+}
+
+void dbHandler::getTreatmentPlanConversionRate()
+{
+	m_TreatmentPlanConversionRate.clear();
+
+	auto it1 = m_TreatmentPlansCreated.begin();
+	auto it2 = m_TreatmentPlansNotAccepted.begin();
+	for (; it1 != m_TreatmentPlansCreated.end() && it2 != m_TreatmentPlansNotAccepted.end(); ++it1, ++it2)
+	{
+		if (*it1 != 0)
+			m_TreatmentPlanConversionRate.push_back((100 * ((*it1) - (*it2)) / (*it1)));
+		else
+			m_TreatmentPlanConversionRate.push_back(0);
+
+	}
+	writer->writeArray("Treatment Plan Conversion Rate %", m_TreatmentPlanConversionRate, "", "%");
+
 }

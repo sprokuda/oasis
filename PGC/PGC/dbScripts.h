@@ -200,3 +200,12 @@ const char* query_Lapsed_Patients_7414 =
 
 const char* query_Total_Recalls_7418_base =
 "Select  count(*) as totRecall from ptpatnts where details like 'Recall%'  and datecreated   between date'%1' and date'%2';"; 
+
+const char* query_Total_Incomplete_Treatment_Value_7421 =
+"SELECT SUM(AMOUNT) FROM PTPATTPN WHERE HEADER <> -1 AND VISITHEADER <> -1 AND COMPLETED <> -1 AND PATNUMBER IN (SELECT PTNO  FROM  LAST_INV where LASTVISITDATE BETWEEN CURRENT_DATE-INTERVAL'18'MONTH and CURRENT_DATE);";
+
+const char* query_Treatment_Plans_Created_7422_base =
+"SELECT SUM(AMOUNT) FROM PTPATTPN WHERE HEADER <> -1 AND VISITHEADER <> -1 AND DATECREATED BETWEEN DATE'%1' AND DATE'%2';";
+
+const char* query_Treatment_Plans_Not_Accepted_7423_base =
+"SELECT SUM(AMOUNT) FROM PTPATTPN WHERE HEADER <> -1 AND VISITHEADER <> -1 AND COMPLETED <> -1 AND DATECREATED BETWEEN DATE'%1' AND DATE'%2'  and PATNUMBER NOT IN (SELECT PTNO FROM FUT_APP) ;";

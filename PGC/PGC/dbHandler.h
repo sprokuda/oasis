@@ -68,6 +68,9 @@ private:
     vector<int> m_TotalRecalls;
     vector<int> m_RecallEffectiveness;
     vector<int> m_LostRecalls;
+    vector<int> m_TreatmentPlansCreated;
+    vector<int> m_TreatmentPlansNotAccepted;
+    vector<int> m_TreatmentPlanConversionRate;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice);
@@ -95,7 +98,11 @@ private:
     void getTotalRecalls();
     void getRecallEffectiveness();
     void getLostRecalls();
-
+    void getTotalIncompleteTreatmentValue();
+    void getTreatmentPlansCreated();
+    void getTreatmentPlansNotAccepted();
+    void getTreatmentPlanConversionRate();
+        
     int unbkRecall(QString PT, QString RD);
     int UnbookedRecalls(QString start, QString end);
 
