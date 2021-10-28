@@ -92,10 +92,10 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     this->setAutoFillBackground(true);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
-    QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
-    shadow_effect->setBlurRadius(6.0);
-    shadow_effect->setOffset(3.0);
-    this->setGraphicsEffect(shadow_effect);
+    //QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
+    //shadow_effect->setBlurRadius(6.0);
+    //shadow_effect->setOffset(3.0);
+    //this->setGraphicsEffect(shadow_effect);
 
     this->setWindowTitle(QObject::tr("Date Picker"));
 

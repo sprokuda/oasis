@@ -11,10 +11,10 @@ QtMultiSelectPopup::QtMultiSelectPopup( QWidget* parent)
     setLayout(mainLayout);
 
     this->setAttribute(Qt::WA_TranslucentBackground);
-    QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
+ /*   QGraphicsDropShadowEffect* shadow_effect = new QGraphicsDropShadowEffect(this);
     shadow_effect->setBlurRadius(6.0);
     shadow_effect->setOffset(3);
-    this->setGraphicsEffect(shadow_effect);
+    this->setGraphicsEffect(shadow_effect);*/
 
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Window);
     installEventFilter(this);
