@@ -297,13 +297,13 @@ void dbHandler::getNumberOfAppointments()
 		QString query_Number_Of_Appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_Appointments_748_base, 
 			QString(it->first).remove("-"), QString(it->second).remove("-"));
 
-//		cout << query_Number_Of_Appointments_748.toStdString().c_str() << endl;
+		//cout << query_Number_Of_Appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Number_Of_Appointments_748.toStdString().c_str());
 		//cout << db.lastError().text().toStdString() << endl;
 		//fflush(stdout);
 		query.next();
-		auto result = query.value(0).toString().toInt();
-		//cout << result.toStdString() << endl;
+		auto result = (int)query.value(0).toString().toDouble();
+		cout << query.value(0).toString().toStdString() << endl;
 		//fflush(stdout);
 		m_NumberOfAppointments.push_back(result);
 	}
@@ -572,4 +572,22 @@ void dbHandler::getProduction()
 		m_Production.push_back((int)Production(it->first,it->second));
 	}
 	writer->writeArray("Total Production", m_Production, "\"$", "\"");
+}
+
+void dbHandler::getProductionPerValue(const QString& header, const vector<int>& hours)
+{
+	vector<int> prd_per_hour;
+
+	auto it1 = m_Production.begin();
+	auto it2 = hours.begin();
+	for (; it1 != m_Production.end() && it2 != hours.end(); ++it1, ++it2)
+	{
+		if (*it2 != 0)
+			prd_per_hour.push_back(((*it1)  / (*it2)));
+		else
+			prd_per_hour.push_back(0);
+
+	}
+	writer->writeArray(header, prd_per_hour, "\"$", "\"");
+
 }

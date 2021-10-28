@@ -156,16 +156,16 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     setGlobals(start, end, books, prod_columns, practice);
 
     makeItemAnalysisTable(start, end);
-    //getHoursWorked();
-    //getHoursCancelled();
-    //getNonPatientRelatedHours();
-    //getOtherHours();
-    //getUtilisation();
-    //getNumberOfAppointments();
-    //getAllAndActivePatients();
-    //getNewPatients();
-    //getChurnedPatients();
-    //getUniquePatients();
+    getHoursWorked();
+    getHoursCancelled();
+    getNonPatientRelatedHours();
+    getOtherHours();
+    getUtilisation();
+    getNumberOfAppointments();
+    getAllAndActivePatients();
+    getNewPatients();
+    getChurnedPatients();
+    getUniquePatients();
     //getLapsedPatients();
     //getNewPatientPercent();
     //getNetPatientGain();
@@ -180,6 +180,10 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     //getTreatmentPlanConversionRate();
 
     getProduction();
+    getProductionPerValue("Production Per Available Hour", m_AvailableHours);
+    getProductionPerValue("Production Per Working Hour", m_HoursWorked);
+    getProductionPerValue("Production Per Patient", m_UniquePatients);
+    getProductionPerValue("Production Per Appointment", m_NumberOfAppointments);
 
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();

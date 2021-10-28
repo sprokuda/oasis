@@ -59,3 +59,5 @@ PGC/Release/
 /~$example.xlsx
 *.xlsx
 *.csv
+*.~lock.PGC Export.csv\#
+*.~lock.Technical Requirement Specification  V3.docx\#

@@ -104,6 +104,7 @@ private:
     void getTreatmentPlansNotAccepted();
     void getTreatmentPlanConversionRate();
     void getProduction();
+    void getProductionPerValue(const QString& header, const vector<int>& hours);
         
     int unbkRecall(QString PT, QString RD);
     int UnbookedRecalls(QString start, QString end);
