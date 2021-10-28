@@ -174,10 +174,12 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     //getRecallEffectiveness();
     //getLostRecalls();
 
-    getTotalIncompleteTreatmentValue();
-    getTreatmentPlansCreated();
-    getTreatmentPlansNotAccepted();
-    getTreatmentPlanConversionRate();
+    //getTotalIncompleteTreatmentValue();
+    //getTreatmentPlansCreated();
+    //getTreatmentPlansNotAccepted();
+    //getTreatmentPlanConversionRate();
+
+    getProduction();
 
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();

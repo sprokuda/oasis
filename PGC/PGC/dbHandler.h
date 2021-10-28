@@ -71,6 +71,7 @@ private:
     vector<int> m_TreatmentPlansCreated;
     vector<int> m_TreatmentPlansNotAccepted;
     vector<int> m_TreatmentPlanConversionRate;
+    vector<int> m_Production;
 
     int apptBookEnd();
     void setGlobals(QString start, QString end, QStringList books, int prod_columns, QString practice);
@@ -102,6 +103,7 @@ private:
     void getTreatmentPlansCreated();
     void getTreatmentPlansNotAccepted();
     void getTreatmentPlanConversionRate();
+    void getProduction();
         
     int unbkRecall(QString PT, QString RD);
     int UnbookedRecalls(QString start, QString end);
@@ -112,7 +114,7 @@ private:
     int apptUsed(QString SKEY, int usd, int appEnd);
     int NonPatientRelatedHours(QString start, QString end);
 
-    double getProduction(QString start, QString end);
+    double Production(QString start, QString end);
 
 
 };

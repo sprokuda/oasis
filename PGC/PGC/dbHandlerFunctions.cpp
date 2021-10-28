@@ -18,7 +18,7 @@ extern const char* query_Total_Incomplete_Treatment_Value_7421;
 extern const char* query_Treatment_Plans_Created_7422_base;
 extern const char* query_Treatment_Plans_Not_Accepted_7423_base;
 
-double dbHandler::getProduction(QString start, QString end)
+double dbHandler::Production(QString start, QString end)
 {
 	QSqlQuery query(db);
 
@@ -561,4 +561,15 @@ void dbHandler::getTreatmentPlanConversionRate()
 	}
 	writer->writeArray("Treatment Plan Conversion Rate %", m_TreatmentPlanConversionRate, "", "%");
 
+}
+
+void dbHandler::getProduction()
+{
+	QSqlQuery query(db);
+	m_Production.clear();
+	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
+	{
+		m_Production.push_back((int)Production(it->first,it->second));
+	}
+	writer->writeArray("Total Production", m_Production, "\"$", "\"");
 }
