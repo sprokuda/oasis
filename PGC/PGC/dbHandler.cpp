@@ -45,7 +45,7 @@ dbHandler::~dbHandler()
     query.exec(dlt_fncn_apptUsed_7212);
     query.exec(dlt_prcd_Production_7213);
 #endif
-
+    query.exec(dlt_tbl_ITEM_ANALYSIS_726);
 }
 
 
@@ -77,11 +77,6 @@ void dbHandler::loadBooksAndFunctions()
 
     query.exec(crt_tbl_ITEMS_725);
     query.exec(ppl_tbl_ITEMS_725);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
-
-    query.exec(crt_tbl_ITEM_ANALYSIS_726);
-    query.exec(ppl_tbl_ITEM_ANALYSIS_726);
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
@@ -152,6 +147,8 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     writer = make_unique<csvWriter>();
     QSqlQuery query(db);
 
+    QDate current_date = QDate::currentDate();
+    QTime current_time = QTime::currentTime();
 
     setGlobals(start, end, books, prod_columns, practice);
 
@@ -187,6 +184,10 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
 
     getProductionThroughLost("Lost Revenue Through Cancellations", m_HoursWorked, m_HoursCancelled);
     getProductionThroughLost("Lost Revenue Through Patient Churn", m_HoursWorked, m_ChurnedPatients);
+    getDebtors();
+    getTop10Items("Top 10 Items by Value", QString(query_Top_10_Items_By_Value_7433));
+    getTop10Items("Top 10 Items by Count", QString(query_Top_10_Items_By_Count_7434));
+    writeGlobals(current_date, current_time);
 
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();
@@ -237,6 +238,12 @@ void dbHandler::makeItemAnalysisTable(QString start, QString end)
     QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
 //    cout << string_726.toStdString().c_str() << endl;
 
+
+    query.exec(crt_tbl_ITEM_ANALYSIS_726);
+    cout << db.lastError().text().toStdString() << endl;
+    fflush(stdout);
+
+
     query.exec(string_726.toStdString().c_str());
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
@@ -272,6 +279,7 @@ void dbHandler::setGlobals(QString start, QString end, QStringList books, int pr
 
     generateDates();
 
+    m_practice = practice;
     
     const char* glb_bookLength = "SELECT CAST(F2 AS INTEGER) +1 AS appbooklength FROM SYTBLENT WHERE SKEY = 'PAOPTIONE0000';";
     query.exec(glb_bookLength);

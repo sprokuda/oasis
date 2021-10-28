@@ -43,7 +43,7 @@ private:
 
     QString m_start_date;
     QString m_end_date;
-
+    QString m_practice;
     QStringList m_books;
 
     unique_ptr<csvWriter> writer;
@@ -51,6 +51,9 @@ private:
     vector<pair<QString, QString>> m_dates;
     vector<QString> m_months;
     vector<QString> m_header_months;
+
+    QDate current_date;
+    QTime current_time;
 
     vector<int> m_HoursWorked;
     vector<int> m_HoursCancelled;
@@ -106,6 +109,10 @@ private:
     void getProduction();
     void getProductionPerValue(const QString& header, const vector<int>& hours);
     void getProductionThroughLost(const QString& header, const vector<int>& hours, const vector<int>& lost);
+    void getDebtors();
+    void getTop10Items(const QString& header, const QString& str);
+    void writeGlobals(const QDate& current_date, const QTime& current_time);
+
         
     int unbkRecall(QString PT, QString RD);
     int UnbookedRecalls(QString start, QString end);

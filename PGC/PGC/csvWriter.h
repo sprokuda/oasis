@@ -74,10 +74,34 @@ public:
         out << "\n";
     };
 
+    template<typename T>
+    void writeTop10(const QString& header, vector<pair<T,T>> data, QString prefix = QString::QString(""), QString postfix = QString::QString(""))
+    {
+        QTextStream out(file);
+        int i = 1;
+        out << header <<"\n";
 
+        for (auto it = data.begin(); it != data.end(); it++)
+        {
+            out << i << "," << it->first << ",$" << it->second << "\n";
+            i++;
+            if (i == 11) break;
+        }
+    };
+
+
+    QFile* getFilePtr() { return file; }
+
+
+    template <typename T>
+    QTextStream& operator << ( const T& value)
+    {
+        QTextStream out1(file);
+        return out1 << value;
+    };
 
 private:
     QFile* file;
-
+    unique_ptr<QTextStream> out_ptr;
 };
 

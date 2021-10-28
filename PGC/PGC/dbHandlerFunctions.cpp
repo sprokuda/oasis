@@ -18,6 +18,10 @@ extern const char* query_Total_Incomplete_Treatment_Value_7421;
 extern const char* query_Treatment_Plans_Created_7422_base;
 extern const char* query_Treatment_Plans_Not_Accepted_7423_base;
 
+extern const char* query_Debtors_7432;
+extern const char* query_Top_10_Items_By_Value_7433;
+extern const char* query_Top_10_Items_by_Count_7434;
+
 double dbHandler::Production(QString start, QString end)
 {
 	QSqlQuery query(db);
@@ -610,4 +614,49 @@ void dbHandler::getProductionThroughLost(const QString& header, const vector<int
 	}
 	writer->writeArray(header, lrtc, "\"$", "\"");
 
+}
+
+void dbHandler::getDebtors()
+{
+	QSqlQuery query(db);
+
+	query.exec(query_Debtors_7432);
+	//cout << db.lastError().text().toStdString() << endl;
+	//fflush(stdout);
+	query.next();
+	auto result = (int)query.value(0).toString().toDouble();
+	writer->writeSnapshot("Debtors", result, "\"$", "\"");
+}
+
+
+void dbHandler::getTop10Items(const QString& header, const QString& str)
+{
+	vector<pair<int, int>> vec;
+
+	QSqlQuery query(db);
+	query.exec(str.toStdString().c_str());
+	while (query.next())
+	{
+		auto first = (int)query.value(0).toString().toDouble();
+		auto second = (int)query.value(1).toString().toDouble();
+		vec.push_back(make_pair(first, second));
+	}
+
+	sort(vec.begin(), vec.end(), [](auto a, auto b) {return a.second > b.second; });
+
+	writer->writeTop10(header, vec);
+}
+
+void dbHandler::writeGlobals(const QDate& current_date, const QTime& current_time)
+{
+	auto out = QTextStream(writer->getFilePtr());
+	out << "Practice Name" << ","<< m_practice << "\n";
+	auto date = m_start_date.split("-");
+	out << "Start Date" << "," << date.at(2)<< "/" << date.at(1) << "/" << date.at(0) << "\n";
+	date = m_end_date.split("-");
+	out << "End Date" << "," << date.at(2) << "/" << date.at(1) << "/" << date.at(0) << "\n";
+	out << "Production Columns" << "," << m_prodCol << "\n";
+	out << "Appointment Books" << "," << "\"" << m_books.join(",") << "\"" << "\n";
+	out << "Date of Extraction" << "," << current_date.toString("dd/MM/yyyy") << "\n";
+	out << "Time of Extraction" << "," << current_time.toString("hh:mm:ss");
 }

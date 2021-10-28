@@ -209,3 +209,13 @@ const char* query_Treatment_Plans_Created_7422_base =
 
 const char* query_Treatment_Plans_Not_Accepted_7423_base =
 "SELECT SUM(AMOUNT) FROM PTPATTPN WHERE HEADER <> -1 AND VISITHEADER <> -1 AND COMPLETED <> -1 AND DATECREATED BETWEEN DATE'%1' AND DATE'%2'  and PATNUMBER NOT IN (SELECT PTNO FROM FUT_APP) ;";
+
+const char* query_Debtors_7432 =
+"Select Sum(invoices - credits) as patdebt from pbaccbal where drnumber = 0;";
+
+const char* query_Top_10_Items_By_Value_7433 =
+"select itemcode,amount from item_analysis order by amount desc;";
+
+const char* query_Top_10_Items_By_Count_7434 =
+"select itemcode,usage from item_analysis order by amount desc  ;";
+
