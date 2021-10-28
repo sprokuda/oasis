@@ -105,6 +105,7 @@ private:
     void getTreatmentPlanConversionRate();
     void getProduction();
     void getProductionPerValue(const QString& header, const vector<int>& hours);
+    void getProductionThroughLost(const QString& header, const vector<int>& hours, const vector<int>& lost);
         
     int unbkRecall(QString PT, QString RD);
     int UnbookedRecalls(QString start, QString end);

@@ -303,7 +303,7 @@ void dbHandler::getNumberOfAppointments()
 		//fflush(stdout);
 		query.next();
 		auto result = (int)query.value(0).toString().toDouble();
-		cout << query.value(0).toString().toStdString() << endl;
+		//cout << query.value(0).toString().toStdString() << endl;
 		//fflush(stdout);
 		m_NumberOfAppointments.push_back(result);
 	}
@@ -589,5 +589,25 @@ void dbHandler::getProductionPerValue(const QString& header, const vector<int>& 
 
 	}
 	writer->writeArray(header, prd_per_hour, "\"$", "\"");
+
+}
+
+void dbHandler::getProductionThroughLost(const QString& header, const vector<int>& hours, const vector<int>& lost)
+{
+	double prd_per_hour = 0;
+	vector<int> lrtc;
+
+	auto it1 = m_Production.begin();
+	auto it2 = hours.begin();
+	auto it3 = lost.begin();
+	for (; it1 != m_Production.end() && it2 != hours.end() && it3 != lost.end(); ++it1, ++it2, ++it3)
+	{
+		if (*it2 != 0)
+			prd_per_hour=(double)(*it1) / (double)(*it2);
+		else
+			prd_per_hour=0;
+		lrtc.push_back((int)(prd_per_hour * (double)*it3));
+	}
+	writer->writeArray(header, lrtc, "\"$", "\"");
 
 }

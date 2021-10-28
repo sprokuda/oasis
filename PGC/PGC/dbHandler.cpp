@@ -185,6 +185,9 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getProductionPerValue("Production Per Patient", m_UniquePatients);
     getProductionPerValue("Production Per Appointment", m_NumberOfAppointments);
 
+    getProductionThroughLost("Lost Revenue Through Cancellations", m_HoursWorked, m_HoursCancelled);
+    getProductionThroughLost("Lost Revenue Through Patient Churn", m_HoursWorked, m_ChurnedPatients);
+
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();
 
