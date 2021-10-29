@@ -30,7 +30,7 @@ dbHandler::dbHandler(QObject* parent) : QObject(parent)
 dbHandler::~dbHandler()
 {
     QSqlQuery query(db);
-#if 0
+#if 1
     query.exec(dlt_tbl_FIRST_INV_721);
     query.exec(dlt_tbl_LAST_INV_722);
     query.exec(dlt_tbl_FUT_APP_723);
@@ -39,11 +39,11 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_ITEM_ANALYSIS_726);
     query.exec(dlt_tbl_CHURN_727);
     query.exec(dlt_tbl_Production_728);
-    query.exec(dlt_fncn_unbkRecall_729);
-    query.exec(dlt_fncn_lostRecall_7210);
-    query.exec(dlt_fncn_apptbookEnd_7211);
-    query.exec(dlt_fncn_apptUsed_7212);
-    query.exec(dlt_prcd_Production_7213);
+//    query.exec(dlt_fncn_unbkRecall_729);
+//    query.exec(dlt_fncn_lostRecall_7210);
+//    query.exec(dlt_fncn_apptbookEnd_7211);
+//    query.exec(dlt_fncn_apptUsed_7212);
+//    query.exec(dlt_prcd_Production_7213);
 #endif
     query.exec(dlt_tbl_ITEM_ANALYSIS_726);
 }
@@ -51,9 +51,12 @@ dbHandler::~dbHandler()
 
 void dbHandler::loadBooksAndFunctions()
 {
+    QDateTime time(QDate::currentDate());
+    auto start_time = time.currentMSecsSinceEpoch();
+
     QSqlQuery query(db);
 
-#if 0
+#if 1
 
     query.exec(crt_tbl_FIRST_INV_721);
     query.exec(ppl_tbl_FIRST_INV_721);
@@ -89,35 +92,32 @@ void dbHandler::loadBooksAndFunctions()
     cout << db.lastError().text().toStdString() << endl;
     fflush(stdout);
 
-    query.exec(crt_fncn_unbkRecall_729);
-    query.next();
-    cout << query.value(0).toString().toStdString() << endl;
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
+    //query.exec(crt_fncn_unbkRecall_729);
+    //query.next();
+    //cout << query.value(0).toString().toStdString() << endl;
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
 
-//    cout << crt_fncn_unbkRecall_729 << endl;
-//    fflush(stdout);
+    //query.exec(crt_fncn_lostRecall_7210);
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
 
+    //query.exec(crt_fncn_apptbookEnd_7211);
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
 
-    query.exec(crt_fncn_lostRecall_7210);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
+    //query.exec(crt_fncn_apptUsed_7212);
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
 
-    query.exec(crt_fncn_apptbookEnd_7211);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
-
-    query.exec(crt_fncn_apptUsed_7212);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
-
-    query.exec(crt_prcd_Production_7213);
-    cout << db.lastError().text().toStdString() << endl;
-    fflush(stdout);
+    //query.exec(crt_prcd_Production_7213);
+    //cout << db.lastError().text().toStdString() << endl;
+    //fflush(stdout);
 
 #endif
 
     queryAppBook();
+    cout << "Time of creation of tables: " << time.currentMSecsSinceEpoch() - start_time << endl;
 }
 
 void dbHandler::queryAppBook()
@@ -196,7 +196,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     //auto start_time = time.currentMSecsSinceEpoch();
 
     //cout << getUnbookedRecalls(start, end) << endl;
-    cout << time.currentMSecsSinceEpoch() - start_time << endl;
+    cout << "Time of excecution of queries: " << time.currentMSecsSinceEpoch() - start_time << endl;
     //fflush(stdout);
 
     //start_time = time.currentMSecsSinceEpoch();
