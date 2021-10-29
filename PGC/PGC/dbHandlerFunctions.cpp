@@ -323,14 +323,15 @@ void dbHandler::getAllAndActivePatients()
 	//cout << db.lastError().text().toStdString() << endl;
 	//fflush(stdout);
 	query.next();
-	auto result = query.value(0).toString().toInt();
-	writer->writeSnapshot("All Patients", result);
+	auto all = query.value(0).toString().toInt();
+	writer->writeSnapshot("All Patients", all);
 	query.exec(query_Active_Patients_7410);
 	//cout << db.lastError().text().toStdString() << endl;
 	//fflush(stdout);
 	query.next();
-	result = query.value(0).toString().toInt();
-	writer->writeSnapshot("Active Patients", result);
+	auto active = query.value(0).toString().toInt();
+	writer->writeSnapshot("Active Patients", active);
+	writer->writeSnapshot("Inactive Patients", all - active);
 }
 
 

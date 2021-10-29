@@ -150,6 +150,9 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     QDate current_date = QDate::currentDate();
     QTime current_time = QTime::currentTime();
 
+    QDateTime time(QDate::currentDate());
+    auto start_time = time.currentMSecsSinceEpoch();
+
     setGlobals(start, end, books, prod_columns, practice);
 
     makeItemAnalysisTable(start, end);
@@ -163,18 +166,18 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getNewPatients();
     getChurnedPatients();
     getUniquePatients();
-    //getLapsedPatients();
-    //getNewPatientPercent();
-    //getNetPatientGain();
-    //getUnbookedRecalls();
-    //getTotalRecalls();
-    //getRecallEffectiveness();
-    //getLostRecalls();
+    getLapsedPatients();
+    getNewPatientPercent();
+    getNetPatientGain();
+    getUnbookedRecalls();
+    getTotalRecalls();
+    getRecallEffectiveness();
+    getLostRecalls();
 
-    //getTotalIncompleteTreatmentValue();
-    //getTreatmentPlansCreated();
-    //getTreatmentPlansNotAccepted();
-    //getTreatmentPlanConversionRate();
+    getTotalIncompleteTreatmentValue();
+    getTreatmentPlansCreated();
+    getTreatmentPlansNotAccepted();
+    getTreatmentPlanConversionRate();
 
     getProduction();
     getProductionPerValue("Production Per Available Hour", m_AvailableHours);
@@ -193,7 +196,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     //auto start_time = time.currentMSecsSinceEpoch();
 
     //cout << getUnbookedRecalls(start, end) << endl;
-    //cout << time.currentMSecsSinceEpoch() - start_time << endl;
+    cout << time.currentMSecsSinceEpoch() - start_time << endl;
     //fflush(stdout);
 
     //start_time = time.currentMSecsSinceEpoch();
