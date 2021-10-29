@@ -19,13 +19,18 @@ public:
     explicit dbHandler(QObject* parent = nullptr);
     ~dbHandler();
 
-    Q_INVOKABLE void doQueries();
-    Q_INVOKABLE void queryAppBook();
+    Q_INVOKABLE void connectDatabase();
     Q_INVOKABLE void loadBooksAndFunctions();
+    Q_INVOKABLE void queryAppBook();
     Q_INVOKABLE void Extract(QString start, QString end, QStringList books, int prod_columns, QString practice);
     QSqlDatabase db;
 
+    Q_INVOKABLE void doQueries();
+
 signals:
+
+    void dbConnectError(QString message);
+    void dbConnectSuccessful();
     void allCompleted();
     void appBookReady(QStringList list);
     void extractionCompleted();

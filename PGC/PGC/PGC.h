@@ -30,9 +30,11 @@ public:
     void initialLoad();
 
 public slots:
-    void onAllCompleted();
+    void onDbconnectError(QString message);
+    void onDbSuccessful();
     void updateLog(QString message);
     void onQueryAppBook(QStringList list);
+    void onAllCompleted();
 
 private:
     QLabel* companyLogoQLabel;

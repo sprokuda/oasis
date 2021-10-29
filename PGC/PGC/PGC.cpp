@@ -104,6 +104,8 @@ PGC::PGC(QWidget *parent)
     thread = new QThread();
 
     handler->moveToThread(thread);
+    connect(handler, SIGNAL(dbConnectError(QString)), this, SLOT(onDbconnectError(QString)));
+    connect(handler, SIGNAL(dbConnectSuccessful()), this, SLOT(onDbSuccessful()));
     connect(handler, SIGNAL(extractionCompleted()), this, SLOT(onAllCompleted()));
     connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
     thread->start();
@@ -140,8 +142,33 @@ void PGC::initialLoad()
      spinner->show();
      spinner->adjustPosition();
      this->setEnabled(false);
-     QMetaObject::invokeMethod(handler, "loadBooksAndFunctions", Qt::QueuedConnection);
- //    QMetaObject::invokeMethod(handler, "queryAppBook", Qt::QueuedConnection);
+     QMetaObject::invokeMethod(handler, "connectDatabase", Qt::QueuedConnection);
+}
+
+
+void PGC::onDbconnectError(QString message)
+{
+    QMessageBox msgBox(this);
+    msgBox.setText(message);
+    msgBox.setIcon(QMessageBox::Warning);
+    auto* connect = msgBox.addButton("Try to connect", QMessageBox::ActionRole);
+    auto* exit = msgBox.addButton("Exit Program", QMessageBox::ActionRole);
+
+    msgBox.exec();
+
+    if (msgBox.clickedButton() == connect)
+    {
+        initialLoad();
+    }
+    else if (msgBox.clickedButton() == exit)
+    {
+        qApp->quit();
+    }
+}
+
+void PGC::onDbSuccessful()
+{
+    QMetaObject::invokeMethod(handler, "loadBooksAndFunctions", Qt::QueuedConnection);
 }
 
 void PGC::exctractData()

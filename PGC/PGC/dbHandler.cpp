@@ -11,20 +11,7 @@ using namespace std;
 
 dbHandler::dbHandler(QObject* parent) : QObject(parent)
 {
-    db = QSqlDatabase::addDatabase("QODBC", "mydb");
-    db.setDatabaseName("OASIS");//"DRIVER={MIMER};DSN='OASIS';DATABASE=OASIS")
-    db.setUserName("sysadm");
-    db.setPassword("12345pass");
 
-    if (!db.open())
-    {
-        cout << "error: " << endl;
-        fflush(stdout);
-        cout << "error: " << db.lastError().text().toStdString() << endl;
-        fflush(stdout);
-    }
-
-    
 }
 
 dbHandler::~dbHandler()
@@ -46,6 +33,24 @@ dbHandler::~dbHandler()
 //    query.exec(dlt_prcd_Production_7213);
 #endif
     query.exec(dlt_tbl_ITEM_ANALYSIS_726);
+}
+
+void dbHandler::connectDatabase()
+{
+    db = QSqlDatabase::addDatabase("QODBC", "mydb");
+    db.setDatabaseName("OASIS");//"DRIVER={MIMER};DSN='OASIS';DATABASE=OASIS")
+    db.setUserName("sysadm");
+    db.setPassword("12345pass");
+
+    if (!db.open())
+    {
+        cout << "error: " << db.lastError().text().toStdString() << endl;
+        fflush(stdout);
+
+        emit dbConnectError(db.lastError().text());
+        return;
+    }
+    emit dbConnectSuccessful();
 }
 
 
@@ -154,8 +159,8 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     auto start_time = time.currentMSecsSinceEpoch();
 
     setGlobals(start, end, books, prod_columns, practice);
-
     makeItemAnalysisTable(start, end);
+#if 0
     getHoursWorked();
     getHoursCancelled();
     getNonPatientRelatedHours();
@@ -192,6 +197,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getTop10Items("Top 10 Items by Count", QString(query_Top_10_Items_By_Count_7434));
     writeGlobals(current_date, current_time);
 
+#endif
     //QDateTime time(QDate::currentDate());
     //auto start_time = time.currentMSecsSinceEpoch();
 
