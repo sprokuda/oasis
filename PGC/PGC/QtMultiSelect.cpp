@@ -98,7 +98,7 @@ void QtMultiSelect::onAddItem(const QString& item_text)
     text.append(item_text);
     text.append(";");
     auto parts = text.split(";");
-    parts.removeAt(parts.lastIndexOf(";"));
+//    parts.removeAt(parts.lastIndexOf(";"));
     parts.removeAt(parts.size() - 1);
     parts.sort();
     auto out_text = parts.join(";");
