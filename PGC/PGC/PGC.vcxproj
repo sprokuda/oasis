@@ -171,6 +171,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="callDelay.cpp" />
+    <ClCompile Include="logOfPGC.cpp" />
     <ClCompile Include="csvWriter.cpp" />
     <ClCompile Include="dbHandler.cpp" />
     <ClCompile Include="dbHandlerFunctions.cpp" />
@@ -182,7 +183,16 @@
     <ClCompile Include="QtWaitingSpinner.cpp" />
     <QtMoc Include="PGC.h" />
     <ClCompile Include="PGC.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="main.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QtDatePicker.h" />
@@ -211,6 +221,7 @@
   <ItemGroup>
     <QtMoc Include="callDelay.h" />
     <QtMoc Include="csvWriter.h" />
+    <QtMoc Include="logOfPGC.h" />
     <ClInclude Include="dbScripts.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

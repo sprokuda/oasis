@@ -106,7 +106,7 @@ PGC::PGC(QWidget *parent)
     handler->moveToThread(thread);
     connect(handler, SIGNAL(dbConnectError(QString)), this, SLOT(onDbconnectError(QString)));
     connect(handler, SIGNAL(dbConnectSuccessful()), this, SLOT(onDbSuccessful()));
-    connect(handler, SIGNAL(extractionCompleted()), this, SLOT(onAllCompleted()));
+    connect(handler, SIGNAL(extractionCompleted()), this, SLOT(onExtractionCompleted()));
     connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
     thread->start();
 
@@ -178,7 +178,7 @@ void PGC::exctractData()
 
     spinner->show();
     spinner->adjustPosition();
-    exctractButton->setEnabled(false);
+    this->setEnabled(false);
 
     QString start = convertDateForMimer(pickerStart->getDate());
     QString end = convertDateForMimer(pickerEnd->getDate());
@@ -248,7 +248,7 @@ bool PGC::checkBeforeExtract()
     return true;
 }
 
-void PGC::onAllCompleted()
+void PGC::onExtractionCompleted()
 {
     spinner->hide();
     exctractButton->setEnabled(true);

@@ -34,7 +34,7 @@ public slots:
     void onDbSuccessful();
     void updateLog(QString message);
     void onQueryAppBook(QStringList list);
-    void onAllCompleted();
+    void onExtractionCompleted();
 
 private:
     QLabel* companyLogoQLabel;

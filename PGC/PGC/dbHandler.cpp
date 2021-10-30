@@ -160,7 +160,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
 
     setGlobals(start, end, books, prod_columns, practice);
     makeItemAnalysisTable(start, end);
-#if 0
+#if 1
     getHoursWorked();
     getHoursCancelled();
     getNonPatientRelatedHours();
