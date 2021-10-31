@@ -7,6 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+#include <errno.h>
+//#include <unistd.h>
 
 using namespace std;
 
@@ -23,17 +25,16 @@ public:
 
         void openLog(string file_name) 
         { 
-            const char* dir_name = "C:/OASIS/PGC/log";
+            const char* dir_name = "C:/log-test";// "C:/OASIS/PGC/log-test";
 
             QDir dir;
             if (!QDir(dir_name).exists()) dir.mkdir(dir_name);
             dir.cd(dir_name);
 
-            const QFileInfo outputDir(dir, "test.log");
+            const QFileInfo outputDir(dir.absolutePath());
             if ((!outputDir.exists()) || (!outputDir.isDir()) || (!outputDir.isWritable()))
             {
                 QMessageBox::warning(nullptr, 0, "Output directory problem","output directory does not exist,\nis not a directory,\nor is not writeable");
-                return;
             }
             QString fileName = dir.absolutePath() + "\\" + QDate::currentDate().toString("yyyyMMdd") + "_" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".log");
             log.open(fileName.toStdString());
@@ -41,5 +42,7 @@ public:
 
         ofstream& getOFStream() { return log; };
         bool isOpened() { return log.is_open(); };
-        void appendString(QString str) { log << str.toStdString(); };
+
+public slots:
+        void appendString(QString str);
 };

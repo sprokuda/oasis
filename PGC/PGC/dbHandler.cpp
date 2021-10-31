@@ -7,8 +7,6 @@
 
 using namespace std;
 
-//extern const char* crt_tbl_FIRST_INV_721;
-
 dbHandler::dbHandler(QObject* parent) : QObject(parent)
 {
 

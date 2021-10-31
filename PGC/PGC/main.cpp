@@ -96,8 +96,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
 
     logOfPGC log;
-    log.openLog("example.log");
-
+    log.openLog("");
 tryOpenLog:
     if(!log.isOpened())
     {
@@ -111,7 +110,7 @@ tryOpenLog:
 
         if (msgBox.clickedButton() == open)
         {
-            log.openLog("example.log"); goto tryOpenLog;
+            log.openLog(""); goto tryOpenLog;
         }
         else if (msgBox.clickedButton() == exit)
         {
@@ -119,6 +118,7 @@ tryOpenLog:
         }
     }
 
+    QObject::connect(&qout, SIGNAL(sendLogString(QString)), &log, SLOT(appendString(QString)));
 
     
 

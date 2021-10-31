@@ -193,12 +193,12 @@ void dbHandler::getHoursWorked()
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
 	QString query_Hours_Worked_742 = appendBooksToString(query_Hours_Worked_742_base, 
-		QString(it->first).remove("-"), QString(it->second).remove("-"));
+		QString(it->first).remove("-"), QString(it->second).remove("-")); //QString(it->second).remove("-")
 
 	//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
 	query.exec(query_Hours_Worked_742.toStdString().c_str());
-	//cout << db.lastError().text().toStdString() << endl;
-	//fflush(stdout);
+	cout << db.lastError().text().toStdString() << endl;
+	fflush(stdout);
 	query.next();
 	auto result = query.value(0).toString().toInt();
 	//cout << result.toStdString() << endl;
@@ -473,7 +473,7 @@ void dbHandler::getRecallEffectiveness()
 
 	auto it1 = m_TotalRecalls.begin();
 	auto it2 = m_UnbookedRecalls.begin();
-	for (; it1 != m_TotalRecalls.end() && it2 != m_UniquePatients.end(); ++it1, ++it2)
+	for (; it1 != m_TotalRecalls.end() && it2 != m_UnbookedRecalls.end(); ++it1, ++it2)
 	{
 		if (*it1 != 0)
 			m_RecallEffectiveness.push_back((100 * ((*it1) - (*it2))/ (*it1)));

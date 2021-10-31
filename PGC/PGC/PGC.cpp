@@ -258,7 +258,7 @@ void PGC::onExtractionCompleted()
 
 void PGC::updateLog(QString message)
 {
-    log->append(message);
+    if (message != QString("\n")) log->append(message);
 }
 
 void PGC::onQueryAppBook(QStringList list)
