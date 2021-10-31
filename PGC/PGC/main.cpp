@@ -102,7 +102,7 @@ tryOpenLog:
     if(!log.isOpened())
     {
         QMessageBox msgBox(nullptr);
-        msgBox.setText("Log file can'not be opened");
+        msgBox.setText("Log file can not be created");
         msgBox.setIcon(QMessageBox::Warning);
         auto* open = msgBox.addButton("Try to open again", QMessageBox::ActionRole);
         auto* exit = msgBox.addButton("Exit Program", QMessageBox::ActionRole);
