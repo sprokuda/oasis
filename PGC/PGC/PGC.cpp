@@ -75,8 +75,8 @@ PGC::PGC(QWidget *parent)
 
     log = new QTextBrowser(this);
     log->setFont(QFont(workingFont.family(), workingFont.pointSize() - 1));
+
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->addLayout(startDateLayout);
     int l, t, r, b;
     mainLayout->getContentsMargins(&l, &t, &r, &b);
 //    mainLayout->addLayout(logoLayout);
