@@ -189,7 +189,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getProductionPerValue("Production Per Appointment", m_NumberOfAppointments);
 
     getProductionThroughLost("Lost Revenue Through Cancellations", m_HoursWorked, m_HoursCancelled);
-    getProductionThroughLost("Lost Revenue Through Patient Churn", m_HoursWorked, m_ChurnedPatients);
+    getProductionThroughLost("Lost Revenue Through Patient Churn", m_UniquePatients, m_ChurnedPatients);
     getDebtors();
     getTop10Items("Top 10 Items by Value", QString(query_Top_10_Items_By_Value_7433));
     getTop10Items("Top 10 Items by Count", QString(query_Top_10_Items_By_Count_7434));
