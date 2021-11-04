@@ -59,7 +59,7 @@ void QtDatePicker::adjustPopupPosition()
 void QtDatePicker::onShowPopupButtonClicked()
 {
         adjustPopupPosition();
-        popup->setDate(QDate::currentDate());
+//        popup->setDate(QDate::currentDate());
         popup->show();
 }
 

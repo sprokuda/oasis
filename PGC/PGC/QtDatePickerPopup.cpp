@@ -17,7 +17,7 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
     calendar->setVerticalHeaderFormat(QCalendarWidget::NoVerticalHeader);
 //    cndrWidget->setDateEditEnabled(false);
-    calendar->setSelectedDate(QDate::currentDate());
+//    calendar->setSelectedDate(QDate::currentDate());
 
     QTableView* tw = calendar->findChild<QTableView*>("qt_calendar_calendarview");
 
