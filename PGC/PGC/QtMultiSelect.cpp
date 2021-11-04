@@ -17,9 +17,9 @@ QtMultiSelect::QtMultiSelect( QWidget* parent)
     button = new QToolButton(this);
     button->setContentsMargins(0, 0, 0, 0);
     QIcon icon;
-    icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
-    icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Active, QIcon::On);
-    icon.addPixmap(QPixmap(workingDirectory + "\\down-100.png"), QIcon::Selected, QIcon::On);
+    icon.addPixmap(QPixmap(":PGC/resources/down-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+    icon.addPixmap(QPixmap(":PGC/resources/down-100.png"), QIcon::Active, QIcon::On);
+    icon.addPixmap(QPixmap(":PGC/resources/down-100.png"), QIcon::Selected, QIcon::On);
     button->setIcon(icon);
 
     ctrlLayout = new QHBoxLayout(this);

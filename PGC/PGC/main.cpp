@@ -126,7 +126,7 @@ tryOpenLog:
 
     workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
     qDebug() << workingDirectory;
-    app.setWindowIcon(QIcon(workingDirectory + "\\centaur-icon.png"));
+    app.setWindowIcon(QIcon(":PGC/resources/centaur-icon.png"));
 
     PGC w;
     QObject::connect(&qout, SIGNAL(sendLogString(QString)), &w, SLOT(updateLog(QString)));

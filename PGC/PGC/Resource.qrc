@@ -1,0 +1,10 @@
+﻿<RCC>
+    <qresource prefix="/PGC">
+	<file>resources/centaur-icon.png</file>
+	<file>resources/ajax-loader.gif</file>
+	<file>resources/down-100.png</file>
+	<file>resources/left-100.png</file>
+	<file>resources/right-100.png</file>
+	<file>resources/today-52.png</file>
+    </qresource>
+</RCC>

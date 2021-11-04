@@ -9,7 +9,7 @@ QtWaitingSpinner::QtWaitingSpinner(QWidget* parent)
 {
     QLabel* label = new QLabel(this);
 
-    QMovie* movie = new QMovie(workingDirectory + "\\ajax-loader.gif");
+    QMovie* movie = new QMovie(":/PGC/resources/ajax-loader.gif");
     label->setMovie(movie);
     movie->start();
 

@@ -219,10 +219,14 @@
     <QtMoc Include="ThreadLogStream.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <QtMoc Include="callDelay.h" />
     <QtMoc Include="csvWriter.h" />
     <QtMoc Include="logOfPGC.h" />
     <ClInclude Include="dbScripts.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resource.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

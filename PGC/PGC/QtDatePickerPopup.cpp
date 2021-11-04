@@ -34,15 +34,15 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     if (btn)
     {
         QIcon icon;
-        icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
-        icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Active, QIcon::On);
-        icon.addPixmap(QPixmap(workingDirectory + "\\left-100.png"), QIcon::Selected, QIcon::On);
+        icon.addPixmap(QPixmap(":PGC/resources/left-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+        icon.addPixmap(QPixmap(":PGC/resources/left-100.png"), QIcon::Active, QIcon::On);
+        icon.addPixmap(QPixmap(":PGC/resources/left-100.png"), QIcon::Selected, QIcon::On);
         btn->setIcon(icon);
 
         btn = calendar->findChild<QToolButton*>("qt_calendar_nextmonth");
-        icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
-        icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Active, QIcon::On);
-        icon.addPixmap(QPixmap(workingDirectory + "\\right-100.png"), QIcon::Selected, QIcon::On);
+        icon.addPixmap(QPixmap(":PGC/resources/right-100.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+        icon.addPixmap(QPixmap(":PGC/resources/right-100.png"), QIcon::Active, QIcon::On);
+        icon.addPixmap(QPixmap(":PGC/resources/right-100.png"), QIcon::Selected, QIcon::On);
         btn->setIcon(icon);
     }
 
@@ -70,9 +70,9 @@ QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
 
     todayButton = new QToolButton(this);
     QIcon icon;
-    icon.addPixmap(QPixmap(workingDirectory + "\\today-52.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
-    icon.addPixmap(QPixmap(workingDirectory + "\\today-52.png"), QIcon::Active, QIcon::On);
-    icon.addPixmap(QPixmap(workingDirectory + "\\today-52.png"), QIcon::Selected, QIcon::On);
+    icon.addPixmap(QPixmap(":PGC/resources/today-52.png"), QIcon::Normal, QIcon::On); //QString::fromUtf8("N")
+    icon.addPixmap(QPixmap(":PGC/resources/today-52.png"), QIcon::Active, QIcon::On);
+    icon.addPixmap(QPixmap(":PGC/resources/today-52.png"), QIcon::Selected, QIcon::On);
     todayButton->setIcon(icon);
 
     QHBoxLayout* labelLayout = new QHBoxLayout;
