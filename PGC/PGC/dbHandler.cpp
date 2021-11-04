@@ -39,7 +39,7 @@ void dbHandler::connectDatabase()
     db.setDatabaseName("OASIS");//"DRIVER={MIMER};DSN='OASIS';DATABASE=OASIS")
     db.setUserName("sysadm");
     db.setPassword("12345pass");
-
+#if 0
     if (!db.open())
     {
         cout << "error: " << db.lastError().text().toStdString() << endl;
@@ -48,6 +48,8 @@ void dbHandler::connectDatabase()
         emit dbConnectError(db.lastError().text());
         return;
     }
+#endif
+    Sleep(3000);
     emit dbConnectSuccessful();
 }
 
