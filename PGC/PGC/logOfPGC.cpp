@@ -10,13 +10,13 @@ void logOfPGC::openLog()
 
     QDir dir;
     dir.cd("C:/");
-    if (!QDir(oasis_dir_name).exists()) qDebug() << dir.mkdir(oasis_dir_name);
+    if (!QDir(oasis_dir_name).exists()) cout << dir.mkdir(oasis_dir_name) << "\n";
     dir.cd(oasis_dir_name);
 
-    if (!QDir(pgc_dir_name).exists()) qDebug() << dir.mkdir(pgc_dir_name);
+    if (!QDir(pgc_dir_name).exists()) cout << dir.mkdir(pgc_dir_name) << "\n";
     dir.cd(pgc_dir_name);
 
-    if (!QDir(log_dir_name).exists()) qDebug() << dir.mkdir(log_dir_name);
+    if (!QDir(log_dir_name).exists()) cout << dir.mkdir(log_dir_name) << "\n";
     dir.cd(log_dir_name);
 
     const QFileInfo outputDir(dir.absolutePath());
@@ -59,5 +59,6 @@ tryOpenLog:
 
 void logOfPGC::appendString(QString str)
 { 
-	if(str != QString("\n")) 	log << str.toStdString(); 
+	//if(str != QString("\n")) 	
+    log << str.toStdString() << "\n";
 }

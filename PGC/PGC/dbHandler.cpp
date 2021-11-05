@@ -133,7 +133,7 @@ void dbHandler::queryAppBook()
     QStringList list;// = { "0022","0021","0023" };
 
     query.exec(script);
-    cout << db.lastError().text().toStdString() << endl;
+    cout << "Execution of query : "<< "\"" << script << "\"" << " last error: "<< db.lastError().text().toStdString() << "\n";
     fflush(stdout);
 
     while (query.next())
@@ -141,7 +141,7 @@ void dbHandler::queryAppBook()
         //cout << query.value(0).toString().toStdString();
         list << query.value(0).toString();
     }
-    cout << db.lastError().text().toStdString() << endl;
+    cout << "Next last error: " << db.lastError().text().toStdString() << "\n";
 
     list.sort();
     emit appBookReady(list);

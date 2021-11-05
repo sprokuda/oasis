@@ -21,19 +21,19 @@ void MessageOutput(QtMsgType type, const QMessageLogContext& context, const QStr
     QByteArray localMsg = msg.toLocal8Bit();
     switch (type) {
     case QtDebugMsg:
-        cout << "QtDebugMsg: " << msg.toStdString() << endl;
+        cout << "QtDebugMsg: " << msg.toStdString() << "\n";
         break;
     case QtInfoMsg:
-        cout << "QtInfoMsg: " << msg.toStdString() << endl;
+        cout << "QtInfoMsg: " << msg.toStdString() << "\n";
         break;
     case QtWarningMsg:
-        cout << "QtWarningMsg: " << msg.toStdString() << endl;
+        cout << "QtWarningMsg: " << msg.toStdString() << "\n";
         break;
     case QtCriticalMsg:
-        cout << "QtCriticalMsg: " << msg.toStdString() << endl;
+        cout << "QtCriticalMsg: " << msg.toStdString() << "\n";
         break;
     case QtFatalMsg:
-        cout << "QtFatalMsg: " << msg.toStdString() << endl;
+        cout << "QtFatalMsg: " << msg.toStdString() << "\n";
         fprintf(stdout, "Fatal: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
         abort();
     }
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
         });
 
     QString workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
-    qDebug() << workingDirectory;
+    cout << workingDirectory.toStdString() << "\n";
 
     return app.exec();
 }
