@@ -4,6 +4,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QDateTime>
+#include <Qdebug>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -23,25 +24,17 @@ public:
     explicit logOfPGC(QObject* parent = nullptr) : QObject(parent) { log_ptr = make_unique<ofstream>(); };
     ~logOfPGC() { log_ptr->close(); log.close(); };
 
-        void openLog(string file_name) 
-        { 
-            const char* dir_name = "C:/log-test";// "C:/OASIS/PGC/log-test";
+    QString file_name;
 
-            QDir dir;
-            if (!QDir(dir_name).exists()) dir.mkdir(dir_name);
-            dir.cd(dir_name);
+public slots:
+    void openLog();
 
-            const QFileInfo outputDir(dir.absolutePath());
-            if ((!outputDir.exists()) || (!outputDir.isDir()) || (!outputDir.isWritable()))
-            {
-                QMessageBox::warning(nullptr, 0, "Output directory problem","output directory does not exist,\nis not a directory,\nor is not writeable");
-            }
-            QString fileName = dir.absolutePath() + "\\" + QDate::currentDate().toString("yyyyMMdd") + "_" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".log");
-            log.open(fileName.toStdString());
-        };
+signals:
+    void noLogFileOpended();
+    void logFileOpened();
 
+public:
         ofstream& getOFStream() { return log; };
-        bool isOpened() { return log.is_open(); };
 
 public slots:
         void appendString(QString str);
