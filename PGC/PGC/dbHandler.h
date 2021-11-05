@@ -32,7 +32,7 @@ signals:
     void dbConnectError(QString message);
     void dbConnectSuccessful();
     void allCompleted();
-    void appBookReady(QStringList list);
+    void appBookReady(map<string,string> books);
     void extractionCompleted();
 
 private:

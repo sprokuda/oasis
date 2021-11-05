@@ -33,7 +33,7 @@ public slots:
     void onDbconnectError(QString message);
     void onDbSuccessful();
     void updateLog(QString message);
-    void onQueryAppBook(QStringList list);
+    void onQueryAppBook(map<string, string> books);
     void onExtractionCompleted();
 
 private:
@@ -69,11 +69,8 @@ private:
 
     QTextBrowser* log;
 
-    size_t buttonWidth = 170;
-    size_t buttonHeight = 30;
+    map<string, string> m_books;
 
-    size_t mainWidth = 600;
-    size_t mainHeight = 600;
 
     QtWaitingSpinner* spinner;
     dbHandler* handler;

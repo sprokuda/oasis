@@ -106,7 +106,7 @@ PGC::PGC(QWidget *parent)
     connect(handler, SIGNAL(dbConnectError(QString)), this, SLOT(onDbconnectError(QString)));
     connect(handler, SIGNAL(dbConnectSuccessful()), this, SLOT(onDbSuccessful()));
     connect(handler, SIGNAL(extractionCompleted()), this, SLOT(onExtractionCompleted()));
-    connect(handler, SIGNAL(appBookReady(QStringList)), this, SLOT(onQueryAppBook(QStringList)));
+    connect(handler, SIGNAL(appBookReady(map<string, string> )), this, SLOT(onQueryAppBook(map<string, string>)));
     thread->start();
 
 //    connect(handler, SIGNAL(allCompleted()),this, SLOT(onAllCompleted()));
@@ -181,7 +181,7 @@ void PGC::exctractData()
 
     QString start = convertDateForMimer(pickerStart->getDate());
     QString end = convertDateForMimer(pickerEnd->getDate());
-    QStringList books = booksSelect->getBooks();
+    QStringList books = booksSelect->getBooks(m_books);
 
     int prod_columns = prodCol->currentText().toInt();
     QString practice = practiceName->text();
@@ -261,15 +261,16 @@ void PGC::updateLog(QString message)
     log->append(message);
 }
 
-void PGC::onQueryAppBook(QStringList list)
+void PGC::onQueryAppBook(map<string, string> books)
 {
     spinner->hide();
-    QStringList list1;
-    for (int i = 0; i < list.size(); i++)
+    m_books = books;
+    QStringList list;
+    for (auto it = books.begin(); it != books.end(); it++)
     {
-       list1 << "000" + list.at(i) ;// = QString::fromLatin1(zero) + list.at(i);
+       list << QString(it->first.c_str());// = QString::fromLatin1(zero) + list.at(i);
     }
-    booksSelect->getPopup().setTable(list1);
+    booksSelect->getPopup().setTable(list);
     booksSelect->selectAllBooks();
     this->setEnabled(true);
 }

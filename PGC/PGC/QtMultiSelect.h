@@ -7,6 +7,10 @@
 
 #include "QtMultiSelectPopup.h"
 
+#include <map>
+#include <string>
+
+using namespace std;
 
 class QtMultiSelect : public QWidget
 {
@@ -18,7 +22,7 @@ public:
     void adjustPopupPosition();
     QtMultiSelectPopup& getPopup() { return *popup; };
     QString getText();
-    QStringList getBooks();
+    QStringList getBooks(map<string, string> books);
     void selectAllBooks();
 public slots:
 

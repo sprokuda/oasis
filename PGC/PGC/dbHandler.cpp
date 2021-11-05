@@ -2,10 +2,12 @@
 #include <iomanip>
 #include "dbHandler.h"
 #include "dbScripts.h"
-
+#include<QMetaType>
 
 
 using namespace std;
+
+//Q_DECLARE_METATYPE(map<string, string>);
 
 dbHandler::dbHandler(QObject* parent) : QObject(parent)
 {
@@ -49,7 +51,7 @@ void dbHandler::connectDatabase()
         return;
     }
 #endif
-    Sleep(3000);
+    Sleep(300);
     emit dbConnectSuccessful();
 }
 
@@ -129,8 +131,23 @@ void dbHandler::queryAppBook()
 {
     QSqlQuery query(db);
 
-    const char* script = "SELECT * FROM APP_BOOK;";
-    QStringList list;// = { "0022","0021","0023" };
+    auto padded = [](string inp) 
+    { 
+        int size = inp.size();
+        switch (size)
+        {
+        case 1: return "000" + inp; break;
+        case 2: return "00" + inp; break;
+        case 3: return "0" + inp;  break;
+        case 4: return inp;  break;
+        default: return string("0000");
+        }
+    };
+
+
+    const char* script = "SELECT BOOKNO, BOOKNAME from APP_BOOK;";
+    map<string, string> books;
+    map<string, string> local_books = { {"BOOK 0001",padded("1")},{"BOOK 0002",padded("02")},{"BOOK 0005",padded("005")}, {"BOOK 0006",padded("0006")} };
 
     query.exec(script);
     cout << "Execution of query : "<< "\"" << script << "\"" << " last error: "<< db.lastError().text().toStdString() << "\n";
@@ -139,12 +156,13 @@ void dbHandler::queryAppBook()
     while (query.next())
     {
         //cout << query.value(0).toString().toStdString();
-        list << query.value(0).toString();
+        books.emplace(query.value(1).toString().toStdString(),padded(query.value(0).toString().toStdString()));
     }
     cout << "Next last error: " << db.lastError().text().toStdString() << "\n";
 
-    list.sort();
-    emit appBookReady(list);
+    qRegisterMetaType<std::map<std::string, std::string>>("std::map<std::string, std::string>");
+    qRegisterMetaType<map<string, string>>("map<string, string>");
+    emit appBookReady(local_books);
 }
 
 void dbHandler::Extract(QString start, QString end, QStringList books, int prod_columns, QString practice)
@@ -277,6 +295,8 @@ void dbHandler::setGlobals(QString start, QString end, QStringList books, int pr
     m_appStart = 22;
     m_appEnd = 33;
     this->m_books = books;
+
+    cout << "the books are: " << m_books.join(";").toStdString() << "\n";
 
     QSqlQuery query(db);
 

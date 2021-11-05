@@ -56,14 +56,22 @@ QString QtMultiSelect::getText()
     return edit->text();
 }
 
-QStringList QtMultiSelect::getBooks()
+QStringList QtMultiSelect::getBooks(map<string,string> books)
 {
     auto text = edit->text();
 
     auto parts = text.split(";");
     parts.removeAt(parts.size() - 1);
 
-    return parts;
+    QStringList result;
+    for (auto it = parts.begin(); it != parts.end(); it++)
+    {
+        if (books.find(it->toStdString()) != books.end())
+            result << QString::fromStdString(books.at(it->toStdString()));
+    }
+
+    result.sort();
+    return result;
 }
 
 
