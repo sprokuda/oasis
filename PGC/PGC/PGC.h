@@ -37,6 +37,8 @@ public slots:
     void onExtractionCompleted();
 
 private:
+    QFont workingFont;
+
     QLabel* companyLogoQLabel;
     QLineEdit* programLogoQLineEdit;
 

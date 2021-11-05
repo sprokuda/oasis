@@ -1,11 +1,10 @@
 #include "QtMultiSelect.h"
 
-extern QString workingDirectory;
-extern QFont workingFont;
 
 QtMultiSelect::QtMultiSelect( QWidget* parent)
     : QWidget(parent) 
 {
+    QFont workingFont = QFont("Calibri", 10);
     this->setFont(workingFont);
     popup = new QtMultiSelectPopup(this);
     popup->installEventFilter(this);

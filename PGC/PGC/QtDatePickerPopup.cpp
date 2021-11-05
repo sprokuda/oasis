@@ -1,11 +1,11 @@
 #include "QtDatePickerPopup.h"
 
-extern QString workingDirectory;
-extern QFont workingFont;
+
 
 QtDatePickerPopup::QtDatePickerPopup(QWidget* parent)
     : QWidget(parent)
 {
+    QFont workingFont = QFont("Calibri", 10);
     QFont localFont(workingFont.family(), workingFont.pointSize() - 1);
     this->setFont(localFont);
 //    this->setFont(workingFont);

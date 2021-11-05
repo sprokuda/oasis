@@ -1,7 +1,6 @@
 #include "QtDatePicker.h"
 
-extern QString workingDirectory;
-extern QFont workingFont;
+
 
 QtDatePicker::QtDatePicker(QWidget* parent)
     : QWidget(parent)

@@ -1,11 +1,10 @@
 #include "PGC.h"
 
-extern QString workingDirectory;
-extern QFont workingFont;
 
 PGC::PGC(QWidget *parent)
     : QWidget(parent)
 {
+    workingFont = QFont("Calibri", 10);
     this->setFont(workingFont);
     
     startDateLabel = new QLabel("Start Date",this);

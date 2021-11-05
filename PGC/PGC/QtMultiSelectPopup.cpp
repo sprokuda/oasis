@@ -1,11 +1,11 @@
 #include "QtMultiSelectPopup.h"
 #include <QHeaderView>
 
-extern QFont workingFont;
 
 QtMultiSelectPopup::QtMultiSelectPopup( QWidget* parent)
     : QWidget(parent)  
 {
+    QFont workingFont = QFont("Calibri", 10);
     this->setFont(workingFont);
     mainLayout = new QVBoxLayout(this);
     setLayout(mainLayout);

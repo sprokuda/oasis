@@ -15,9 +15,6 @@
 using namespace std;
 using namespace filesystem;
 
-QString workingDirectory;
-
-QFont workingFont;
 
 void MessageOutput(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
@@ -52,7 +49,7 @@ int main(int argc, char *argv[])
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(":PGC/resources/centaur-icon.png"));
 
-    workingFont = QFont("Calibri", 10);
+    QFont workingFont = QFont("Calibri", 10);
 
     QtPassword qp(workingFont);
     qp.show();
@@ -71,7 +68,7 @@ int main(int argc, char *argv[])
             w.initialLoad();
         });
 
-    workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
+    QString workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
     qDebug() << workingDirectory;
 
     return app.exec();
