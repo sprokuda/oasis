@@ -83,7 +83,7 @@ public:
 
         for (auto it = data.begin(); it != data.end(); it++)
         {
-            out << i << "," << it->first << ",$" << it->second << "\n";
+            out << i << "," << it->first << ","<< prefix << it->second << "\n";
             i++;
             if (i == 11) break;
         }

@@ -630,7 +630,7 @@ void dbHandler::getDebtors()
 }
 
 
-void dbHandler::getTop10Items(const QString& header, const QString& str)
+void dbHandler::getTop10Items(const QString& header, const QString& str, const QString prefix = "")
 {
 	vector<pair<int, int>> vec;
 
@@ -645,7 +645,7 @@ void dbHandler::getTop10Items(const QString& header, const QString& str)
 
 	sort(vec.begin(), vec.end(), [](auto a, auto b) {return a.second > b.second; });
 
-	writer->writeTop10(header, vec);
+	writer->writeTop10(header, vec, prefix);
 }
 
 void dbHandler::writeGlobals(const QDate& current_date, const QTime& current_time)

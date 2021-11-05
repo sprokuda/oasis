@@ -115,7 +115,7 @@ private:
     void getProductionPerValue(const QString& header, const vector<int>& hours);
     void getProductionThroughLost(const QString& header, const vector<int>& hours, const vector<int>& lost);
     void getDebtors();
-    void getTop10Items(const QString& header, const QString& str);
+    void getTop10Items(const QString& header, const QString& str, const QString prefix = "");
     void writeGlobals(const QDate& current_date, const QTime& current_time);
 
         

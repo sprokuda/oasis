@@ -48,7 +48,7 @@ PGC::PGC(QWidget *parent)
 
     practiceNameLabel = new QLabel("Practice Name", this);
     practiceName = new QLineEdit(this);
-    practiceName->setText("test practice");
+    practiceName->setText("Dental Surgery");
 
     practiceLayout = new QHBoxLayout();
 //    practiceLayout->setContentsMargins(10, 10, 10, 10);

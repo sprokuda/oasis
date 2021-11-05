@@ -7,7 +7,7 @@
 
 using namespace std;
 
-//Q_DECLARE_METATYPE(map<string, string>);
+
 
 dbHandler::dbHandler(QObject* parent) : QObject(parent)
 {
@@ -23,9 +23,9 @@ dbHandler::~dbHandler()
     query.exec(dlt_tbl_FUT_APP_723);
     query.exec(dlt_tbl_APP_BOOK_724);
     query.exec(dlt_tbl_ITEMS_725);
-    query.exec(dlt_tbl_ITEM_ANALYSIS_726);
+//    query.exec(dlt_tbl_ITEM_ANALYSIS_726);
     query.exec(dlt_tbl_CHURN_727);
-    query.exec(dlt_tbl_Production_728);
+//    query.exec(dlt_tbl_Production_728);
 //    query.exec(dlt_fncn_unbkRecall_729);
 //    query.exec(dlt_fncn_lostRecall_7210);
 //    query.exec(dlt_fncn_apptbookEnd_7211);
@@ -41,7 +41,7 @@ void dbHandler::connectDatabase()
     db.setDatabaseName("OASIS");//"DRIVER={MIMER};DSN='OASIS';DATABASE=OASIS")
     db.setUserName("sysadm");
     db.setPassword("12345pass");
-#if 0
+#if 1
     if (!db.open())
     {
         cout << "error: " << db.lastError().text().toStdString() << endl;
@@ -51,7 +51,7 @@ void dbHandler::connectDatabase()
         return;
     }
 #endif
-    Sleep(300);
+//    Sleep(300);
     emit dbConnectSuccessful();
 }
 
@@ -63,7 +63,7 @@ void dbHandler::loadBooksAndFunctions()
 
     QSqlQuery query(db);
 
-#if 0
+#if 1
 
     query.exec(crt_tbl_FIRST_INV_721);
     query.exec(ppl_tbl_FIRST_INV_721);
@@ -211,7 +211,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getProductionThroughLost("Lost Revenue Through Cancellations", m_HoursWorked, m_HoursCancelled);
     getProductionThroughLost("Lost Revenue Through Patient Churn", m_UniquePatients, m_ChurnedPatients);
     getDebtors();
-    getTop10Items("Top 10 Items by Value", QString(query_Top_10_Items_By_Value_7433));
+    getTop10Items("Top 10 Items by Value", QString(query_Top_10_Items_By_Value_7433), "$");
     getTop10Items("Top 10 Items by Count", QString(query_Top_10_Items_By_Count_7434));
     writeGlobals(current_date, current_time);
 
