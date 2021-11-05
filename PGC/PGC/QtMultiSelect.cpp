@@ -111,7 +111,7 @@ void QtMultiSelect::onRemoveItem(const QString& item_text)
     auto parts = text.split(";");
     parts.removeAt(parts.size()-1);
     parts.removeAt(parts.indexOf(item_text));
-    parts.removeAt(parts.lastIndexOf(";"));
+    //parts.removeAt(parts.lastIndexOf(";"));
     parts.sort();
     auto out_text = parts.join(";");
     if (!out_text.isEmpty()) out_text.append(";");
