@@ -61,7 +61,7 @@ void dbHandler::loadBooksAndFunctions()
 
     QSqlQuery query(db);
 
-#if 1
+#if 0
 
     query.exec(crt_tbl_FIRST_INV_721);
     query.exec(ppl_tbl_FIRST_INV_721);
