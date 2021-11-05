@@ -630,7 +630,7 @@ void dbHandler::getDebtors()
 }
 
 
-void dbHandler::getTop10Items(const QString& header, const QString& str, const QString prefix = "")
+void dbHandler::getTop10Items(const QString& header, const QString& str, const QString prefix)
 {
 	vector<pair<int, int>> vec;
 
