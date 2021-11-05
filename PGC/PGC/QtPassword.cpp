@@ -1,22 +1,30 @@
 #include "QtPassword.h"
 
-extern QFont workingFont;
-
-QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
-		:QWidget(parent), font(qfont), buttonHeight(bHeight)
+QtPassword::QtPassword(const QFont& qfont, QWidget* parent)
+		:QWidget(parent), font(qfont)
 {
-	this->setFont(workingFont);
+	today = QDate::currentDate();
+	int dow = 0;
+	if (today.dayOfWeek() < 7) dow = today.dayOfWeek() + 1;
+	else dow = 1;
+	password = QString::number(today.day() * 13 * (dow + 21) + today.month() * 27);
+
+
+
 	label = new QLabel("Enter password:", this);
 	edit = new QLineEdit(this);
-	okButton = new QPushButton("Conform", this);
+	edit->setEchoMode(QLineEdit::Password);
+	okButton = new QPushButton("Confirm",this);
 	cancelButton = new QPushButton("Exit", this);
+
+	QSpacerItem* spacer = new QSpacerItem(120,1);
 
 	box = new QMessageBox(this);
 	box->setText("Wrong password!");
 	box->addButton(QMessageBox::Ok);
 	box->setIcon(QMessageBox::Warning);
 	box->setFont(font);
-//	box->resize(200,200);
+
 
 	QHBoxLayout* buttonLayout = new QHBoxLayout();
 	buttonLayout->addStretch();
@@ -33,11 +41,6 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 	setFont(qfont);
 
 	setLayout(mainLayout);
-	setWindowTitle(tr("OASIS PGC Data Extractor"));
-//	move(800, 400);
-
-//	QPoint global_geometry = this->mapToGlobal(this->rect().center());
-//	box->move(global_geometry.x() - 75, global_geometry.y() - 50);
 
 	connect(edit, SIGNAL(editingFinished()), this, SLOT(onPasswordEntered()));
 	connect(okButton, SIGNAL(clicked()), this, SLOT(onPasswordEntered()));
@@ -48,16 +51,19 @@ QtPassword::QtPassword(const QFont& qfont, const int& bHeight, QWidget* parent)
 
 void QtPassword::onPasswordEntered()
 {
-//	edit->setText("Enter");
-	if (edit->text() == "123")
+
+	if (edit->text() == password)
 	{
-		hide();
-		emit passwordAccepted();
+		if (if_first_time)
+		{
+			if_first_time = false;
+			hide();
+			emit passwordAccepted();
+
+		}
 	}
 	else
 	{
-//		QPoint global_geometry = this->mapToGlobal(this->rect().center());
-//		box->move(global_geometry.x() - 75, global_geometry.y() - 50);
 		box->exec();
 	}
 }
