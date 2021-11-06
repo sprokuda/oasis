@@ -156,13 +156,13 @@ void dbHandler::queryAppBook()
     while (query.next())
     {
         //cout << query.value(0).toString().toStdString();
-        books.emplace(query.value(1).toString().toStdString(),padded(query.value(0).toString().toStdString()));
+        books.emplace(query.value(1).toString().left(9).toStdString(),padded(query.value(0).toString().toStdString()));
     }
     cout << "Next last error: " << db.lastError().text().toStdString() << "\n";
 
     qRegisterMetaType<std::map<std::string, std::string>>("std::map<std::string, std::string>");
     qRegisterMetaType<map<string, string>>("map<string, string>");
-    emit appBookReady(local_books);
+    emit appBookReady(books);
 }
 
 void dbHandler::Extract(QString start, QString end, QStringList books, int prod_columns, QString practice)
