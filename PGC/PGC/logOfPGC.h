@@ -4,11 +4,13 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QDateTime>
-#include <Qdebug>
+#include <QDebug>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
 #include <errno.h>
+#include <QAbstractButton>
+#include <QPushButton>
 //#include <unistd.h>
 
 using namespace std;

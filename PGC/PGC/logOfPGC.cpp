@@ -2,6 +2,9 @@
 #include <QAbstractButton>
 #include <QPushButton>
 
+extern QString initial_log;
+
+
 void logOfPGC::openLog()
 {
     const char* oasis_dir_name = "OASIS";
@@ -9,15 +12,39 @@ void logOfPGC::openLog()
     const char* log_dir_name = "Log";
 
     QDir dir;
-    dir.cd("C:/");
-    if (!QDir(oasis_dir_name).exists()) cout << dir.mkdir(oasis_dir_name) << "\n";
-    dir.cd(oasis_dir_name);
+    if (!dir.cd("C:/"))
+    {
+        initial_log += QString("There is no drive C:\\\n");
+        return;
+    }
 
-    if (!QDir(pgc_dir_name).exists()) cout << dir.mkdir(pgc_dir_name) << "\n";
-    dir.cd(pgc_dir_name);
+    auto create_and_report = [&dir](QString dir_name)
+    {
+        auto result = dir.mkdir(dir_name);
+        if (result) return QString(dir_name) + QString(" is created");
+        else return QString(dir_name) + QString(" directory can't be created or already exists");
+    };
 
-    if (!QDir(log_dir_name).exists()) cout << dir.mkdir(log_dir_name) << "\n";
-    dir.cd(log_dir_name);
+    auto check_directory = [&dir, create_and_report](QString dir_name)
+    {
+        bool fld_report = QDir(dir_name).exists();
+        if (!fld_report)
+        {
+            initial_log += create_and_report(dir_name) + "\n";
+        }
+        auto cd_report = dir.cd(dir_name);
+        if (!cd_report)
+        {
+            initial_log += (QString("Cann't enter directory ") + QString("\"dir_name\"\n"));
+            QMessageBox::warning(nullptr, 0, "Output directory problem", "output directory "+ QString(dir_name) + " does not exist, \nis not a directory, \nor is not writeable");
+        }
+
+    };
+
+
+    check_directory(oasis_dir_name);
+    check_directory(pgc_dir_name);
+    check_directory(log_dir_name);
 
     const QFileInfo outputDir(dir.absolutePath());
     if ((!outputDir.exists()) || (!outputDir.isDir()) || (!outputDir.isWritable()))

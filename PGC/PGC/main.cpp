@@ -3,7 +3,7 @@
 #include <QtWidgets/QApplication>
 #include <QIcon>
 #include <QDebug>
-
+#include <QTime>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
@@ -22,6 +22,7 @@ void MessageOutput(QtMsgType type, const QMessageLogContext& context, const QStr
     switch (type) {
     case QtDebugMsg:
         cout << "QtDebugMsg: " << msg.toStdString() << "\n";
+        //qDebug() << "QtDebugMsg: " << msg << "\n";
         break;
     case QtInfoMsg:
         cout << "QtInfoMsg: " << msg.toStdString() << "\n";
@@ -40,13 +41,15 @@ void MessageOutput(QtMsgType type, const QMessageLogContext& context, const QStr
 }
 
 
-
+QString initial_log;
 
 int main(int argc, char *argv[])
 {
     ThreadLogStream qout(cout);
     qInstallMessageHandler(MessageOutput);
     QApplication app(argc, argv);
+    QString workingDirectory = QString::fromWCharArray(weakly_canonical(path(argv[0])).parent_path().c_str());
+
     app.setWindowIcon(QIcon(":PGC/resources/centaur-icon.png"));
 
     QFont workingFont = QFont("Calibri", 10);
@@ -59,17 +62,20 @@ int main(int argc, char *argv[])
 
     QObject::connect(&qp, SIGNAL(passwordAccepted()), &log_of_pgc, SLOT(openLog()));
     QObject::connect(&qp, SIGNAL(passwordRejected()), &app, SLOT(quit()));
-    QObject::connect(&log_of_pgc, SIGNAL(noLogFileOpened()), &app, SLOT(quit()));
-    QObject::connect(&log_of_pgc, &logOfPGC::logFileOpened, [&qout, &log_of_pgc, &w]() 
+    QObject::connect(&log_of_pgc, SIGNAL(noLogFileOpended()), &app, SLOT(quit()));
+    QObject::connect(&log_of_pgc, &logOfPGC::logFileOpened, [&qout, &log_of_pgc, &w, &workingDirectory]() 
         {
             QObject::connect(&qout, SIGNAL(sendLogString(QString)), &log_of_pgc, SLOT(appendString(QString)));
-            w.show();
             QObject::connect(&qout, SIGNAL(sendLogString(QString)), &w, SLOT(updateLog(QString)));
+            cout << "Started at: " 
+                << QDate::currentDate().toString("yyyy/MM/dd").toStdString() << " "
+                << QTime::currentTime().toString("hh:mm:ss").toStdString()
+                << "\n";
+            cout << initial_log.toStdString();
+            cout << "The working directory is : " << workingDirectory.toStdString() << "\n";
+            w.show();
             w.initialLoad();
         });
-
-    QString workingDirectory = QString::fromWCharArray( weakly_canonical(path(argv[0])).parent_path().c_str() );
-    cout << workingDirectory.toStdString() << "\n";
 
     return app.exec();
 }
