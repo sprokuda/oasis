@@ -7,9 +7,9 @@ extern QString initial_log;
 
 void logOfPGC::openLog()
 {
-    const char* oasis_dir_name = "OASIS";
-    const char* pgc_dir_name = "PGC";
-    const char* log_dir_name = "Log";
+    const char* oasis_dir_name = "OASIS1";
+    const char* pgc_dir_name = "PGC1";
+    const char* log_dir_name = "Log1";
 
     QDir dir;
     if (!dir.cd("C:/"))
@@ -52,7 +52,8 @@ void logOfPGC::openLog()
         QMessageBox::warning(nullptr, 0, "Output directory problem", "output directory does not exist,\nis not a directory,\nor is not writeable");
     }
     QString file_name = dir.absolutePath() + "\\" + QDate::currentDate().toString("yyyyMMdd") + "_" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".log");
-
+    //initial_log += "Log is being saved to : " + dir.absolutePath() + "\n";
+    initial_log += "Log file is: " + file_name.replace("/","\\") + "\n";
     log.open(file_name.toStdString());
 
 tryOpenLog:

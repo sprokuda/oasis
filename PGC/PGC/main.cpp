@@ -72,7 +72,7 @@ int main(int argc, char *argv[])
                 << QTime::currentTime().toString("hh:mm:ss").toStdString()
                 << "\n";
             cout << initial_log.toStdString();
-            cout << "The working directory is : " << workingDirectory.toStdString() << "\n";
+            cout << "PGC.exe is run from : " << workingDirectory.toStdString() << "\n";
             w.show();
             w.initialLoad();
         });
