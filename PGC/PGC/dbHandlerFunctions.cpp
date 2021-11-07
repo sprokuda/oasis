@@ -51,6 +51,9 @@ double dbHandler::Production(QString start, QString end)
 	str = QString("SELECT Sum(Amount) from pbarcmas  where transtype = 5 and deleted <> -1 and entrydate  between date'%1' and date'%2';").arg(start).arg(end);
 	query.exec(str.toStdString().c_str());
 	query.next();
+
+	log_query_result("Production for interval: " + start + "/" + end, db.lastError().text());
+
 	writeoff = query.value(0).toString().toDouble();
 
 	return invoice + adjust - discount - writeoff;;
@@ -197,12 +200,9 @@ void dbHandler::getHoursWorked()
 
 	//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
 	query.exec(query_Hours_Worked_742.toStdString().c_str());
-	cout << db.lastError().text().toStdString() << endl;
-	fflush(stdout);
 	query.next();
 	auto result = query.value(0).toString().toInt();
-	//cout << result.toStdString() << endl;
-	//fflush(stdout);
+	log_query_result("Hours Worked for for interval: " + it->first + "/" + it->second, db.lastError().text());
 	m_HoursWorked.push_back(result);
 	}
 	writer->writeArray("Hours Worked", m_HoursWorked);
@@ -217,14 +217,10 @@ void dbHandler::getHoursCancelled()
 		QString query_Hours_Cancelled_743 = appendBooksToString(query_Hours_Cancelled_743_base, 
 			QString(it->first).remove("-"), QString(it->second).remove("-"));
 
-		//cout << query_Hours_Worked_742.toStdString().c_str() << endl;
 		query.exec(query_Hours_Cancelled_743.toStdString().c_str());
-		//cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = query.value(0).toString().toInt();
-		//cout << result.toStdString() << endl;
-		//fflush(stdout);
+		log_query_result("Hours Cancelled for interval: " + it->first + "/" + it->second, db.lastError().text());
 		m_HoursCancelled.push_back(result);
 	}
 	writer->writeArray("Hours Cancelled", m_HoursCancelled);
@@ -301,14 +297,11 @@ void dbHandler::getNumberOfAppointments()
 		QString query_Number_Of_Appointments_748 = appendBooksToStringNoAppSlot(query_Number_Of_Appointments_748_base, 
 			QString(it->first).remove("-"), QString(it->second).remove("-"));
 
-		//cout << query_Number_Of_Appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Number_Of_Appointments_748.toStdString().c_str());
-		//cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = (int)query.value(0).toString().toDouble();
-		//cout << query.value(0).toString().toStdString() << endl;
-		//fflush(stdout);
+		log_query_result("Number Of Appointments for interval: " + it->first + "/" + it->second, db.lastError().text());
+
 		m_NumberOfAppointments.push_back(result);
 	}
 	writer->writeArray("Number of Appointments", m_NumberOfAppointments);
@@ -320,17 +313,19 @@ void dbHandler::getAllAndActivePatients()
 	QSqlQuery query(db);
 
 	query.exec(query_All_Patients_749);
-	//cout << db.lastError().text().toStdString() << endl;
-	//fflush(stdout);
 	query.next();
 	auto all = query.value(0).toString().toInt();
+	log_query_result("All Patients", db.lastError().text());
+
 	writer->writeSnapshot("All Patients", all);
+
 	query.exec(query_Active_Patients_7410);
-	//cout << db.lastError().text().toStdString() << endl;
-	//fflush(stdout);
 	query.next();
 	auto active = query.value(0).toString().toInt();
+	log_query_result("Active Patients", db.lastError().text());
+
 	writer->writeSnapshot("Active Patients", active);
+
 	writer->writeSnapshot("Inactive Patients", all - active);
 }
 
@@ -342,12 +337,12 @@ void dbHandler::getNewPatients()
 	for (auto it = m_dates.begin(); it != m_dates.end(); it++)
 	{
 		QString query_New_Patients_7411 = QString(query_New_Patients_7411_base).arg(it->first).arg(it->second);
-//		cout << query_New_Patients_7411.toStdString().c_str() << endl;
+
 		query.exec(query_New_Patients_7411.toStdString().c_str());
-		//cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = query.value(0).toString().toInt();
+		log_query_result("New Patients for interval: " + it->first + "/" + it->second, db.lastError().text());
+
 		m_NewPatients.push_back(result);
 	}
 	writer->writeArray("New Patients", m_NewPatients);
@@ -362,12 +357,11 @@ void dbHandler::getChurnedPatients()
 	{
 		QString query_Churned_Patients_7412 = QString(query_Churned_Patients_7412_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
-//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Churned_Patients_7412.toStdString().c_str());
-		//cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = query.value(0).toString().toInt();
+		log_query_result("Churned Patients for interval: " + it->first + "/" + it->second, db.lastError().text());
+
 		m_ChurnedPatients.push_back(result);
 	}
 	writer->writeArray("Churned Patients", m_ChurnedPatients);
@@ -381,12 +375,11 @@ void dbHandler::getUniquePatients()
 	{
 		QString query_Unique_Patients_7413 = QString(query_Unique_Patients_7413_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
-//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Unique_Patients_7413.toStdString().c_str());
-		//cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = query.value(0).toString().toInt();
+		log_query_result("Unique Patients for interval: " + it->first + "/" + it->second, db.lastError().text());
+
 		m_UniquePatients.push_back(result);
 	}
 	writer->writeArray("Unique Patients", m_UniquePatients);
@@ -397,10 +390,10 @@ void dbHandler::getLapsedPatients()
 	QSqlQuery query(db);
 
 	query.exec(query_Lapsed_Patients_7414);
-	//cout << db.lastError().text().toStdString() << endl;
-	//fflush(stdout);
 	query.next();
 	auto result = query.value(0).toString().toInt();
+	log_query_result("Lapsed Patients", db.lastError().text());
+
 	writer->writeSnapshot("Lapsed Patients", result);
 }
 
@@ -455,12 +448,11 @@ void dbHandler::getTotalRecalls()
 	{
 		QString query_Total_Recalls_7418 = QString(query_Total_Recalls_7418_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
-//		cout << query_Number_Of_appointments_748.toStdString().c_str() << endl;
 		query.exec(query_Total_Recalls_7418.toStdString().c_str());
-		//cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = query.value(0).toString().toInt();
+		log_query_result("Total Recalls for interval:" + it->first + "/" + it->second, db.lastError().text());
+
 		m_TotalRecalls.push_back(result);
 	}
 	writer->writeArray("Total Recalls", m_TotalRecalls);
@@ -503,10 +495,9 @@ void dbHandler::getTotalIncompleteTreatmentValue()
 	QSqlQuery query(db);
 
 	query.exec(query_Total_Incomplete_Treatment_Value_7421);
-	//cout << db.lastError().text().toStdString() << endl;
-	//fflush(stdout);
 	query.next();
 	auto result = (int)query.value(0).toString().toDouble();
+	log_query_result("Total Incomplete Treatment Value", db.lastError().text());
 	writer->writeSnapshot("Total Incomplete Treatment Value", result,"\"$","\"");
 }
 
@@ -518,13 +509,11 @@ void dbHandler::getTreatmentPlansCreated()
 	{
 		QString query_Treatment_Plans_Created_7422 = QString(query_Treatment_Plans_Created_7422_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
-//		cout << query_Treatment_Plans_Created_7422.toStdString().c_str() << endl;
 		query.exec(query_Treatment_Plans_Created_7422.toStdString().c_str());
-//		cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = (int)query.value(0).toString().toDouble();
-//		cout << query.value(0).toString().toStdString() << endl;
+		log_query_result("Treatment Plans Created for interval: " + it->first + "/" + it->second, db.lastError().text());
+
 		m_TreatmentPlansCreated.push_back(result);
 	}
 	writer->writeArray("Treatment Plans Created", m_TreatmentPlansCreated, "\"$", "\"");
@@ -539,12 +528,11 @@ void dbHandler::getTreatmentPlansNotAccepted()
 	{
 		QString query_Treatment_Plans_Not_Accepted_7423 = QString(query_Treatment_Plans_Not_Accepted_7423_base).arg(it->first).arg(it->second);//m_startDate, m_endDate;
 
-//		cout << query_Treatment_Plans_Not_Accepted_7423.toStdString().c_str() << endl;
 		query.exec(query_Treatment_Plans_Not_Accepted_7423.toStdString().c_str());
-//		cout << db.lastError().text().toStdString() << endl;
-		//fflush(stdout);
 		query.next();
 		auto result = (int)query.value(0).toString().toDouble();
+		log_query_result("Treatment Plans Not Accepted for interval: " + it->first + "/" + it->second, db.lastError().text());
+
 		m_TreatmentPlansNotAccepted.push_back(result);
 	}
 	writer->writeArray("Treatment Plans Not Accepted", m_TreatmentPlansNotAccepted, "\"$", "\"");
@@ -626,6 +614,8 @@ void dbHandler::getDebtors()
 	//fflush(stdout);
 	query.next();
 	auto result = (int)query.value(0).toString().toDouble();
+	log_query_result("Debtors", db.lastError().text());
+
 	writer->writeSnapshot("Debtors", result, "\"$", "\"");
 }
 

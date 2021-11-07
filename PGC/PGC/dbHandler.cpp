@@ -10,9 +10,8 @@ using namespace std;
 void log_query_result(const QString& header, const QString& msg)
 {
     if (msg.isEmpty()) cout << header.toStdString() << ": " << "no error" << "\n";
-    else cout << header.toStdString() << ": " << "last error: " << msg.toStdString()<< "\n";
+    else cout << header.toStdString() << ": " << "last error: " << msg.toStdString() << "\n";
 }
-
 
 
 dbHandler::dbHandler(QObject* parent) : QObject(parent)
@@ -162,6 +161,7 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getLapsedPatients();
     getNewPatientPercent();
     getNetPatientGain();
+
     getUnbookedRecalls();
     getTotalRecalls();
     getRecallEffectiveness();
@@ -367,12 +367,10 @@ int dbHandler::UnbookedRecalls(QString start, QString end)
     while (query.next())
     {
         QString patnumber = query.value(0).toString();
-//        cout << patnumber.toStdString() << endl;
         QString datecreated = query.value(4).toString();
-//        cout << datecreated.toStdString() << endl;
-//        cout << unbkRecall(patnumber, datecreated) << endl;
         result += unbkRecall(patnumber, datecreated);
     }
+    log_query_result("Unbooked Recalls for interval: " + start + "/" + end, db.lastError().text());
     return result;
 }
 
@@ -385,7 +383,6 @@ int dbHandler::lostRecall(QString PT, QString RD)
 
     query.exec(str.toStdString().c_str());
     query.next();
-//  cout << query.value(0).toString().toStdString() << endl;
     int app = query.value(0).toInt();
     int lost;
     if (app > 0) lost = 0;
@@ -419,12 +416,10 @@ int dbHandler::LostRecalls(QString start, QString end)
     while (query.next())
     {
         QString patnumber = query.value(0).toString();
-        //        cout << patnumber.toStdString() << endl;
         QString datecreated = query.value(4).toString();
-        //        cout << datecreated.toStdString() << endl;
-        //        cout << unbkRecall(patnumber, datecreated) << endl;
         result += lostRecall(patnumber, datecreated);
     }
+    log_query_result("Lost Recalls for interval: " + start + "/" + end, db.lastError().text());
     return result;
 }
 
@@ -463,8 +458,6 @@ int dbHandler::apptUsed(QString SKEY, int usd, int appEnd)
 
 int dbHandler::NonPatientRelatedHours(QString start, QString end)
 {
-//    Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '20200101%' AND '20201231%' and (patnumber = '000000' or patnumber = '') and (substring(skey from 13 for 4) = '0001' OR substring(skey from 13 for 4) = '0002' OR substring(skey from 13 for 4) = '0005') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5;
-//    const char* base = "Select sum(apptUsed(SKEY, timeused * 5, 21)) / 60 as nonptHr from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > 5 AND ";
     const char* base = "Select * from paapplns where  SKEY BETWEEN '%1%' AND '%2%' and (patnumber = '000000' or patnumber = '') AND CAST(SUBSTRING(SKEY FROM 17 FOR 2)  AS INTEGER) > %3 AND ";
     QString str = QString(base).arg(start).arg(end).arg(m_appStart - 1);
     for (int i = 0; i < m_books.size(); i++)
@@ -480,8 +473,6 @@ int dbHandler::NonPatientRelatedHours(QString start, QString end)
         }
     }
 
-//    cout << str.toStdString() << endl;
-
     QSqlQuery query(db);
     int result = 0;
 
@@ -493,6 +484,7 @@ int dbHandler::NonPatientRelatedHours(QString start, QString end)
 
         result += apptUsed(SKEY, timeused * m_appSlot, m_appEnd);// "21" is hardcoded instead of value of m_appEnd
     }
+    log_query_result("Non Patient Related Hours for interval: " + start + "/" + end, db.lastError().text());
     return result/60;
 }
 

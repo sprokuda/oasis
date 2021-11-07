@@ -6,8 +6,8 @@ using namespace std;
 
 csvWriter::csvWriter(QObject* parent) : QObject(parent)
 {
-    const char* dir1 = "OASIS";
-    const char* dir2 = "PGC";
+    const char* dir1 = "OASIS1";
+    const char* dir2 = "PGC1";
     
     QDir dir;
     dir.cd("C:/");

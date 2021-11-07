@@ -11,6 +11,8 @@
 
 #include "csvWriter.h"
 
+void log_query_result(const QString& header, const QString& msg);
+
 
 class dbHandler : public QObject
 {
