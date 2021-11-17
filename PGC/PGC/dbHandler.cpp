@@ -124,8 +124,12 @@ void dbHandler::queryAppBook()
     m_books_map.clear();
     while (query.next())
     {
-
-        m_books_map.emplace(query.value(1).toString().left(9).toStdString(),padded(query.value(0).toString().toStdString()));
+        auto book_name = query.value(1).toString();
+        while(book_name.endsWith(" "))
+        {
+            book_name.truncate(book_name.size() - 1);
+        }
+        m_books_map.emplace(book_name.toStdString(),padded(query.value(0).toString().toStdString()));
     }
     log_query_result("BOOKS", db.lastError().text());
 
