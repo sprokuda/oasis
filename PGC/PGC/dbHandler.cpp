@@ -116,22 +116,22 @@ void dbHandler::queryAppBook()
     };
 
     const char* script = "SELECT BOOKNO, BOOKNAME from APP_BOOK;";
-    map<string, string> books;
     map<string, string> local_books = { {"BOOK 0001",padded("1")},{"BOOK 0002",padded("02")},{"BOOK 0005",padded("005")}, {"BOOK 0006",padded("0006")} };
 
     query.exec(script);
 //    cout << "Execution of query : "<< "\"" << script << "\"" << " last error: "<< db.lastError().text().toStdString() << "\n";
  //   fflush(stdout);
+    m_books_map.clear();
     while (query.next())
     {
 
-        books.emplace(query.value(1).toString().left(9).toStdString(),padded(query.value(0).toString().toStdString()));
+        m_books_map.emplace(query.value(1).toString().left(9).toStdString(),padded(query.value(0).toString().toStdString()));
     }
     log_query_result("BOOKS", db.lastError().text());
 
     qRegisterMetaType<std::map<std::string, std::string>>("std::map<std::string, std::string>");
     qRegisterMetaType<map<string, string>>("map<string, string>");
-    emit appBookReady(books);
+    emit appBookReady(m_books_map);
 }
 
 void dbHandler::Extract(QString start, QString end, QStringList books, int prod_columns, QString practice)

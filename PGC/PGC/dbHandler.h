@@ -52,6 +52,7 @@ private:
     QString m_end_date;
     QString m_practice;
     QStringList m_books;
+    map<string, string> m_books_map;
 
     unique_ptr<csvWriter> writer;
 
