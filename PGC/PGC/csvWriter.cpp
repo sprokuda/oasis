@@ -6,8 +6,8 @@ using namespace std;
 
 csvWriter::csvWriter(QObject* parent) : QObject(parent)
 {
-    const char* dir1 = "OASIS1";
-    const char* dir2 = "PGC1";
+    const char* dir1 = "OASIS";
+    const char* dir2 = "PGC";
     
     QDir dir;
     dir.cd("C:/");
@@ -34,7 +34,7 @@ csvWriter::csvWriter(QObject* parent) : QObject(parent)
             << "\t" << outputDir2.absoluteFilePath().toStdString() << endl;
     }
 
-    QString fileName = QDate::currentDate().toString("yyyyMMdd") + "__" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".csv");
+    QString fileName = QDate::currentDate().toString("yyyyMMdd") + "_" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".csv");
     cout << (dir.absolutePath() + "\\" + fileName).toStdString() << endl;
     fflush(stdout);
 

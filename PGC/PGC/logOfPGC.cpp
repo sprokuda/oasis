@@ -7,9 +7,9 @@ extern QString initial_log;
 
 void logOfPGC::openLog()
 {
-    const char* oasis_dir_name = "OASIS1";
-    const char* pgc_dir_name = "PGC1";
-    const char* log_dir_name = "Log1";
+    const char* oasis_dir_name = "OASIS";
+    const char* pgc_dir_name = "PGC";
+    const char* log_dir_name = "Log";
 
     QDir dir;
     if (!dir.cd("C:/"))
