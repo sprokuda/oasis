@@ -216,12 +216,18 @@ void dbHandler::getHoursCancelled()
 	{
 		QString query_Hours_Cancelled_743 = appendBooksToString(query_Hours_Cancelled_743_base, 
 			QString(it->first).remove("-"), QString(it->second).remove("-"));
-
-		query.exec(query_Hours_Cancelled_743.toStdString().c_str());
-		query.next();
-		auto result = query.value(0).toString().toInt();
-		log_query_result("Hours Cancelled for interval: " + it->first + "/" + it->second, db.lastError().text());
-		m_HoursCancelled.push_back(result);
+		if (m_iconCan == 0 && m_iconNS == 0)
+		{
+			m_HoursCancelled.push_back(0);
+		}
+		else
+		{
+			query.exec(query_Hours_Cancelled_743.toStdString().c_str());
+			query.next();
+			auto result = query.value(0).toString().toInt();
+			log_query_result("Hours Cancelled for interval: " + it->first + "/" + it->second, db.lastError().text());
+			m_HoursCancelled.push_back(result);
+		}
 	}
 	writer->writeArray("Hours Cancelled", m_HoursCancelled);
 }
