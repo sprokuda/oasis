@@ -659,7 +659,7 @@ void dbHandler::writeGlobals(const QDate& current_date, const QTime& current_tim
 		QStringList result;
 		m_books.sort();
 		auto it1 = m_books.begin();
-		for (auto it = m_books_map.begin(); it != m_books_map.end(); it++)
+		for (auto it = m_books_map.begin(); it != m_books_map.end() && it1 != m_books.end(); it++)
 		{
 			if (it->second == it1->toStdString())
 			{
