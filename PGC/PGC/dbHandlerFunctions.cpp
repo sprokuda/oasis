@@ -628,13 +628,13 @@ void dbHandler::getDebtors()
 
 void dbHandler::getTop10Items(const QString& header, const QString& str, const QString prefix)
 {
-	vector<pair<int, int>> vec;
+	vector<pair<QString, int>> vec;
 
 	QSqlQuery query(db);
 	query.exec(str.toStdString().c_str());
 	while (query.next())
 	{
-		auto first = (int)query.value(0).toString().toDouble();
+		auto first = query.value(0).toString();
 		auto second = (int)query.value(1).toString().toDouble();
 		vec.push_back(make_pair(first, second));
 	}

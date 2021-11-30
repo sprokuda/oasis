@@ -74,8 +74,8 @@ public:
         out << "\n";
     };
 
-    template<typename T>
-    void writeTop10(const QString& header, vector<pair<T,T>> data, QString prefix = QString::QString(""), QString postfix = QString::QString(""))
+    template<typename T1, typename T2>
+    void writeTop10(const QString& header, vector<pair<T1,T2>> data, QString prefix = QString::QString(""), QString postfix = QString::QString(""))
     {
         QTextStream out(file);
         int i = 1;
