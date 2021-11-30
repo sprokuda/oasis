@@ -219,6 +219,7 @@ void dbHandler::makeItemAnalysisTable(QString start, QString end)
     QSqlQuery query(db);
     QString string_726 = QString(ppl_tbl_ITEM_ANALYSIS_726).arg(start).arg(end);
 
+    query.exec(dlt_tbl_ITEM_ANALYSIS_726);
     query.exec(crt_tbl_ITEM_ANALYSIS_726);
 //    cout << db.lastError().text().toStdString() << endl;
 
