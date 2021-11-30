@@ -35,7 +35,7 @@ void logOfPGC::openLog()
         auto cd_report = dir.cd(dir_name);
         if (!cd_report)
         {
-            initial_log += (QString("Cann't enter directory ") + QString("\"dir_name\"\n"));
+            initial_log += (QString("Can't enter directory ") + QString("\"dir_name\"\n"));
             QMessageBox::warning(nullptr, 0, "Output directory problem", "output directory "+ QString(dir_name) + " does not exist, \nis not a directory, \nor is not writeable");
         }
 
