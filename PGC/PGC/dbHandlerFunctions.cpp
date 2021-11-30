@@ -659,15 +659,19 @@ void dbHandler::writeGlobals(const QDate& current_date, const QTime& current_tim
 		QStringList result;
 		m_books.sort();
 		auto it1 = m_books.begin();
-		for (auto it = m_books_map.begin(); it != m_books_map.end() && it1 != m_books.end(); it++)
+		while (it1 != m_books.end())
 		{
-			if (it->second == it1->toStdString())
+			for (auto it = m_books_map.begin(); it != m_books_map.end() && it1 != m_books.end(); it++)
 			{
-				result.push_back(it->first.c_str());
-				it1++;
+				if (it->second == it1->toStdString())
+				{
+					result.push_back(it->first.c_str());
+					it1++;
+				}
 			}
 		}
-		return result;
+		result.sort();
+		return result;// result.join(",");
 	};
 
 	out << "Appointment Books" << "," << "\"" << books_names().join(",") << "\"" << "\n";
