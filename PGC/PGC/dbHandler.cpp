@@ -62,6 +62,14 @@ void dbHandler::loadBooksAndFunctions()
 
     QSqlQuery query(db);
 
+    query.exec(dlt_tbl_FIRST_INV_721);
+    query.exec(dlt_tbl_LAST_INV_722);
+    query.exec(dlt_tbl_FUT_APP_723);
+    query.exec(dlt_tbl_APP_BOOK_724);
+    query.exec(dlt_tbl_ITEMS_725);
+    query.exec(dlt_tbl_CHURN_727);
+    query.exec(dlt_tbl_ITEM_ANALYSIS_726);
+
 #if 1
 
     query.exec(crt_tbl_FIRST_INV_721);
@@ -185,11 +193,13 @@ void dbHandler::Extract(QString start, QString end, QStringList books, int prod_
     getProductionThroughLost("Lost Revenue Through Cancellations", m_HoursWorked, m_HoursCancelled);
     getProductionThroughLost("Lost Revenue Through Patient Churn", m_UniquePatients, m_ChurnedPatients);
     getDebtors();
+#endif
     getTop10Items("Top 10 Items by Value", QString(query_Top_10_Items_By_Value_7433), "$");
     getTop10Items("Top 10 Items by Count", QString(query_Top_10_Items_By_Count_7434));
     writeGlobals(current_date, current_time);
 
-#endif
+//#endif
+
 
     cout << "Time taken to extract data: " << time.currentMSecsSinceEpoch() - start_time << "msec." << endl;
     emit extractionCompleted();

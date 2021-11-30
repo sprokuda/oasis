@@ -6,32 +6,41 @@ using namespace std;
 
 csvWriter::csvWriter(QObject* parent) : QObject(parent)
 {
-    const char* dir1 = "OASIS";
-    const char* dir2 = "PGC";
-    
+    const char* oasis_dir_name = "OASIS";
+    const char* pgc_dir_name = "PGC";
+
     QDir dir;
     dir.cd("C:/");
 
-    if (!QDir(dir1).exists())
-        cout << "QDir returned: " << dir.mkdir(dir1) << endl;
-    dir.cd(dir1);
-
-    const QFileInfo outputDir1(dir.absolutePath().toStdString().c_str());
-    if ((!outputDir1.exists()) || (!outputDir1.isDir()) || (!outputDir1.isWritable())) 
+    auto create_and_report = [&dir](QString dir_name)
     {
-        cout << "output directory does not exist, is not a directory, or is not writeable"
-            << "\t" << outputDir1.absoluteFilePath().toStdString() << endl;
-    }
+        auto result = dir.mkdir(dir_name);
+        if (result) return QString(dir_name) + QString(" is created");
+        else return QString(dir_name) + QString(" directory can't be created or already exists");
+    };
 
-    if (!QDir(dir2).exists())
-        cout << "QDir returned: " << dir.mkdir(dir2) << endl;
-    dir.cd(dir2);
-
-    const QFileInfo outputDir2(dir.absolutePath().toStdString().c_str());
-    if ((!outputDir2.exists()) || (!outputDir2.isDir()) || (!outputDir2.isWritable()))
+    auto check_directory = [&dir, create_and_report](QString dir_name)
     {
-        cout << "output directory does not exist, is not a directory, or is not writeable"
-            << "\t" << outputDir2.absoluteFilePath().toStdString() << endl;
+        bool fld_report = QDir(dir_name).exists();
+        if (!fld_report)
+        {
+            cout << create_and_report(dir_name).toStdString() + "\n";
+        }
+        auto cd_report = dir.cd(dir_name);
+        if (!cd_report)
+        {
+            cout <<  (string("Can't enter directory ") + string("\"dir_name\"\n"));
+        }
+    };
+
+
+    check_directory(oasis_dir_name);
+    check_directory(pgc_dir_name);
+
+    const QFileInfo outputDir(dir.absolutePath());
+    if ((!outputDir.exists()) || (!outputDir.isDir()) || (!outputDir.isWritable()))
+    {
+        cout << "output directory does not exist, is not a directory, or is not writeable" << endl;
     }
 
     QString fileName = QDate::currentDate().toString("yyyyMMdd") + "_" + QTime::currentTime().toString("hh-mm-ss-zzz") + QString(".csv");
@@ -45,19 +54,6 @@ csvWriter::csvWriter(QObject* parent) : QObject(parent)
         file->close();
     }
 
-    //else {
-    //    file.write(logTextEdit->toPlainText().toUtf8());
-    //    file.close();
-    //}
-
-    //QFile file(outputDir_ + "/" + fileName);
-    //if (!file.open(QFile::WriteOnly))
-    //{
-    //    QMessageBox::warning(0, "Could not create Project File",
-    //        QObject::tr("\n Could not create Project File on disk"));
-
-    //    return false;
-    //}
 }
 
 csvWriter::~csvWriter()
@@ -68,12 +64,6 @@ csvWriter::~csvWriter()
     }
 }
 
-//template<typename T>
-//void csvWriter::writeArray(vector<T> array)
-//{
-//
-////    file->write(data);
-//}
 
 
 
