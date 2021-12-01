@@ -674,7 +674,37 @@ void dbHandler::writeGlobals(const QDate& current_date, const QTime& current_tim
 		return result;// result.join(",");
 	};
 
-	out << "Appointment Books" << "," << "\"" << books_names().join(",") << "\"" << "\n";
+	auto books_names_simplified = [=]()
+	{
+
+		map <string, string> book_numbers;
+		for (auto it = m_books_map.begin(); it != m_books_map.end(); it++)
+		{
+			book_numbers.emplace(it->second, it->first);
+		}
+
+		QStringList result;
+		m_books.sort();
+
+		auto it1 = m_books.begin();
+		for (auto it = book_numbers.begin(); it != book_numbers.end() && it1 != m_books.end(); it++)
+		{
+			if (it->first == it1->toStdString())
+			{
+				result.push_back(it->second.c_str());
+				it1++;
+			}
+		}
+
+		result.sort();
+		return result;// result.join(",");
+
+	};
+
+
+
+
+	out << "Appointment Books" << "," << "\"" << books_names_simplified().join(",") << "\"" << "\n";
 	out << "Date of Extraction" << "," << current_date.toString("dd/MM/yyyy") << "\n";
 	out << "Time of Extraction" << "," << current_time.toString("hh:mm:ss");
 }
